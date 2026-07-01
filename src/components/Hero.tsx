@@ -13,10 +13,10 @@ export function Hero() {
           loop
           muted
           playsInline
-           className="absolute inset-0 w-full h-full object-cover" 
-           src={heroVideoUrl} 
-         /> 
-         {/* Subtle dark overlay (approx 40-50% opacity) to ensure text readability  */}
+          className="absolute inset-0 w-full h-full object-cover"
+          src={heroVideoUrl}
+        />
+        {/* Subtle dark overlay (approx 40-50% opacity) to ensure text readability  */}
         <div className="absolute inset-0 bg-black/45" />
       </div>
 
@@ -30,10 +30,10 @@ export function Hero() {
             className="flex flex-col justify-center max-w-2xl order-2 lg:order-1"
           >
             <h1 className="heading-hero mb-6 mt-8">
-              Better Posture.
+              Redefine your
               <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-accent-silver to-text-secondary">
-                Smarter Living.
+                Posture
               </span>
             </h1>
 
@@ -48,16 +48,16 @@ export function Hero() {
                 Buy Now
               </button>
               <a
-  href="https://www.youtube.com/watch?v=ZVy5krlFEqk&t=1s"
-  target="_blank"
-  rel="noopener noreferrer"
-  className="group w-full sm:w-auto btn-secondary-dark flex items-center justify-center gap-3"
->
-  <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-white/20 transition-colors">
-    <Play className="w-3.5 h-3.5 fill-white" />
-  </div>
-  Watch Demo
-</a>
+                href="https://www.youtube.com/watch?v=ZVy5krlFEqk&t=1s"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group w-full sm:w-auto btn-secondary-dark flex items-center justify-center gap-3"
+              >
+                <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-white/20 transition-colors">
+                  <Play className="w-3.5 h-3.5 fill-white" />
+                </div>
+                Watch Demo
+              </a>
             </div>
           </motion.div>
 
