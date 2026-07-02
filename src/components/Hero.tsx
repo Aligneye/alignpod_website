@@ -44,9 +44,9 @@ export function Hero() {
             </p>
 
             <div className="flex flex-col sm:flex-row items-center gap-4">
-              <button className="w-full sm:w-auto btn-primary-dark">
-                Buy Now
-              </button>
+              <Link to="/posture-check" className="btn-primary-dark">
+              Analyze Your Posture
+              </Link>
               <a
                 href="https://www.youtube.com/watch?v=ZVy5krlFEqk&t=1s"
                 target="_blank"
