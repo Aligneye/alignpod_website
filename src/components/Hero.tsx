@@ -1,6 +1,6 @@
 import { motion } from "motion/react";
 import { Play, ChevronDown } from "lucide-react";
-import heroVideoUrl from "../assets/videos/hero-section.2.mp4";
+import heroVideoUrl from "../assets/videos/alignpod-ezremove.mp4";
 import { Link } from 'react-router-dom';
 
 export function Hero() {
