@@ -1,9 +1,37 @@
+import { useState, useEffect } from "react";
 import { motion } from "motion/react";
 import { Play, ChevronDown } from "lucide-react";
 import heroVideoUrl from "../assets/videos/alignpod-ezremove.mp4";
 import { Link } from 'react-router-dom';
 
 export function Hero() {
+  const words = ["Posture", "Alignment", "Habits", "Wellness"];
+  const [index, setIndex] = useState(0);
+  const [subIndex, setSubIndex] = useState(0);
+  const [reverse, setReverse] = useState(false);
+
+  // Typewriter effect
+  useEffect(() => {
+    if (subIndex === words[index].length && !reverse) {
+      const timeout = setTimeout(() => setReverse(true), 2500); // pause on full word
+      return () => clearTimeout(timeout);
+    }
+
+    if (subIndex === 0 && reverse) {
+      const timeout = setTimeout(() => {
+        setReverse(false);
+        setIndex((prev) => (prev + 1) % words.length);
+      }, 500); // pause on empty space before typing next
+      return () => clearTimeout(timeout);
+    }
+
+    const timeout = setTimeout(() => {
+      setSubIndex((prev) => prev + (reverse ? -1 : 1));
+    }, reverse ? 50 : 100); // speed of typing/deleting
+
+    return () => clearTimeout(timeout);
+  }, [subIndex, reverse, index]);
+
   return (
     <section className="relative min-h-screen flex items-center justify-center pt-24 overflow-hidden bg-deep-black">
       {/* Background Video/Gradient Setup */}
@@ -32,9 +60,10 @@ export function Hero() {
             <h1 className="heading-hero mb-6 mt-8">
               Redefine your
               <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-accent-silver to-text-secondary">
-                Posture
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-accent-silver to-text-secondary inline-block min-h-[1.2em]">
+                {words[index].substring(0, subIndex)}
               </span>
+              <span className="inline-block w-[3px] h-[0.8em] bg-white ml-2 align-middle animate-pulse" />
             </h1>
 
             <p className="text-body text-text-secondary mb-10 max-w-lg">
