@@ -42,12 +42,27 @@ export function FAQ() {
   };
 
   return (
-    <section className="relative w-full py-24 lg:py-32 bg-[#F8F8F6] text-[#111111] overflow-hidden selection:bg-[#111111] selection:text-white">
+    <section className="relative w-full py-24 lg:py-32 bg-[#F8F8F6] text-[#111111] overflow-hidden selection:bg-[#111111] selection:text-white" id='faq'>
       {/* Background Ambience */}
-      <div className="absolute inset-0 z-0 pointer-events-none opacity-50">
-        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_top_left,#ffffff_0%,transparent_60%)] blur-3xl"></div>
-        <div className="absolute bottom-0 right-0 w-full h-full bg-[radial-gradient(circle_at_bottom_right,#ffffff_0%,transparent_60%)] blur-3xl"></div>
-      </div>
+<div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+  <motion.div
+    animate={{ y: [-20, 20, -20], x: [-10, 10, -10] }}
+    transition={{ repeat: Infinity, duration: 12, ease: "easeInOut" }}
+    className="absolute top-[8%] left-[10%] w-[420px] h-[420px] bg-[#A7C7FF]/30 rounded-full blur-[90px]"
+  />
+
+  <motion.div
+    animate={{ y: [20, -20, 20], x: [15, -15, 15] }}
+    transition={{ repeat: Infinity, duration: 14, ease: "easeInOut" }}
+    className="absolute bottom-[5%] right-[8%] w-[520px] h-[520px] bg-[#4F9CFF]/25 rounded-full blur-[110px]"
+  />
+
+  <motion.div
+    animate={{ y: [-15, 15, -15] }}
+    transition={{ repeat: Infinity, duration: 16, ease: "easeInOut" }}
+    className="absolute top-[38%] left-[42%] w-[360px] h-[360px] bg-white/70 rounded-full blur-[100px]"
+  />
+</div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
         
@@ -72,21 +87,10 @@ export function FAQ() {
             </p>
 
             {/* Premium CSS Illustration */}
-            <div className="relative w-full aspect-[4/3] rounded-[40px] bg-white shadow-[0_20px_40px_rgba(0,0,0,0.03)] border border-gray-100 flex items-center justify-center overflow-hidden">
-              {/* Soft radial glow inside illustration */}
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,#f8f8f6_0%,transparent_70%)]"></div>
+            <div className="relative w-[90%] max-w-[460px] aspect-[4/3] mx-auto rounded-[40px] bg-white/80 shadow-[0_30px_80px_rgba(0,0,0,0.10)] border border-white/70 backdrop-blur-xl flex items-center justify-center overflow-hidden">
+              {/* Soft blue glow inside illustration */}
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,#DBEAFE_0%,transparent_72%)]"></div>
               
-              {/* Floating decorative elements */}
-              <motion.div 
-                animate={{ y: [-10, 10, -10], rotate: [0, 5, 0] }}
-                transition={{ repeat: Infinity, duration: 8, ease: "easeInOut" }}
-                className="absolute right-8 top-8 w-24 h-24 rounded-full border border-gray-100/50 backdrop-blur-sm"
-              />
-              <motion.div 
-                animate={{ y: [15, -15, 15], rotate: [0, -5, 0] }}
-                transition={{ repeat: Infinity, duration: 7, ease: "easeInOut", delay: 1 }}
-                className="absolute left-12 bottom-12 w-32 h-32 rounded-full bg-gray-50/50 border border-gray-100 backdrop-blur-md"
-              />
 
               {/* Main Floating Device Concept */}
               <motion.div
@@ -94,13 +98,12 @@ export function FAQ() {
                 transition={{ repeat: Infinity, duration: 6, ease: "easeInOut" }}
                 className="relative z-10 flex flex-col items-center"
               >
-                 <div className="w-[120px] h-[180px] bg-gradient-to-br from-white to-gray-50 rounded-[32px] shadow-[0_20px_40px_rgba(0,0,0,0.06),inset_0_2px_4px_rgba(255,255,255,1)] border border-gray-200/60 flex flex-col items-center justify-center relative overflow-hidden backdrop-blur-xl">
+                 <div className="w-[120px] h-[180px] bg-gradient-to-br from-[#8A8D91] via-[#6F7378] to-[#4B4F55] rounded-[16px] shadow-[0_30px_70px_rgba(0,0,0,0.22),inset_0_2px_8px_rgba(255,255,255,0.28),inset_0_-6px_12px_rgba(0,0,0,0.25)] border border-[#9CA3AF]/70 flex flex-col items-center justify-center relative overflow-hidden backdrop-blur-xl">
                    {/* Glass reflection */}
-                   <div className="absolute top-0 left-0 right-0 h-1/2 bg-gradient-to-b from-white/80 to-transparent pointer-events-none" />
+                   <div className="absolute top-0 left-0 right-0 h-1/2 bg-gradient-to-b from-white/25 to-transparent pointer-events-none" />
                    
                    {/* Center Button / Node */}
-                   <div className="w-16 h-16 rounded-full bg-white shadow-[0_4px_12px_rgba(0,0,0,0.04),inset_0_2px_4px_rgba(255,255,255,1)] border border-gray-100 flex items-center justify-center">
-                      <HelpCircle className="w-6 h-6 text-gray-300" strokeWidth={1.5} />
+                   <div className="w-16 h-16 rounded-[10px] bg-gradient-to-b from-white to-[#F2F2F2]shadow-[0_8px_20px_rgba(0,0,0,0.18),inset_0_2px_6px_rgba(255,255,255,0.9)]border border-white">
                    </div>
                  </div>
                  
