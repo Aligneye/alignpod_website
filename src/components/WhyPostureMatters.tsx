@@ -64,7 +64,7 @@ export function WhyPostureMatters() {
             Posture Is Not Just Position
           </span>
           <h2 className="heading-section text-[#111111] mb-6">
-            Small daily posture habits shape how your body feels.
+            Every healthy posture starts with a small habit
           </h2>
           <p className="text-lg sm:text-xl text-gray-600 leading-relaxed font-light">
             Long sitting hours, screen work, and unnoticed slouching can slowly

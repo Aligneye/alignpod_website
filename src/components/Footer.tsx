@@ -1,23 +1,45 @@
 import { motion } from 'motion/react';
 import { Target } from 'lucide-react';
+import { Link } from "react-router-dom";
 
 const footerLinks = [
   {
     title: "Product",
-    links: ["How It Works", "Training Mode", "Therapy Mode", "Smart Calibration", "Companion App"]
+    links: [
+      { label: "How It Works", href: "#how-it-works" },
+      { label: "Training Mode", href: "#training-therapy" },
+      { label: "Therapy Mode", href: "#training-therapy" },
+      { label: "Smart Calibration", href: "#calibration" },
+      { label: "Companion App", href: "#companion-app" },
+    ],
   },
   {
     title: "Company",
-    links: ["About", "Science", "Why AlignPod", "Contact"]
+    links: [
+      { label: "About", href: "/product" },
+      { label: "Science", href: "/science" },
+      { label: "Why AlignPod", href: "/why-alignpod" },
+      { label: "Contact", href: "/contact" },
+    ],
   },
   {
     title: "Support",
-    links: ["FAQ", "Help", "Privacy Policy", "Terms of Use"]
+    links: [
+      { label: "FAQ", href: "#faq" },
+      { label: "Help", href: "/contact" },
+      { label: "Privacy Policy", href: "/privacy-policy" },
+      { label: "Terms of Use", href: "/terms" },
+    ],
   },
   {
     title: "Connect",
-    links: ["Email", "Instagram", "LinkedIn", "YouTube"]
-  }
+    links: [
+      { label: "Email", href: "mailto:harshit@aligneye.com" },
+      { label: "Instagram", href: "https://www.instagram.com/aligneye?igsh=emNkYmk2NGlucnAw" },
+      { label: "LinkedIn", href: "https://www.linkedin.com/company/aligneye/" },
+      { label: "YouTube", href: "https://www.youtube.com/@AlignEye" },
+    ],
+  },
 ];
 
 const fadeInUp = {
@@ -61,13 +83,14 @@ export function Footer() {
                 <ul className="flex flex-col gap-4">
                   {column.links.map((link, linkIdx) => (
                     <li key={linkIdx}>
-                      <a 
-                        href="#" 
-                        className="text-white/60 text-sm hover:text-white transition-colors duration-300 relative group inline-block"
-                      >
-                        {link}
-                        <span className="absolute -bottom-1 left-0 w-0 h-px bg-white/50 transition-all duration-300 group-hover:w-full"></span>
-                      </a>
+                     <a
+                       href={link.href}
+                       target={link.href.startsWith("http") ? "_blank" : undefined}
+                       rel={link.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                       className="text-white/60 text-sm hover:text-white transition-colors duration-300 relative group inline-block">
+                      {link.label}
+                     <span className="absolute -bottom-1 left-0 w-0 h-px bg-white/50 transition-all duration-300 group-hover:w-full"></span>
+                    </a>
                     </li>
                   ))}
                 </ul>
