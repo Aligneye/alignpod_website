@@ -47,31 +47,55 @@ export function WhyPostureMatters() {
   return (
     <section className="relative w-full py-24 lg:py-32 bg-[#fafafa] text-charcoal overflow-hidden selection:bg-charcoal selection:text-white">
       {/* Premium subtle background grid */}
-      <div className="absolute inset-0 z-0 pointer-events-none">
+      <div className="absolute inset-0 z-0 pointer-events-none opacity-30">
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#fafafa_100%)]"></div>
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          variants={fadeInUp}
-          className="max-w-3xl mx-auto text-center"
-        >
-          <span className="inline-block text-xs font-semibold tracking-[0.2em] text-gray-500 uppercase mb-4">
-            Posture Is Not Just Position
-          </span>
-          <h2 className="heading-section text-[#111111] mb-6">
-            Small daily posture habits shape how your body feels.
+        <div className="max-w-4xl mx-auto text-center relative py-8 flex flex-col items-center">
+          {/* Soft radial white/blue glow behind the headline for depth */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] sm:w-[600px] h-[350px] sm:h-[600px] bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.12)_0%,rgba(255,255,255,0)_70%)] pointer-events-none z-0" />
+
+          <motion.span
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            className="relative z-10 inline-block text-xs font-semibold tracking-[0.25em] text-gray-500 uppercase mb-12"
+          >
+            POSTURE IS NOT JUST POSITION
+          </motion.span>
+
+          <h2 className="relative z-10 font-display font-black tracking-tighter leading-[0.92] text-[4.5rem] sm:text-6xl md:text-7xl lg:text-[7.5rem] xl:text-[8rem] text-[#111111] flex flex-col items-center select-none">
+            {["Small", "Daily", "Posture", "Habits."].map((word, idx) => (
+              <span key={idx} className="block overflow-hidden py-2 sm:py-3">
+                <motion.span
+                  initial={{ opacity: 0, y: 80 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{
+                    delay: idx * 0.2,
+                    duration: 1.2,
+                    ease: [0.16, 1, 0.3, 1],
+                  }}
+                  className="inline-block"
+                >
+                  {word}
+                </motion.span>
+              </span>
+            ))}
           </h2>
-          <p className="text-lg sm:text-xl text-gray-600 leading-relaxed font-light">
+
+          <motion.p
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.0, duration: 1.0, ease: [0.16, 1, 0.3, 1] }}
+            className="relative z-10 text-lg sm:text-xl md:text-2xl text-gray-600 leading-relaxed font-light mt-16 max-w-2xl"
+          >
             Long sitting hours, screen work, and unnoticed slouching can slowly
             create stress on your neck, back, breathing, and focus. AlignPod is
             built to make posture awareness effortless.
-          </p>
-        </motion.div>
+          </motion.p>
+        </div>
 
         <motion.div
           initial="hidden"
