@@ -17,7 +17,14 @@ export function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
 
-  const isDarkTheme = location.pathname === "/";
+  // const isDarkTheme =
+  // location.pathname === "/" ||
+  // location.pathname === "/why-alignpod";
+  // location.pathname === "/product";
+  // location.pathname === "/science";
+
+  const isDarkTheme =
+  ["/", "/why-alignpod", "/product", "/science"].includes(location.pathname);
 
   useEffect(() => {
     const handleScroll = () => {
