@@ -1,6 +1,10 @@
 import { motion } from 'motion/react';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
+import {Link} from "react-router-dom";
+import analytics from "../assets/analytics.jpeg";
+import breathe from "../assets/breathe.jpeg";
+import ble from "../assets/ble.jpeg";
 import { 
   Activity, Vibrate, Target, Smartphone,
   Check, Maximize, Feather, Layout, Settings
@@ -21,7 +25,12 @@ const staggerContainer = {
 
 function Hero() {
   return (
-    <section className="relative w-full min-h-[90vh] flex flex-col items-center justify-center bg-[#F8F8F6] text-[#111111] overflow-hidden pt-32 pb-24 selection:bg-[#111111] selection:text-white">
+    <section className="relative w-full min-h-[90vh] flex flex-col items-center justify-center bg-[#0B0F14] text-white overflow-hidden pt-32 pb-24 selection:bg-[#111111] selection:text-white">
+      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+  <div className="absolute top-[-180px] left-[-120px] w-[560px] h-[560px] rounded-full bg-blue-500/15 blur-[140px]" />
+  <div className="absolute bottom-[-220px] right-[-120px] w-[620px] h-[620px] rounded-full bg-cyan-400/10 blur-[180px]" />
+  <div className="absolute inset-0 opacity-[0.04] bg-[linear-gradient(to_right,#ffffff_1px,transparent_1px),linear-gradient(to_bottom,#ffffff_1px,transparent_1px)] bg-[size:40px_40px]" />
+</div>
       <div className="absolute inset-0 z-0 pointer-events-none flex items-center justify-center">
          <div className="w-[800px] h-[800px] bg-[radial-gradient(circle_at_center,#ffffff_0%,transparent_70%)] opacity-80 blur-3xl"></div>
       </div>
@@ -31,7 +40,7 @@ function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="inline-block text-xs font-semibold tracking-[0.2em] text-[#6B7280] uppercase mb-6"
+          className="inline-block text-xs font-semibold tracking-[0.2em] text-white/70 uppercase mb-6"
         >
           AlignPod Device
         </motion.span>
@@ -40,7 +49,7 @@ function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.1, ease: "easeOut" }}
-          className="heading-hero text-[#111111] mb-8"
+          className="heading-hero text-white mb-8"
         >
           Meet the smart wearable built for posture awareness.
         </motion.h1>
@@ -49,7 +58,7 @@ function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-          className="text-body text-[#6B7280] max-w-3xl mx-auto mb-16"
+          className="text-body text-white/70 max-w-3xl mx-auto mb-16"
         >
           AlignPod is a compact posture and wellness companion that combines real-time posture tracking, gentle haptic feedback, smart calibration, therapy mode, and app-based insights in one minimal device.
         </motion.p>
@@ -63,35 +72,36 @@ function Hero() {
           <button className="btn-primary-light w-full sm:w-auto">
             Explore Features
           </button>
-          <button className="btn-secondary-light w-full sm:w-auto">
+          <Link to="/contact"
+            className="btn-secondary-light w-full sm:w-auto">
             Contact Us
-          </button>
+            </Link>
         </motion.div>
 
         {/* Floating Device Placeholder */}
-        <motion.div
+       <motion.div
           initial={{ opacity: 0, y: 40, scale: 0.95 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ duration: 1.2, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 1.2, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
           className="relative w-full max-w-sm mx-auto flex justify-center items-center"
         >
           <motion.div
             animate={{ y: [-15, 15, -15] }}
             transition={{ repeat: Infinity, duration: 8, ease: "easeInOut" }}
-            className="relative z-10 w-[160px] sm:w-[180px] h-[240px] sm:h-[280px] bg-gradient-to-br from-[#EAEAEA] to-[#D5D5D5] rounded-[48px] shadow-[0_40px_80px_rgba(0,0,0,0.1),inset_0_2px_4px_rgba(255,255,255,0.8),inset_0_-4px_8px_rgba(0,0,0,0.05)] border border-[#FFFFFF] flex flex-col items-center justify-center relative overflow-hidden backdrop-blur-xl"
+            className="relative z-10 w-[140px] sm:w-[160px] h-[220px] sm:h-[240px] bg-gradient-to-br from-[#8A8D91] via-[#6F7378] to-[#4B4F55] rounded-[20px] shadow-[0_40px_80px_rgba(0,0,0,0.1),inset_0_2px_4px_rgba(255,255,255,0.8),inset_0_-4px_8px_rgba(0,0,0,0.05)] border border-[#FFFFFF] flex flex-col items-center justify-center relative overflow-hidden backdrop-blur-xl"
           >
             {/* Glass reflection */}
-            <div className="absolute top-0 left-0 right-0 h-[40%] bg-gradient-to-b from-white/80 to-transparent pointer-events-none rounded-t-[48px]" />
+            <div className="absolute top-0 left-0 right-0 h-[40%] bg-gradient-to-b from-white/80 to-transparent pointer-events-none rounded-t-[40px]" />
             {/* Center Button */}
-            <div className="relative w-[80px] h-[80px] bg-gradient-to-b from-[#FFFFFF] to-[#F0F0F0] rounded-full shadow-[0_8px_24px_rgba(0,0,0,0.1),inset_0_-2px_4px_rgba(0,0,0,0.02)] border border-white flex items-center justify-center">
-               <div className="w-[60px] h-[60px] rounded-full bg-gradient-to-br from-[#FAFAFA] to-[#E5E5E5] shadow-[inset_0_2px_6px_rgba(0,0,0,0.03)]" />
+            <div className="relative w-[70px] h-[70px] bg-gradient-to-b from-[#FFFFFF] to-[#F0F0F0] rounded-[15px] shadow-[0_8px_24px_rgba(0,0,0,0.1),inset_0_-2px_4px_rgba(0,0,0,0.02)] border border-white flex items-center justify-center">
+               <div className="w-[50px] h-[50px] rounded-full bg-gradient-to-br from-[#FAFAFA] to-[#E5E5E5] shadow-[inset_0_2px_6px_rgba(0,0,0,0.03)]" />
             </div>
           </motion.div>
           {/* Shadow */}
           <motion.div 
             animate={{ scale: [1, 0.7, 1], opacity: [0.15, 0.05, 0.15] }}
             transition={{ repeat: Infinity, duration: 8, ease: "easeInOut" }}
-            className="absolute -bottom-10 w-32 h-6 bg-black rounded-[100%] blur-[12px]"
+            className="absolute -bottom-8 w-32 h-6 bg-black rounded-[100%] blur-[12px]"
           />
         </motion.div>
       </div>
@@ -377,16 +387,11 @@ function AppConnected() {
             className="w-full max-w-[280px] mx-auto h-[560px] bg-white rounded-[40px] shadow-[0_20px_40px_rgba(0,0,0,0.06)] border-[6px] border-[#E5E7EB] p-5 pt-16 relative overflow-hidden"
           >
              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-28 h-5 bg-[#E5E7EB] rounded-b-2xl"></div>
-             <h4 className="text-xl font-display font-bold mb-8">Live Posture</h4>
-             <div className="flex items-center gap-4 mb-10">
-               <span className="text-6xl font-display font-bold">12°</span>
-             </div>
-             <div className="w-full h-40 bg-gray-50 rounded-2xl border border-gray-100 flex items-end justify-between p-4 gap-2 mb-6">
-                {[40, 60, 30, 80, 50, 90, 70].map((h, i) => (
-                  <div key={i} className={`w-full rounded-sm ${i === 6 ? 'bg-blue-500' : 'bg-gray-300'}`} style={{ height: `${h}%` }}></div>
-                ))}
-             </div>
-             <div className="w-full h-16 bg-[#111111] rounded-2xl mt-auto absolute bottom-5 left-0 right-0 mx-5 w-[calc(100%-40px)]"></div>
+             <img
+              src={ble}
+              alt="Live Posture"
+              className="w-full h-full object-cover"
+    />
           </motion.div>
 
           {/* Mockup 2 */}
@@ -398,22 +403,11 @@ function AppConnected() {
             className="w-full max-w-[280px] mx-auto h-[560px] bg-white rounded-[40px] shadow-[0_20px_40px_rgba(0,0,0,0.06)] border-[6px] border-[#E5E7EB] p-5 pt-16 relative overflow-hidden md:-translate-y-8"
           >
              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-28 h-5 bg-[#E5E7EB] rounded-b-2xl"></div>
-             <h4 className="text-xl font-display font-bold mb-8">Profiles</h4>
-             <div className="flex flex-col gap-3">
-               <div className="w-full h-20 bg-[#111111] rounded-2xl flex items-center px-4">
-                 <div className="w-10 h-10 bg-white/20 rounded-full"></div>
-                 <div className="ml-4 w-20 h-3 bg-white/40 rounded-full"></div>
-               </div>
-               <div className="w-full h-20 bg-gray-50 border border-gray-100 rounded-2xl flex items-center px-4">
-                 <div className="w-10 h-10 bg-gray-200 rounded-full"></div>
-                 <div className="ml-4 w-24 h-3 bg-gray-300 rounded-full"></div>
-               </div>
-               <div className="w-full h-20 bg-gray-50 border border-gray-100 rounded-2xl flex items-center px-4">
-                 <div className="w-10 h-10 bg-gray-200 rounded-full"></div>
-                 <div className="ml-4 w-16 h-3 bg-gray-300 rounded-full"></div>
-               </div>
-             </div>
-             <div className="w-12 h-12 bg-[#111111] rounded-full absolute bottom-8 right-8"></div>
+             <img
+              src={breathe}
+              alt="Live Posture"
+              className="w-full h-full object-cover"
+    />
           </motion.div>
 
           {/* Mockup 3 */}
@@ -425,15 +419,11 @@ function AppConnected() {
             className="w-full max-w-[280px] mx-auto h-[560px] bg-[#111111] text-white rounded-[40px] shadow-[0_20px_40px_rgba(0,0,0,0.06)] border-[6px] border-[#E5E7EB] p-5 pt-16 relative overflow-hidden"
           >
              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-28 h-5 bg-[#E5E7EB] rounded-b-2xl"></div>
-             <h4 className="text-xl font-display font-bold mb-12 text-center text-[#34D399]">Therapy Mode</h4>
-             
-             <div className="w-32 h-32 rounded-full border border-white/20 mx-auto flex items-center justify-center relative mb-12">
-               <motion.div animate={{ scale: [1, 1.2, 1], opacity: [0.5, 0, 0.5] }} transition={{ repeat: Infinity, duration: 2 }} className="absolute w-full h-full border border-[#34D399] rounded-full"></motion.div>
-               <Vibrate className="w-10 h-10 text-[#34D399]" />
-             </div>
-
-             <div className="text-center text-5xl font-display font-light mb-8">14:30</div>
-             <div className="w-full h-16 bg-white/10 rounded-full mt-auto absolute bottom-8 left-0 right-0 mx-5 w-[calc(100%-40px)]"></div>
+              <img
+              src={analytics}
+              alt="Live Posture"
+              className="w-full h-full object-cover"
+    />
           </motion.div>
         </div>
       </div>

@@ -1,3 +1,6 @@
+import { Navbar} from "../components/Navbar";
+import { Footer } from "../components/Footer";
+
 const sections = [
   {
     title: "1. Acceptance of Terms",
@@ -124,9 +127,11 @@ const sections = [
   },
 ];
 
-export function TermsOfUse() {
+export function TermsOfUse(){
   return (
-    <main className="min-h-screen bg-[#F8F8F6] pt-28 px-6">
+    <>
+    <Navbar/>
+     <main className="min-h-screen bg-[#F8F8F6] pt-28 px-6">
       <section className="max-w-5xl mx-auto py-16 lg:py-24">
         <div className="text-center mb-14">
           <p className="text-sm tracking-[0.25em] uppercase text-gray-500 mb-4">
@@ -171,5 +176,7 @@ export function TermsOfUse() {
         </div>
       </section>
     </main>
+    <Footer/>
+    </>
   );
-}
+}   

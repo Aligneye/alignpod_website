@@ -1,3 +1,6 @@
+import { Navbar} from "../components/Navbar";
+import { Footer } from "../components/Footer";
+
 const sections = [
   {
     title: "1. Introduction",
@@ -119,6 +122,8 @@ const sections = [
 
 export function PrivacyPolicy() {
   return (
+    <>
+    <Navbar/>
     <main className="min-h-screen bg-[#F8F8F6] pt-28 px-6">
       <section className="max-w-5xl mx-auto py-16 lg:py-24">
         <div className="text-center mb-14">
@@ -164,5 +169,8 @@ export function PrivacyPolicy() {
         </div>
       </section>
     </main>
+    <Footer/>
+    </>
   );
 }
+    

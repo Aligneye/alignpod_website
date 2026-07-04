@@ -5,6 +5,8 @@ import { ResultCard } from "../components/posture/ResultCard";
 import { analyzePostureImage } from "../services/gemini";
 import type { PostureResult } from "../types/posture";
 import { CameraCapture } from "../components/posture/CameraCapture";
+import { Navbar} from "../components/Navbar";
+import { Footer } from "../components/Footer";
 
 export function PostureCheck() {
   const [imageFile, setImageFile] = useState<File | null>(null);
@@ -50,6 +52,8 @@ export function PostureCheck() {
   };
 
   return (
+    <>
+    <Navbar/>
     <main className="min-h-screen bg-[#F8F8F6] pt-28 px-6">
       <section className="max-w-5xl mx-auto text-center py-20">
         <p className="text-sm tracking-[0.25em] uppercase text-gray-500 mb-4">
@@ -102,5 +106,8 @@ export function PostureCheck() {
         {result && <ResultCard result={result} />}
       </section>
     </main>
+    <Footer/>
+    </>
   );
 }
+    

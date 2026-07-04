@@ -1,6 +1,8 @@
 import { motion } from 'motion/react';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
+import record from "../assets/record.jpeg";
+import dayrecord from "../assets/dayrecord.jpeg";
 import { 
   Target, Smartphone, Activity, Vibrate, Users, Check,
   ChevronDown, Brain, Zap, ArrowDown
@@ -21,7 +23,7 @@ const staggerContainer = {
 
 function Hero() {
   return (
-    <section className="relative w-full min-h-[90vh] flex flex-col items-center justify-center bg-[#F8F8F6] text-[#111111] overflow-hidden pt-32 pb-24 selection:bg-[#111111] selection:text-white">
+    <section className="relative w-full min-h-[90vh] flex flex-col items-center justify-center bg-[#0B0F14] text-white overflow-hidden pt-32 pb-24 selection:bg-[#111111] selection:text-white">
       <div className="absolute inset-0 z-0 pointer-events-none flex items-center justify-center">
          <div className="w-[800px] h-[800px] bg-[radial-gradient(circle_at_center,#ffffff_0%,transparent_70%)] opacity-80 blur-3xl"></div>
       </div>
@@ -31,7 +33,7 @@ function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="inline-block text-xs font-semibold tracking-[0.2em] text-[#6B7280] uppercase mb-6"
+          className="inline-block text-xs font-semibold tracking-[0.2em] text-white/70 uppercase mb-6"
         >
           The Science
         </motion.span>
@@ -40,7 +42,7 @@ function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.1, ease: "easeOut" }}
-          className="heading-hero text-[#111111] mb-8"
+          className="heading-hero text-white mb-8"
         >
           Designed around the way your body naturally moves.
         </motion.h1>
@@ -49,35 +51,11 @@ function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-          className="text-body text-[#6B7280] max-w-3xl mx-auto mb-20"
+          className="text-body text-white/70 max-w-3xl mx-auto mb-20"
         >
           AlignPod combines motion sensing, personalized calibration, gentle haptic feedback, and intelligent software to help people build healthier posture habits through everyday awareness.
-        </motion.p>
+        </motion.p> 
 
-        {/* Floating Device Placeholder */}
-        <motion.div
-          initial={{ opacity: 0, y: 40, scale: 0.95 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ duration: 1.2, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-          className="relative w-full max-w-sm mx-auto flex justify-center items-center"
-        >
-          <motion.div
-            animate={{ y: [-15, 15, -15] }}
-            transition={{ repeat: Infinity, duration: 8, ease: "easeInOut" }}
-            className="relative z-10 w-[140px] sm:w-[160px] h-[220px] sm:h-[240px] bg-gradient-to-br from-[#EAEAEA] to-[#D5D5D5] rounded-[40px] shadow-[0_40px_80px_rgba(0,0,0,0.1),inset_0_2px_4px_rgba(255,255,255,0.8),inset_0_-4px_8px_rgba(0,0,0,0.05)] border border-[#FFFFFF] flex flex-col items-center justify-center relative overflow-hidden backdrop-blur-xl"
-          >
-            <div className="absolute top-0 left-0 right-0 h-[40%] bg-gradient-to-b from-white/80 to-transparent pointer-events-none rounded-t-[40px]" />
-            <div className="relative w-[70px] h-[70px] bg-gradient-to-b from-[#FFFFFF] to-[#F0F0F0] rounded-full shadow-[0_8px_24px_rgba(0,0,0,0.1),inset_0_-2px_4px_rgba(0,0,0,0.02)] border border-white flex items-center justify-center">
-               <div className="w-[50px] h-[50px] rounded-full bg-gradient-to-br from-[#FAFAFA] to-[#E5E5E5] shadow-[inset_0_2px_6px_rgba(0,0,0,0.03)]" />
-            </div>
-          </motion.div>
-          <motion.div 
-            animate={{ scale: [1, 0.7, 1], opacity: [0.15, 0.05, 0.15] }}
-            transition={{ repeat: Infinity, duration: 8, ease: "easeInOut" }}
-            className="absolute -bottom-8 w-32 h-6 bg-black rounded-[100%] blur-[12px]"
-          />
-        </motion.div>
-        
         <motion.div 
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -365,7 +343,7 @@ function RealTimeAnalysis() {
             className="bg-[#F8F8F6] rounded-[40px] p-10 flex flex-col items-center justify-center text-center border border-[#E7E7E7]"
           >
              <div className="text-emerald-500 font-bold tracking-widest text-sm uppercase mb-4">Good Posture</div>
-             <div className="text-7xl font-display font-light mb-8">0° - 15°</div>
+             <div className="text-7xl font-display font-light mb-8">0° - 25°</div>
              <div className="w-full max-w-[200px] h-2 bg-gray-200 rounded-full overflow-hidden">
                <motion.div className="h-full bg-emerald-500 rounded-full" animate={{ width: ["20%", "40%", "20%"] }} transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }} />
              </div>
@@ -526,12 +504,7 @@ function CompanionApp() {
            >
               <div className="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-5 bg-[#E5E7EB] rounded-b-2xl"></div>
               <span className="font-display font-bold text-lg mb-8">History</span>
-              <div className="w-full flex-grow bg-gray-50 rounded-2xl border border-gray-100 flex items-end justify-between p-4 gap-2 mb-6">
-                 {[40, 50, 70, 60, 80, 50, 90].map((h, i) => (
-                   <div key={i} className="w-full rounded-sm bg-[#111111]" style={{ height: `${h}%` }}></div>
-                 ))}
-              </div>
-              <div className="w-full h-16 bg-gray-100 rounded-2xl mb-2"></div>
+              <img src={dayrecord} alt="record of sessions of day" className='w-full h-full object-cover' />
            </motion.div>
 
            <motion.div 
@@ -541,9 +514,7 @@ function CompanionApp() {
              className="hidden lg:flex absolute z-10 w-[240px] sm:w-[280px] h-[480px] sm:h-[560px] bg-[#FAFAFA] rounded-[40px] shadow-xl border-[6px] border-[#E5E7EB] flex-col p-5 items-center pt-16 opacity-90"
            >
              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-5 bg-[#E5E7EB] rounded-b-2xl"></div>
-             <span className="font-display font-bold text-lg mb-8">Live Data</span>
-             <div className="text-5xl font-display font-light mb-8">14°</div>
-             <div className="w-full h-24 bg-white shadow-sm rounded-2xl mb-4"></div>
+             <img src={record} alt="record of sessions of day" className='w-full h-full object-cover' />
            </motion.div>
         </div>
       </div>

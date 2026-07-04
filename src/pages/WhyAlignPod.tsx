@@ -1,4 +1,7 @@
 import { motion, AnimatePresence } from 'motion/react';
+import calibapp from "../assets/calibapp.jpeg";
+import realangle from "../assets/realangle.jpeg";
+import training from "../assets/training.jpeg";
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
 import { 
@@ -22,18 +25,20 @@ const staggerContainer = {
 
 function Hero() {
   return (
-    <section className="relative w-full min-h-[90vh] flex flex-col items-center justify-center bg-[#F8F8F6] text-[#111111] overflow-hidden pt-32 pb-24 selection:bg-[#111111] selection:text-white">
+    <section className="relative w-full min-h-[90vh] flex flex-col items-center justify-center bg-[#0B0F14] text-white overflow-hidden pt-32 pb-24 selection:bg-white selection:text-black">
       {/* Background Ambience */}
-      <div className="absolute inset-0 z-0 pointer-events-none flex items-center justify-center">
-         <div className="w-[800px] h-[800px] bg-[radial-gradient(circle_at_center,#ffffff_0%,transparent_70%)] opacity-80 blur-3xl"></div>
-      </div>
+      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+        <div className="absolute top-[-180px] left-[-120px] w-[560px] h-[560px] rounded-full bg-blue-500/15 blur-[140px]" />
+        <div className="absolute bottom-[-220px] right-[-120px] w-[620px] h-[620px] rounded-full bg-cyan-400/10 blur-[180px]" />
+        <div className="absolute inset-0 opacity-[0.04] bg-[linear-gradient(to_right,#ffffff_1px,transparent_1px),linear-gradient(to_bottom,#ffffff_1px,transparent_1px)] bg-[size:40px_40px]" />
+</div>
       
       <div className="relative z-10 max-w-5xl mx-auto px-6 lg:px-8 text-center flex flex-col items-center">
         <motion.span 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="inline-block text-xs font-semibold tracking-[0.2em] text-[#6B7280] uppercase mb-6"
+          className="inline-block text-xs font-semibold tracking-[0.2em] text-white/50 uppercase mb-6"
         >
           Why AlignPod
         </motion.span>
@@ -42,7 +47,7 @@ function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.1, ease: "easeOut" }}
-          className="heading-hero text-[#111111] mb-8"
+          className="heading-hero text-white mb-8"
         >
           Designed differently.<br/>Built intentionally.
         </motion.h1>
@@ -51,7 +56,7 @@ function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-          className="text-body text-[#6B7280] max-w-2xl mx-auto mb-20"
+          className="text-body text-white/70 max-w-2xl mx-auto mb-20"
         >
           AlignPod wasn't created to simply remind you to sit straighter. It was designed to help people build healthier posture habits through awareness, personalization, and consistency.
         </motion.p>
@@ -66,12 +71,12 @@ function Hero() {
           <motion.div
             animate={{ y: [-15, 15, -15] }}
             transition={{ repeat: Infinity, duration: 8, ease: "easeInOut" }}
-            className="relative z-10 w-[140px] sm:w-[160px] h-[220px] sm:h-[240px] bg-gradient-to-br from-[#EAEAEA] to-[#D5D5D5] rounded-[40px] shadow-[0_40px_80px_rgba(0,0,0,0.1),inset_0_2px_4px_rgba(255,255,255,0.8),inset_0_-4px_8px_rgba(0,0,0,0.05)] border border-[#FFFFFF] flex flex-col items-center justify-center relative overflow-hidden backdrop-blur-xl"
+            className="relative z-10 w-[140px] sm:w-[160px] h-[220px] sm:h-[240px] bg-gradient-to-br from-[#8A8D91] via-[#6F7378] to-[#4B4F55] rounded-[20px] shadow-[0_40px_80px_rgba(0,0,0,0.1),inset_0_2px_4px_rgba(255,255,255,0.8),inset_0_-4px_8px_rgba(0,0,0,0.05)] border border-[#FFFFFF] flex flex-col items-center justify-center relative overflow-hidden backdrop-blur-xl"
           >
             {/* Glass reflection */}
             <div className="absolute top-0 left-0 right-0 h-[40%] bg-gradient-to-b from-white/80 to-transparent pointer-events-none rounded-t-[40px]" />
             {/* Center Button */}
-            <div className="relative w-[70px] h-[70px] bg-gradient-to-b from-[#FFFFFF] to-[#F0F0F0] rounded-full shadow-[0_8px_24px_rgba(0,0,0,0.1),inset_0_-2px_4px_rgba(0,0,0,0.02)] border border-white flex items-center justify-center">
+            <div className="relative w-[70px] h-[70px] bg-gradient-to-b from-[#FFFFFF] to-[#F0F0F0] rounded-[15px] shadow-[0_8px_24px_rgba(0,0,0,0.1),inset_0_-2px_4px_rgba(0,0,0,0.02)] border border-white flex items-center justify-center">
                <div className="w-[50px] h-[50px] rounded-full bg-gradient-to-br from-[#FAFAFA] to-[#E5E5E5] shadow-[inset_0_2px_6px_rgba(0,0,0,0.03)]" />
             </div>
           </motion.div>
@@ -148,8 +153,12 @@ const shortcomingsData = [
 
 function Shortcomings() {
   return (
-    <section className="py-24 lg:py-32 bg-[#F8F8F6] text-[#111111]">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+    <section className="relative py-24 lg:py-32 bg-[#0E1014] text-white overflow-hidden">
+      <div className="absolute inset-0 pointer-events-none">
+  <div className="absolute top-[-180px] left-[-120px] w-[520px] h-[520px] bg-blue-500/10 rounded-full blur-[140px]" />
+  <div className="absolute bottom-[-200px] right-[-120px] w-[600px] h-[600px] bg-cyan-400/10 rounded-full blur-[160px]" />
+</div>
+      <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
         <motion.div 
           initial="hidden"
           whileInView="visible"
@@ -160,7 +169,7 @@ function Shortcomings() {
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-display font-bold tracking-tight mb-6">
             Why traditional posture devices fall short.
           </h2>
-          <p className="text-lg sm:text-xl text-[#6B7280] leading-relaxed font-light">
+          <p className="text-lg sm:text-xl text-white/65 leading-relaxed font-light">
             We studied the limitations of early posture wearables to understand why people stop using them after a few weeks.
           </p>
         </motion.div>
@@ -176,13 +185,13 @@ function Shortcomings() {
             <motion.div 
               key={idx}
               variants={fadeInUp}
-              className="card-light"
+              className="group rounded-[32px] bg-white/[0.06] border border-white/10 p-8 sm:p-10 backdrop-blur-md hover:bg-[#080A0D] hover:border-white/20 transition-all duration-300"
             >
-              <div className="icon-box-light bg-[#F8F8F6] text-[#6B7280]">
+              <div className="w-12 h-12 rounded-2xl bg-white/10 border border-white/10 text-white flex items-center justify-center mb-8 group-hover:bg-white group-hover:text-[#111111] transition-colors duration-300">
                 <XCircle className="w-6 h-6" strokeWidth={1.5} />
               </div>
-              <h3 className="heading-card text-xl">{item.title}</h3>
-              <p className="text-body text-[#6B7280]">{item.desc}</p>
+              <h3 className="heading-card text-xl text-white">{item.title}</h3>
+              <p className="text-body text-white/60">{item.desc}</p>
             </motion.div>
           ))}
         </motion.div>
@@ -451,8 +460,19 @@ function PersonalizedCalibration() {
 
 function Ecosystem() {
   return (
-    <section className="py-24 lg:py-32 bg-[#F8F8F6] text-[#111111] overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 text-center">
+    <section className="relative w-full min-h-screen bg-[#0A0D12] text-white overflow-hidden">
+      {/* Background */}
+    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      {/* Blue Glow */}
+      <div className="absolute -top-44 left-0 w-[700px] h-[700px] bg-cyan-500/10 rounded-full blur-[170px]" />
+      {/* Dark Blue Glow */}
+      <div className="absolute top-1/2 right-[-200px] w-[650px] h-[650px] bg-blue-600/10 rounded-full blur-[180px]" />
+      {/* Center Glow */}
+      <div className="absolute left-1/2 top-[45%] -translate-x-1/2 w-[900px] h-[900px] bg-white/5 rounded-full blur-[220px]" />
+      {/* Apple Grid */}
+      <div className="absolute inset-0 opacity-[0.035] bg-[linear-gradient(to_right,#ffffff_1px,transparent_1px),linear-gradient(to_bottom,#ffffff_1px,transparent_1px)] bg-[size:42px_42px]" />
+    </div>
+      <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 text-center">
         <motion.div 
           initial="hidden"
           whileInView="visible"
@@ -460,42 +480,52 @@ function Ecosystem() {
           variants={fadeInUp}
           className="mb-16 lg:mb-24"
         >
-          <h2 className="heading-section text-[#111111] mb-6">
+          <h2 className="heading-section text-white mb-6">
             A Complete Ecosystem.
           </h2>
-          <p className="text-lg sm:text-xl text-[#6B7280] leading-relaxed font-light max-w-2xl mx-auto">
+          <p className="text-lg sm:text-xl text-white/65 leading-relaxed font-light max-w-2xl mx-auto">
             The hardware is only half the story. The companion app gives you total control over your experience, insights, and therapy sessions.
           </p>
         </motion.div>
+        <motion.div
+    animate={{
+        y: [-15,15,-15],
+        opacity:[0.4,0.8,0.4]
+    }}
+    transition={{
+        repeat:Infinity,
+        duration:7
+    }}
+    className="absolute left-[20%] top-[35%]
+               w-3 h-3 rounded-full bg-cyan-400 blur-sm"
+/>
+
+<motion.div
+    animate={{
+        y:[12,-12,12]
+    }}
+    transition={{
+        repeat:Infinity,
+        duration:9
+    }}
+    className="absolute right-[18%] top-[25%]
+               w-2 h-2 rounded-full bg-blue-400 blur-sm"
+/>
 
         {/* Floating Phones Representation */}
         <div className="relative h-[500px] sm:h-[700px] w-full flex justify-center items-center perspective-[2000px]">
+          <div className="absolute left-1/2 top-1/2-translate-x-1/2 -translate-y-1/2 w-[650px] h-[650px] rounded-full bg-cyan-400/10 blur-[120px]" />
            <motion.div 
              animate={{ y: [-15, 15, -15] }}
              transition={{ repeat: Infinity, duration: 7, ease: "easeInOut" }}
              className="relative z-20 w-[260px] sm:w-[320px] h-[520px] sm:h-[640px] bg-white rounded-[40px] sm:rounded-[48px] shadow-[0_40px_80px_rgba(0,0,0,0.1)] border-[6px] sm:border-[8px] border-[#E5E7EB] flex flex-col p-6 items-center pt-20 shrink-0"
            >
-              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-6 bg-[#E5E7EB] rounded-b-3xl"></div>
-              <div className="w-full flex justify-between items-center mb-8">
-                 <span className="font-display font-bold text-xl">Live Posture</span>
-                 <Activity className="w-6 h-6 text-[#111111]" />
-              </div>
-              <div className="flex flex-col items-center mb-10">
-                  <div className="flex items-start">
-                    <span className="text-[80px] leading-none font-display font-bold text-[#111111] tracking-tighter">12</span>
-                    <span className="text-4xl text-gray-400 font-light mt-2">°</span>
-                  </div>
-                  <div className="mt-4 px-4 py-1.5 bg-[#111111] text-white rounded-full flex items-center gap-2">
-                     <span className="text-xs font-semibold uppercase tracking-wider">Good Posture</span>
-                  </div>
-              </div>
-              <div className="w-full flex-grow bg-gray-50 rounded-3xl border border-gray-100 flex flex-col justify-end p-5">
-                 <div className="flex items-end justify-between h-24 gap-2">
-                    {[30, 50, 40, 70, 50, 80, 60].map((h, i) => (
-                      <div key={i} className={`w-full rounded-t-sm ${i === 6 ? 'bg-blue-400' : 'bg-[#111111]'}`} style={{ height: `${h}%` }}></div>
-                    ))}
-                 </div>
-              </div>
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-28 h-6 bg-[#E5E7EB] rounded-b-3xl"></div>
+              <img
+              src={realangle}
+              alt="Live Posture"
+              className="w-full h-full object-cover"
+    />
            </motion.div>
 
            <motion.div 
@@ -505,12 +535,12 @@ function Ecosystem() {
              className="hidden lg:flex absolute z-10 w-[280px] sm:w-[300px] h-[560px] sm:h-[600px] bg-[#FAFAFA] rounded-[48px] shadow-xl border-[8px] border-[#E5E7EB] flex-col p-6 items-center pt-20 opacity-90 shrink-0"
            >
              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-28 h-6 bg-[#E5E7EB] rounded-b-3xl"></div>
-             <div className="w-full flex justify-between items-center mb-10">
-                 <span className="font-display font-bold text-xl">Profiles</span>
-             </div>
-             <div className="w-full h-16 bg-white shadow-sm border border-gray-100 rounded-2xl mb-4"></div>
-             <div className="w-full h-16 bg-white shadow-sm border border-gray-100 rounded-2xl mb-4"></div>
-             <div className="w-full h-16 bg-white shadow-sm border border-gray-100 rounded-2xl"></div>
+             <img
+              src={training}
+              alt="Live Posture"
+              className="w-full h-full object-cover"
+    />
+         
            </motion.div>
 
            <motion.div 
@@ -520,15 +550,11 @@ function Ecosystem() {
              className="hidden lg:flex absolute z-10 w-[280px] sm:w-[300px] h-[560px] sm:h-[600px] bg-[#111111] text-white rounded-[48px] shadow-xl border-[8px] border-[#E5E7EB] flex-col p-6 items-center pt-20 opacity-90 shrink-0"
            >
              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-28 h-6 bg-[#E5E7EB] rounded-b-3xl"></div>
-             <div className="text-center mb-10">
-                  <span className="text-[10px] font-semibold tracking-[0.2em] text-[#34D399] uppercase block mb-2">Therapy</span>
-                  <div className="text-5xl font-display font-light text-white">14<span className="opacity-50">:</span>30</div>
-             </div>
-             <div className="w-40 h-40 rounded-full border border-white/20 mx-auto mb-10 flex items-center justify-center relative">
-                <div className="absolute w-32 h-32 rounded-full border border-[#34D399]/40 animate-ping"></div>
-                <Vibrate className="w-10 h-10 text-[#34D399]" />
-             </div>
-             <div className="w-full h-20 bg-white/10 rounded-3xl mt-auto"></div>
+                  <img
+              src={calibapp}
+              alt="Live Posture"
+              className="w-full h-full object-cover"
+    />
            </motion.div>
         </div>
       </div>
