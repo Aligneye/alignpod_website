@@ -1,5 +1,6 @@
 import { motion } from 'motion/react';
 import { Check } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 40 },
@@ -112,9 +113,10 @@ export function FinalCTA() {
             <button className="btn-primary-dark w-full sm:w-auto">
               Get Started
             </button>
-            <button className="btn-secondary-dark w-full sm:w-auto">
-              Contact Us
-            </button>
+            <Link to="/contact"
+            className="inline-flex items-center justify-center px-8 py-4 rounded-full bg-[#111111] text-white hover:bg-black transition duration-300">
+            Contact Us
+            </Link>
           </motion.div>
 
           {/* Trust Indicators */}

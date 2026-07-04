@@ -1,5 +1,5 @@
 import { motion } from "motion/react";
-import { Activity, Vibrate, SlidersHorizontal, Smartphone } from "lucide-react";
+import { Activity, Vibrate, Sparkles , Smartphone } from "lucide-react";
 
 const featuresLeft = [
   {
@@ -8,17 +8,17 @@ const featuresLeft = [
     icon: Activity,
   },
   {
-    title: "Gentle vibration feedback",
-    text: "Gives silent haptic reminders when poor posture is detected.",
-    icon: Vibrate,
+    title: "Smart posture training",
+    text: "Trains healthier posture habits with timely vibration alerts whenever slouching is detected.",
+    icon: Sparkles, 
   },
 ];
 
 const featuresRight = [
   {
-    title: "Personalized calibration",
-    text: "Learns your natural upright position for more accurate posture awareness.",
-    icon: SlidersHorizontal,
+    title: "Targeted vibration therapy",
+    text: "Delivers soothing vibration sessions to help relax muscles, reduce stiffness, and support everyday comfort.",
+    icon: Vibrate,
   },
   {
     title: "Mobile app insights",
@@ -48,10 +48,10 @@ const staggerContainer = {
 
 export function MeetAlignPod() {
   return (
-    <section className="relative w-full py-24 lg:py-32 bg-[#F7F7F5] text-[#111111] overflow-hidden selection:bg-[#111111] selection:text-white">
+    <section className="relative w-full py-24 lg:py-32 bg-[#0E1014] text-white overflow-hidden selection:bg-white selection:text-black" id="meet-alignpod">
       {/* Subtle Premium Background Texture */}
       <div className="absolute inset-0 z-0 opacity-40 pointer-events-none">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#F7F7F5_100%)]"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,#1A1D23_0%,#0E1014_72%)]"></div>
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
@@ -66,10 +66,10 @@ export function MeetAlignPod() {
           <span className="inline-block text-xs font-semibold tracking-[0.2em] text-[#6B7280] uppercase mb-4">
             Meet AlignPod
           </span>
-          <h2 className="heading-section text-[#111111] mb-6">
+          <h2 className="heading-section text-white mb-6">
             A smarter way to build healthier posture.
           </h2>
-          <p className="text-body text-[#6B7280]">
+          <p className="text-body text-white/70">
             AlignPod is a compact smart wearable that tracks posture in real
             time, gives gentle vibration feedback, and helps you build better
             sitting habits through personalized calibration and app-based
@@ -91,15 +91,15 @@ export function MeetAlignPod() {
               <motion.div
                 key={index}
                 variants={fadeInUp}
-                className="group card-light flex flex-col"
+                className="group rounded-[28px] bg-white/[0.06] border border-white/10 p-8 flex flex-col backdrop-blur-sm hover:bg-white/[0.09] hover:border-white/20 transition-all duration-300"
               >
-                <div className="icon-box-light bg-white border-gray-200 group-hover:bg-[#111111] group-hover:text-white transition-colors duration-300">
+                <div className="w-12 h-12 rounded-2xl bg-white/10 border border-white/10 text-white flex items-center justify-center mb-6 group-hover:bg-white group-hover:text-[#111111] transition-colors duration-300">
                   <feature.icon className="w-5 h-5" strokeWidth={1.5} />
                 </div>
-                <h3 className="heading-card text-xl">
+                <h3 className="heading-card text-xl text-white">
                   {feature.title}
                 </h3>
-                <p className="text-body text-[#6B7280]">
+                <p className="text-body text-white/60">
                   {feature.text}
                 </p>
               </motion.div>
@@ -112,8 +112,8 @@ export function MeetAlignPod() {
             className="relative flex justify-center items-center h-[350px] lg:h-[500px] order-1 lg:order-2"
           >
             {/* Ambient Glow */}
-            <div className="absolute w-[280px] h-[350px] bg-white rounded-full blur-[80px] opacity-80" />
-            <div className="absolute w-[200px] h-[200px] bg-gray-200/50 rounded-full blur-[60px]" />
+            <div className="absolute w-[300px] h-[380px] bg-[#4F9CFF]/20 rounded-full blur-[90px]" />
+<div className="absolute w-[220px] h-[220px] bg-white/10 rounded-full blur-[70px]" />
 
             {/* Floating Device Animation */}
             <motion.div
@@ -152,9 +152,9 @@ export function MeetAlignPod() {
               <motion.div
                 key={index}
                 variants={fadeInUp}
-                className="group card-light flex flex-col"
+                className="group flex flex-col rounded-[28px] bg-white/[0.06] border border-white/10 backdrop-blur-md p-8 transition-all duration-300 hover:bg-white/[0.08] hover:border-white/20 hover:-translate-y-1"
               >
-                <div className="icon-box-light bg-white border-gray-200 group-hover:bg-[#111111] group-hover:text-white transition-colors duration-300">
+                <div className="w-12 h-12 rounded-2xl bg-white/10 border border-white/10 text-white flex items-center justify-center mb-6 group-hover:bg-white group-hover:text-[#111111] transition-colors duration-300">
                   <feature.icon className="w-5 h-5" strokeWidth={1.5} />
                 </div>
                 <h3 className="heading-card text-xl">

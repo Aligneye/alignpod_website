@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { ShoppingCart, Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
-
 import logo from "../assets/alignlogo.png";
 
 const navLinks = [
@@ -57,7 +56,7 @@ export function Navbar() {
           <img
             src={logo}
             alt="alignPod Logo"
-            className={`h-8 md:h-10 w-auto object-contain transition-all duration-300 group-hover:opacity-80 ${getLogoStyle()}`}
+            className={`h-8 md:h-10  w-auto object-contain transition-all duration-300 group-hover:opacity-80 ${getLogoStyle()}`}
           />
         </Link>
 
@@ -89,10 +88,6 @@ export function Navbar() {
 
         {/* Right Actions (Desktop & Mobile) */}
         <div className="flex items-center gap-4 z-50 relative">
-          <button className={`p-2 transition-colors relative group ${getTextColor(false)}`}>
-            <ShoppingCart className="w-5 h-5" strokeWidth={1.5} />
-            <span className={`absolute top-1 right-1 w-2 h-2 rounded-full scale-0 group-hover:scale-100 transition-transform ${isScrolled || isDarkTheme ? 'bg-white' : 'bg-[#111111]'}`}></span>
-          </button>
 
           <button className={`hidden md:flex items-center justify-center px-6 py-2.5 text-sm font-semibold rounded-full transition-all duration-300 hover:scale-105 ${
             isScrolled || isDarkTheme

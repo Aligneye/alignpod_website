@@ -46,7 +46,7 @@ const fadeInUp = {
 
 export function HowItWorks() {
   return (
-    <section className="relative w-full py-32 lg:py-48 bg-white overflow-hidden selection:bg-[#111111] selection:text-white">
+    <section className="relative w-full py-32 lg:py-48 bg-white overflow-hidden selection:bg-[#111111] selection:text-white" id="how-it-works">
       {/* Background Textures */}
       <div className="absolute inset-0 z-0 pointer-events-none">
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808008_1px,transparent_1px),linear-gradient(to_bottom,#80808008_1px,transparent_1px)] bg-[size:48px_48px]"></div>
