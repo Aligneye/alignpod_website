@@ -11,10 +11,14 @@ import Science from "./pages/Science";
 import Contact from "./pages/Contact";
 import {PostureCheck } from "./pages/PostureCheck";
 import { PrivacyPolicy } from "./pages/PrivacyPolicy";
-import {TermsOfUse} from "./pages/TermsOfUse"
+import {TermsOfUse} from "./pages/TermsOfUse";
+import { BuyNow } from "./pages/BuyNow";
+import { LeadPopup } from "./components/LeadPopup";
 
 export default function App() {
   return (
+    <>
+    <LeadPopup />
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
@@ -25,7 +29,9 @@ export default function App() {
         <Route path="/posture-check" element={<PostureCheck />} />
         <Route path ="/privacy-policy" element={<PrivacyPolicy/>}/>
         <Route path ="/terms" element={<TermsOfUse/>}/>
+        <Route path="/buy-now" element={<BuyNow />} />
       </Routes>
     </Router>
+    </>
   );
 }

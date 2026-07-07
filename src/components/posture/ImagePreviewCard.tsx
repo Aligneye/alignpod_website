@@ -4,6 +4,7 @@ type ImagePreviewCardProps = {
   imagePreview: string;
   onImageUpload: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onAnalyze: () => void;
+  onRetakePhoto: () => void;
   isLoading: boolean;
 };
 
@@ -11,6 +12,7 @@ export function ImagePreviewCard({
   imagePreview,
   onImageUpload,
   onAnalyze,
+  onRetakePhoto,
   isLoading,
 }: ImagePreviewCardProps) {
   return (
@@ -24,15 +26,12 @@ export function ImagePreviewCard({
       </div>
 
       <div className="flex flex-col sm:flex-row gap-4 justify-center">
-        <label className="px-6 py-3 rounded-full border border-gray-300 text-[#111111] cursor-pointer hover:bg-gray-50 transition">
-          Change Image
-          <input
-            type="file"
-            accept="image/png,image/jpeg,image/jpg"
-            onChange={onImageUpload}
-            className="hidden"
-          />
-        </label>
+        <button
+         onClick={onRetakePhoto}
+         className="px-6 py-3 rounded-full border border-gray-300 text-[#111111] hover:bg-gray-100 transition"
+         >
+           Retake Photo
+         </button>
 
         <button
           onClick={onAnalyze}

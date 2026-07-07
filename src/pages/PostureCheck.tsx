@@ -50,6 +50,13 @@ export function PostureCheck() {
       setIsLoading(false);
     }
   };
+  const handleRetakePhoto = () => {
+  setImageFile(null);
+  setImagePreview(null);
+  setResult(null);
+  setError("");
+  setShowCamera(true);
+};
 
   return (
     <>
@@ -88,11 +95,12 @@ export function PostureCheck() {
 
   {imagePreview && (
     <ImagePreviewCard
-      imagePreview={imagePreview}
-      onImageUpload={handleImageUpload}
-      onAnalyze={handleAnalyze}
-      isLoading={isLoading}
-    />
+  imagePreview={imagePreview}
+  onImageUpload={handleImageUpload}
+  onAnalyze={handleAnalyze}
+  onRetakePhoto={handleRetakePhoto}
+  isLoading={isLoading}
+/>
   )}
 
 </div>
