@@ -9,6 +9,7 @@ export function Hero() {
   const [index, setIndex] = useState(0);
   const [subIndex, setSubIndex] = useState(0);
   const [reverse, setReverse] = useState(false);
+  const [showVideo, setShowVideo] = useState(false);
 
   // Typewriter effect
   useEffect(() => {
@@ -76,17 +77,15 @@ export function Hero() {
               <Link to="/posture-check" className="btn-primary-dark">
               Analyze Your Posture
               </Link>
-              <a
-                href="https://www.youtube.com/watch?v=ZVy5krlFEqk&t=1s"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group w-full sm:w-auto btn-secondary-dark flex items-center justify-center gap-3"
-              >
+              <button
+               onClick={() => setShowVideo(true)}
+               className="group w-full sm:w-auto btn-secondary-dark flex items-center justify-center gap-3"
+                >
                 <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-white/20 transition-colors">
                   <Play className="w-3.5 h-3.5 fill-white" />
                 </div>
                 Watch Demo
-              </a>
+              </button>
             </div>
           </motion.div>
 
@@ -136,6 +135,27 @@ export function Hero() {
           <ChevronDown className="w-4 h-4 text-text-secondary opacity-50" />
         </motion.div>
       </motion.div>
+      {showVideo && (
+  <div className="fixed inset-0 bg-black/80 z-[9999] flex items-center justify-center px-4">
+    <div className="relative w-full max-w-4xl bg-black rounded-2xl overflow-hidden">
+      <button
+        onClick={() => setShowVideo(false)}
+        className="absolute top-3 right-3 z-10 w-9 h-9 rounded-full bg-white text-black text-2xl flex items-center justify-center"
+      >
+        ×
+      </button>
+
+      <iframe
+        className="w-full aspect-video"
+        src="https://www.youtube.com/embed/ZVy5krlFEqk?autoplay=1"
+        title="AlignEye Demo Video"
+        allow="autoplay; encrypted-media"
+        allowFullScreen
+      />
+    </div>
+  </div>
+)}
     </section>
+    
   );
 }

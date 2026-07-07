@@ -13,12 +13,12 @@ export function ResultCard({ result }: ResultCardProps) {
   ];
 
   return (
-    <div className="max-w-2xl mx-auto mt-8 bg-white border border-gray-200 rounded-[32px] p-8 text-left shadow-sm">
+    <div className="w-full max-w-2xl mx-auto mt-8 bg-white border border-gray-200 rounded-[24px] sm:rounded-[32px] p-5 sm:p-8 text-left shadow-sm overflow-hidden">
       <p className="text-sm tracking-[0.2em] uppercase text-gray-500 mb-3">
         Posture Report
       </p>
 
-      <div className="flex items-center justify-between gap-6 mb-6">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6 mb-6">
         <div>
           <h2 className="text-3xl font-semibold text-[#111111] mb-2">
             AI posture analysis
@@ -26,7 +26,7 @@ export function ResultCard({ result }: ResultCardProps) {
           <p className="text-gray-600">{result.summary}</p>
         </div>
 
-        <div className="shrink-0 flex flex-col items-center text-center">
+        <div className="w-full sm:w-auto shrink-0 flex flex-col items-center text-center">
   <p className="text-sm uppercase tracking-[0.15em] text-gray-500 mb-2">
     Posture Score
   </p>
