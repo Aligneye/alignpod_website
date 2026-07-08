@@ -72,13 +72,13 @@ export function SmartCalibration() {
     <section className="relative w-full py-24 lg:py-32 bg-[#F8F8F6] text-[#111111] overflow-hidden selection:bg-[#111111] selection:text-white" id='calibration'>
       {/* Background Texture */}
       <div className="absolute inset-0 z-0 pointer-events-none opacity-50">
-         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[radial-gradient(circle_at_center,#ffffff_0%,transparent_70%)] blur-3xl"></div>
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[radial-gradient(circle_at_center,#ffffff_0%,transparent_70%)] blur-3xl"></div>
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
-        
+
         {/* Header */}
-        <motion.div 
+        <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
@@ -98,7 +98,7 @@ export function SmartCalibration() {
 
         {/* Visual Showcase: Phone & Device */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-8 items-center mb-24 lg:mb-32 max-w-5xl mx-auto">
-          
+
           {/* Left: Phone Mockup */}
           <motion.div
             initial={{ opacity: 0, x: -40 }}
@@ -121,26 +121,26 @@ export function SmartCalibration() {
                 <div className="relative w-48 h-48 flex items-center justify-center mb-10">
                   <svg className="w-full h-full -rotate-90 transform" viewBox="0 0 100 100">
                     {/* Background Ring */}
-                    <circle 
-                      cx="50" cy="50" r="45" 
-                      fill="none" 
-                      stroke="#F3F4F6" 
-                      strokeWidth="4" 
+                    <circle
+                      cx="50" cy="50" r="45"
+                      fill="none"
+                      stroke="#F3F4F6"
+                      strokeWidth="4"
                     />
                     {/* Animated Progress Ring */}
-                    <motion.circle 
-                      cx="50" cy="50" r="45" 
-                      fill="none" 
-                      stroke={isDone ? "#10B981" : "#111111"} 
+                    <motion.circle
+                      cx="50" cy="50" r="45"
+                      fill="none"
+                      stroke={isDone ? "#10B981" : "#111111"}
                       strokeWidth="4"
                       strokeLinecap="round"
                       initial={{ strokeDasharray: "283", strokeDashoffset: "283" }}
-                      animate={{ 
+                      animate={{
                         strokeDashoffset: isCalibrating ? "0" : (isDone ? "0" : "283"),
                       }}
-                      transition={{ 
-                        duration: isCalibrating ? 8 : 0.5, 
-                        ease: "linear" 
+                      transition={{
+                        duration: isCalibrating ? 8 : 0.5,
+                        ease: "linear"
                       }}
                     />
                   </svg>
@@ -191,16 +191,15 @@ export function SmartCalibration() {
                 </p>
 
                 {/* CTA Button */}
-                <button 
+                <button
                   onClick={handleStart}
                   disabled={isCalibrating || isDone}
-                  className={`w-full py-4 rounded-full font-semibold transition-all duration-300 shadow-[0_4px_14px_rgba(0,0,0,0.1)] ${
-                    isCalibrating 
-                      ? 'bg-gray-100 text-gray-400 cursor-not-allowed shadow-none' 
-                      : isDone 
-                        ? 'bg-[#10B981] text-white hover:shadow-[0_6px_20px_rgba(16,185,129,0.3)]' 
+                  className={`w-full py-4 rounded-full font-semibold transition-all duration-300 shadow-[0_4px_14px_rgba(0,0,0,0.1)] ${isCalibrating
+                      ? 'bg-gray-100 text-gray-400 cursor-not-allowed shadow-none'
+                      : isDone
+                        ? 'bg-[#10B981] text-white hover:shadow-[0_6px_20px_rgba(16,185,129,0.3)]'
                         : 'bg-[#111111] text-white hover:bg-black hover:scale-[1.02]'
-                  }`}
+                    }`}
                 >
                   {isCalibrating ? "Calibrating..." : isDone ? "Done" : "Start Calibration"}
                 </button>
@@ -209,7 +208,7 @@ export function SmartCalibration() {
           </motion.div>
 
           {/* Right: Device Mockup & Waves */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, x: 40 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-100px" }}
@@ -221,14 +220,14 @@ export function SmartCalibration() {
               <AnimatePresence>
                 {isCalibrating && (
                   <>
-                    <motion.div 
+                    <motion.div
                       initial={{ scale: 1, opacity: 0 }}
                       animate={{ scale: 2.5, opacity: [0, 0.4, 0] }}
                       exit={{ opacity: 0 }}
                       transition={{ repeat: Infinity, duration: 2, ease: "easeOut" }}
                       className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-40 bg-[#60A5FA]/20 rounded-[48px] blur-md pointer-events-none"
                     />
-                    <motion.div 
+                    <motion.div
                       initial={{ scale: 1, opacity: 0 }}
                       animate={{ scale: 3.5, opacity: [0, 0.2, 0] }}
                       exit={{ opacity: 0 }}
@@ -238,7 +237,7 @@ export function SmartCalibration() {
                   </>
                 )}
               </AnimatePresence>
-              
+
               {/* Device Placeholder */}
               <motion.div
                 animate={{ y: [-10, 10, -10] }}
@@ -253,9 +252,9 @@ export function SmartCalibration() {
                   <div className="w-[52px] h-[52px] rounded-full bg-gradient-to-br from-[#FAFAFA] to-[#E5E5E5] shadow-[inset_0_2px_6px_rgba(0,0,0,0.06)]" />
                 </div>
               </motion.div>
-              
+
               {/* Dynamic shadow */}
-              <motion.div 
+              <motion.div
                 animate={{ scale: [1, 0.8, 1], opacity: [0.15, 0.05, 0.15] }}
                 transition={{ repeat: Infinity, duration: 5, ease: "easeInOut" }}
                 className="absolute -bottom-16 left-1/2 -translate-x-1/2 w-32 h-6 bg-black rounded-[100%] blur-[12px]"
@@ -265,7 +264,7 @@ export function SmartCalibration() {
         </div>
 
         {/* Benefits Grid */}
-        <motion.div 
+        <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
