@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { AnimatePresence, motion } from "motion/react";
 import { UploadCard } from "../components/posture/UploadCard";
 import { ImagePreviewCard } from "../components/posture/ImagePreviewCard";
 import { ResultCard } from "../components/posture/ResultCard";
+import { AnalysisLoader } from "../components/posture/AnalysisLoader";
 import { analyzePostureImage } from "../services/gemini";
 import type { PostureResult } from "../types/posture";
 import { CameraCapture } from "../components/posture/CameraCapture";
@@ -17,6 +19,14 @@ export function PostureCheck() {
   const [error, setError] = useState("");
   const [showCamera, setShowCamera] = useState(false);
 
+  useEffect(() => {
+    return () => {
+      if (imagePreview?.startsWith("blob:")) {
+        URL.revokeObjectURL(imagePreview);
+      }
+    };
+  }, [imagePreview]);
+
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file) return;
@@ -29,15 +39,15 @@ export function PostureCheck() {
   };
 
   const handleCameraCapture = (file: File, previewUrl: string) => {
-  setImageFile(file);
-  setImagePreview(previewUrl);
-  trackEvent("photo_captured", { source: "camera" });
-  setResult(null);
-  setError("");
-};
+    setImageFile(file);
+    setImagePreview(previewUrl);
+    trackEvent("photo_captured", { source: "camera" });
+    setResult(null);
+    setError("");
+  };
 
   const handleAnalyze = async () => {
-    if (!imageFile) return;
+    if (!imageFile || isLoading) return;
 
     try {
       setIsLoading(true);
@@ -56,89 +66,123 @@ export function PostureCheck() {
       setIsLoading(false);
     }
   };
+
   const handleRetakePhoto = () => {
-  setImageFile(null);
-  setImagePreview(null);
-  setResult(null);
-  setError("");
-  setShowCamera(true);
-};
+    setImageFile(null);
+    setImagePreview(null);
+    setResult(null);
+    setError("");
+    setShowCamera(true);
+  };
 
   return (
     <>
-    <Navbar/>
-    <main className="min-h-screen bg-[#F8F8F6] pt-28 px-6">
-      <section className="max-w-5xl mx-auto text-center py-20">
-        <p className="text-sm tracking-[0.25em] uppercase text-gray-500 mb-4">
-          AI Posture Check
-        </p>
+      <Navbar />
+      <main className="min-h-screen bg-[#F8F8F6] pt-28 px-6">
+        <section className="max-w-5xl mx-auto text-center py-20">
+          <p className="text-sm tracking-[0.25em] uppercase text-gray-500 mb-4">
+            AI Posture Check
+          </p>
 
-        <h1 className="text-5xl md:text-7xl font-semibold text-[#111111] mb-6">
-          Check your posture with AI.
-        </h1>
+          <h1 className="text-5xl md:text-7xl font-semibold text-[#111111] mb-6">
+            Check your posture with AI.
+          </h1>
 
-        <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-12">
-          Upload a clear side-view posture image and get awareness-based posture feedback.
-        </p>
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-12">
+            Upload a clear side-view posture image and get awareness-based posture feedback.
+          </p>
 
-        <div className="max-w-2xl mx-auto bg-white border border-gray-200 rounded-[32px] p-8 shadow-sm">
+          <div className="max-w-2xl mx-auto bg-white border border-gray-200 rounded-[32px] p-8 shadow-sm">
+            <AnimatePresence mode="wait">
+              {!imagePreview && !showCamera && !isLoading && (
+                <motion.div
+                  key="upload"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.22 }}
+                >
+                  <div className="mb-6 rounded-2xl bg-[#F8F8F6] border border-gray-100 p-5 text-left">
+                    <h3 className="text-lg font-semibold text-[#111111] mb-3">
+                      For best AI posture analysis
+                    </h3>
 
-{!imagePreview && !showCamera && (
-  <>
-    <div className="mb-6 rounded-2xl bg-[#F8F8F6] border border-gray-100 p-5 text-left">
-      <h3 className="text-lg font-semibold text-[#111111] mb-3">
-        For best AI posture analysis
-      </h3>
+                    <ul className="space-y-2 text-sm text-gray-600">
+                      <li>• Sit sideways to the camera, not facing front.</li>
+                      <li>• Keep your head, neck, shoulder, and upper back clearly visible.</li>
+                      <li>• Sit naturally as you usually work or study.</li>
+                      <li>• Use good lighting and avoid blurry photos.</li>
+                      <li>• Keep the camera at chest or shoulder height.</li>
+                    </ul>
+                  </div>
 
-      <ul className="space-y-2 text-sm text-gray-600">
-        <li>• Sit sideways to the camera, not facing front.</li>
-        <li>• Keep your head, neck, shoulder, and upper back clearly visible.</li>
-        <li>• Sit naturally as you usually work or study.</li>
-        <li>• Use good lighting and avoid blurry photos.</li>
-        <li>• Keep the camera at chest or shoulder height.</li>
-      </ul>
-    </div>
+                  <UploadCard
+                    onImageUpload={handleImageUpload}
+                    onOpenCamera={() => {
+                      trackEvent("camera_opened");
+                      setShowCamera(true);
+                    }}
+                  />
+                </motion.div>
+              )}
 
-    <UploadCard
-      onImageUpload={handleImageUpload}
-      onOpenCamera={() => {
-        trackEvent("camera_opened");
-        setShowCamera(true);
-      }}
-    />
-  </>
-)}
+              {showCamera && !isLoading && (
+                <motion.div
+                  key="camera"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.22 }}
+                >
+                  <CameraCapture
+                    onCapture={handleCameraCapture}
+                    onClose={() => setShowCamera(false)}
+                  />
+                </motion.div>
+              )}
 
-  {showCamera && (
-    <CameraCapture
-      onCapture={handleCameraCapture}
-      onClose={() => setShowCamera(false)}
-    />
-  )}
+              {imagePreview && !isLoading && !result && (
+                <motion.div
+                  key="preview"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.22 }}
+                >
+                  <ImagePreviewCard
+                    imagePreview={imagePreview}
+                    onImageUpload={handleImageUpload}
+                    onAnalyze={handleAnalyze}
+                    onRetakePhoto={handleRetakePhoto}
+                    isLoading={isLoading}
+                  />
+                </motion.div>
+              )}
 
-  {imagePreview && (
-    <ImagePreviewCard
-  imagePreview={imagePreview}
-  onImageUpload={handleImageUpload}
-  onAnalyze={handleAnalyze}
-  onRetakePhoto={handleRetakePhoto}
-  isLoading={isLoading}
-/>
-  )}
-
-</div>
-
-        {error && (
-          <div className="max-w-2xl mx-auto mt-6 rounded-2xl border border-red-200 bg-red-50 p-4 text-sm text-red-700">
-            {error}
+              {isLoading && imagePreview && (
+                <motion.div
+                  key="loading"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.25 }}
+                >
+                  <AnalysisLoader imagePreview={imagePreview} />
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
-        )}
 
-        {result && <ResultCard result={result} />}
-      </section>
-    </main>
-    <Footer/>
+          {error && (
+            <div className="max-w-2xl mx-auto mt-6 rounded-2xl border border-red-200 bg-red-50 p-4 text-sm text-red-700">
+              {error}
+            </div>
+          )}
+
+          {result && <ResultCard result={result} />}
+        </section>
+      </main>
+      <Footer />
     </>
   );
 }
-    
