@@ -1,26 +1,46 @@
-import { motion } from "motion/react";
-import { Activity, Zap, Target, Clock } from "lucide-react";
+import { useState } from "react";
+import { motion, AnimatePresence } from "motion/react";
+import neckBackPain from "../assets/neck-back-pain.jpg";
+import shoulderTightness from "../assets/shoulder-tightness.jpg";
+import lowEnergyFatigue from "../assets/low-energy-fatigue.jpg";
+import reducedFocus from "../assets/reduced-focus.jpg";
 
-const cards = [
+const steps = [
   {
-    title: "Neck & Back Stress",
-    text: "Poor posture places unnecessary load on your spine and upper back during long sitting hours.",
-    icon: Activity,
+    id: 1,
+    index: "01",
+    title: "Neck & back pain",
+    description:
+      "Sitting with a bent neck or rounded back puts extra pressure on your spine, leading to daily stiffness, pain, and discomfort.",
+    image: neckBackPain,
+    alt: "Woman touching the back of her neck",
   },
   {
-    title: "Lower Energy",
-    text: "Slouching can affect breathing efficiency and make the body feel tired faster.",
-    icon: Zap,
+    id: 2,
+    index: "02",
+    title: "Shoulder tightness",
+    description:
+      "Poor sitting posture keeps your shoulders rolled forward for long hours, causing tightness, heaviness, and upper-body strain.",
+    image: shoulderTightness,
+    alt: "Woman touching her tight shoulder",
   },
   {
-    title: "Reduced Focus",
-    text: "Discomfort from poor posture can silently affect concentration and work performance.",
-    icon: Target,
+    id: 3,
+    index: "03",
+    title: "Low energy & fatigue",
+    description:
+      "Slouching can restrict natural breathing and make your body work harder, leaving you feeling tired faster during work or study.",
+    image: lowEnergyFatigue,
+    alt: "Woman resting her head on her laptop, fatigued",
   },
   {
-    title: "Long-Term Habits",
-    text: "Small posture mistakes repeated every day can become lasting body patterns.",
-    icon: Clock,
+    id: 4,
+    index: "04",
+    title: "Reduced focus",
+    description:
+      "When your body feels stiff or uncomfortable, your attention keeps shifting from work to discomfort, affecting concentration and productivity.",
+    image: reducedFocus,
+    alt: "Woman distracted by her phone at her desk",
   },
 ];
 
@@ -29,24 +49,19 @@ const fadeInUp = {
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] },
-  },
-};
-
-const staggerContainer = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.15,
-    },
+    transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] as const },
   },
 };
 
 export function WhyPostureMatters() {
+  const [activeStep, setActiveStep] = useState<number | null>(1);
+
+  const handleToggle = (stepId: number) => {
+    setActiveStep((current) => (current === stepId ? null : stepId));
+  };
+
   return (
-    <section className="relative w-full py-24 lg:py-32 bg-[#fafafa] text-charcoal overflow-hidden selection:bg-charcoal selection:text-white">
-      {/* Premium subtle background grid */}
+    <section className="relative w-full py-24 lg:py-32 bg-[#fafafa] text-[#111111] overflow-hidden selection:bg-[#111111] selection:text-white">
       <div className="absolute inset-0 z-0 pointer-events-none opacity-30">
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#fafafa_100%)]"></div>
@@ -70,51 +85,90 @@ export function WhyPostureMatters() {
           <motion.p
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.0, duration: 1.0, ease: [0.16, 1, 0.3, 1] }}
-            className="relative z-10 text-lg sm:text-xl md:text-2xl text-gray-600 leading-relaxed font-light mt-16 max-w-2xl"
+            transition={{ delay: 0.8, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+            className="relative z-10 text-lg sm:text-xl md:text-2xl text-gray-600 leading-relaxed font-light mt-16 max-w-2xl mx-auto"
           >
             Long sitting hours, screen work, and unnoticed slouching can slowly
             create stress on your neck, back, breathing, and focus. AlignPod is
             built to make posture awareness effortless.
           </motion.p>
-      </div>
+        </motion.div>
 
-      <motion.div
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-100px" }}
-        variants={staggerContainer}
-        className="mt-20 grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8"
-      >
-        {cards.map((card, index) => (
-          <motion.div
-            key={index}
-            variants={fadeInUp}
-            whileHover={{
-              scale: 1.02,
-              y: -5,
-              transition: { duration: 0.4, ease: "easeOut" },
-            }}
-            className="group relative bg-white/80 backdrop-blur-xl rounded-[28px] p-8 sm:p-10 border border-gray-200/60 shadow-sm hover:shadow-[0_0_40px_rgba(0,0,0,0.06)] hover:border-gray-300 transition-all duration-500"
-          >
-            {/* Subtle hover glow effect */}
-            <div className="absolute inset-0 rounded-[28px] bg-gradient-to-br from-gray-100/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+        <div className="mt-20">
+          <div className="grid grid-cols-1 lg:grid-cols-[1.08fr_0.92fr] gap-8 lg:gap-14 items-start">
+            <div className="order-2 lg:order-1 flex flex-col lg:pr-6">
+              {steps.map((step) => {
+                const isActive = activeStep === step.id;
 
-            <div className="relative z-10">
-              <div className="w-12 h-12 rounded-2xl bg-gray-50 border border-gray-100 flex items-center justify-center mb-6 text-deep-black group-hover:scale-110 group-hover:bg-deep-black group-hover:text-white group-hover:shadow-md transition-all duration-500">
-                <card.icon className="w-6 h-6" strokeWidth={1.5} />
-              </div>
-              <h3 className="text-2xl font-display font-semibold text-deep-black mb-3">
-                {card.title}
-              </h3>
-              <p className="text-gray-600 leading-relaxed font-light text-base sm:text-lg">
-                {card.text}
-              </p>
+                return (
+                  <motion.div
+                    key={step.id}
+                    initial={false}
+                    className="mb-3 last:mb-0"
+                  >
+                    <button
+                      onClick={() => handleToggle(step.id)}
+                      className={`w-full rounded-[22px] border px-5 py-4 text-left transition-all duration-300 ease-out ${
+                        isActive
+                          ? "border-[#111111] bg-[#111111] text-white shadow-[0_12px_35px_rgba(17,17,17,0.16)]"
+                          : "border-white/60 bg-white/70 text-[#f5f5f5] hover:bg-white/90 hover:text-[#111111]"
+                      }`}
+                    >
+                      <div className="flex items-center justify-between gap-4">
+                        <span className="text-sm font-semibold uppercase tracking-[0.2em] text-gray-400">
+                          {step.index}
+                        </span>
+                        <span className={`text-xl font-semibold transition-all duration-300 ${isActive ? "text-white" : "text-[#111111]"}`}>
+                          {step.title}
+                        </span>
+                      </div>
+                    </button>
+
+                    <AnimatePresence initial={false}>
+                      {isActive && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: "auto", opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.35, ease: "easeOut" }}
+                          className="overflow-hidden"
+                        >
+                          <div className="ml-2 mt-2 rounded-[18px] border border-gray-200 bg-[#f7f7f4] px-5 py-4 text-sm leading-7 text-gray-600">
+                            {step.description}
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </motion.div>
+                );
+              })}
             </div>
-          </motion.div>
-        ))}
-      </motion.div>
-    </div>
-    </section >
+
+            <div className="order-1 lg:order-2 lg:sticky lg:top-24 self-start">
+              <div className="relative h-[60vh] sm:h-[72vh] w-full overflow-hidden rounded-[28px] border border-gray-200 bg-[#f3f3ef] shadow-sm">
+                {steps.map((step) => {
+                  const isActive = activeStep === step.id;
+
+                  return (
+                    <motion.img
+                      key={step.id}
+                      src={step.image}
+                      alt={step.alt}
+                      initial={{ opacity: 0, scale: 1.03 }}
+                      animate={{
+                        opacity: isActive ? 1 : 0,
+                        scale: isActive ? 1 : 1.03,
+                      }}
+                      transition={{ duration: 0.45, ease: "easeOut" }}
+                      className="absolute inset-0 h-full w-full object-cover"
+                    />
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   );
 }

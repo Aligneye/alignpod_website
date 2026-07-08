@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { AnimatePresence, motion } from "motion/react";
 import { UploadCard } from "../components/posture/UploadCard";
 import { ImagePreviewCard } from "../components/posture/ImagePreviewCard";
 import { ResultCard } from "../components/posture/ResultCard";
+import { AnalysisLoader } from "../components/posture/AnalysisLoader";
 import { analyzePostureImage } from "../services/gemini";
 import type { PostureResult } from "../types/posture";
 import { CameraCapture } from "../components/posture/CameraCapture";
@@ -13,6 +15,14 @@ export function PostureCheck() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [showCamera, setShowCamera] = useState(false);
+
+  useEffect(() => {
+    return () => {
+      if (imagePreview?.startsWith("blob:")) {
+        URL.revokeObjectURL(imagePreview);
+      }
+    };
+  }, [imagePreview]);
 
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -32,7 +42,7 @@ export function PostureCheck() {
 };
 
   const handleAnalyze = async () => {
-    if (!imageFile) return;
+    if (!imageFile || isLoading) return;
 
     try {
       setIsLoading(true);
@@ -65,33 +75,67 @@ export function PostureCheck() {
         </p>
 
         <div className="max-w-2xl mx-auto bg-white border border-gray-200 rounded-[32px] p-8 shadow-sm">
+          <AnimatePresence mode="wait">
+            {!imagePreview && !showCamera && !isLoading && (
+              <motion.div
+                key="upload"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.22 }}
+              >
+                <UploadCard
+                  onImageUpload={handleImageUpload}
+                  onOpenCamera={() => setShowCamera(true)}
+                />
+              </motion.div>
+            )}
 
-  {!imagePreview && !showCamera && (
-    <>
-      <UploadCard
-  onImageUpload={handleImageUpload}
-  onOpenCamera={() => setShowCamera(true)}
-/>
-    </>
-  )}
+            {showCamera && !isLoading && (
+              <motion.div
+                key="camera"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.22 }}
+              >
+                <CameraCapture
+                  onCapture={handleCameraCapture}
+                  onClose={() => setShowCamera(false)}
+                />
+              </motion.div>
+            )}
 
-  {showCamera && (
-    <CameraCapture
-      onCapture={handleCameraCapture}
-      onClose={() => setShowCamera(false)}
-    />
-  )}
+            {imagePreview && !isLoading && !result && (
+              <motion.div
+                key="preview"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.22 }}
+              >
+                <ImagePreviewCard
+                  imagePreview={imagePreview}
+                  onImageUpload={handleImageUpload}
+                  onAnalyze={handleAnalyze}
+                  isLoading={isLoading}
+                />
+              </motion.div>
+            )}
 
-  {imagePreview && (
-    <ImagePreviewCard
-      imagePreview={imagePreview}
-      onImageUpload={handleImageUpload}
-      onAnalyze={handleAnalyze}
-      isLoading={isLoading}
-    />
-  )}
-
-</div>
+            {isLoading && imagePreview && (
+              <motion.div
+                key="loading"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.25 }}
+              >
+                <AnalysisLoader imagePreview={imagePreview} />
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
 
         {error && (
           <div className="max-w-2xl mx-auto mt-6 rounded-2xl border border-red-200 bg-red-50 p-4 text-sm text-red-700">
