@@ -63,13 +63,24 @@ export function ResultCard({ result }: ResultCardProps) {
       </div>
 
       <div className="rounded-2xl bg-[#F8F8F6] p-5 border border-gray-100 mb-6">
-        <p className="font-medium text-[#111111] mb-3">Recommendations</p>
-        <ul className="space-y-2 text-sm text-gray-600">
-          {result.recommendations.map((tip) => (
-            <li key={tip}>• {tip}</li>
-          ))}
-        </ul>
-      </div>
+  <p className="font-medium text-[#111111] mb-3">
+    How AlignPod can help
+  </p>
+
+  <ul className="space-y-2 text-sm text-gray-600">
+    <li>• Tracks your sitting posture in real time while you work or study.</li>
+    <li>• Gives gentle vibration reminders when you start slouching.</li>
+    <li>• Helps you build better posture habits through daily awareness.</li>
+    <li>• Supports posture training without forcing uncomfortable correction.</li>
+  </ul>
+</div>
+
+<a
+  href="/product"
+  className="inline-flex items-center justify-center w-full rounded-full bg-[#111111] text-white px-6 py-3 hover:bg-black transition"
+>
+  Explore AlignPod
+</a>
 
       <p className="text-xs text-gray-500 leading-relaxed">
         {result.disclaimer}

@@ -3,6 +3,7 @@ import { motion } from "motion/react";
 import { Play, ChevronDown } from "lucide-react";
 import heroVideoUrl from "../assets/videos/alignpod-ezremove.mp4";
 import { Link } from 'react-router-dom';
+import { trackEvent } from "../utils/analytics";
 
 export function Hero() {
   const words = ["Posture", "Alignment", "Habits", "Wellness"];
@@ -74,11 +75,21 @@ export function Hero() {
             </p>
 
             <div className="flex flex-col sm:flex-row items-center gap-4">
-              <Link to="/posture-check" className="btn-primary-dark">
+              <Link
+                to="/posture-check"
+                className="btn-primary-dark"
+                onClick={() =>
+                 trackEvent("analyze_posture_clicked", {
+                location: "hero",
+               })
+              }
+             >
               Analyze Your Posture
-              </Link>
+           </Link>
               <button
-               onClick={() => setShowVideo(true)}
+                onClick={() => {trackEvent("watch_demo_clicked", { location: "hero" });
+                setShowVideo(true);
+                }}
                className="group w-full sm:w-auto btn-secondary-dark flex items-center justify-center gap-3"
                 >
                 <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-white/20 transition-colors">

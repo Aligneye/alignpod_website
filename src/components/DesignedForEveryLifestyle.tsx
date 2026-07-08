@@ -12,31 +12,37 @@ const lifestyles = [
     title: "Students",
     text: "Stay aware during long study sessions and online classes.",
     image: student,
+    alt: "student image",
   },
   {
     title: "Office Professionals",
     text: "Build healthier posture habits during long desk hours.",
     image: office,
+    alt: "office person working image",
   },
   {
     title: "Developers & Designers",
     text: "Stay comfortable through deep work, coding, and creative sessions.",
     image: developer,
+    alt: "Developer image",
   },
   {
     title: "Gamers",
     text: "Maintain better posture during focused gaming sessions.",
     image: gamer,
+    alt: "Gamer image",
   },
   {
     title: "Remote Workers",
     text: "Support healthier work-from-home posture routines.",
     image: remote,
+    alt: "person doing job work fron home image",
   },
   {
     title: "Frequent Travelers",
     text: "Use gentle therapy breaks after extended sitting.",
     image: traveller,
+    alt: "person travelling image",
   },
 ];
 
