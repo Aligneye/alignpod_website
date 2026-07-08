@@ -7,6 +7,7 @@ import type { PostureResult } from "../types/posture";
 import { CameraCapture } from "../components/posture/CameraCapture";
 import { Navbar} from "../components/Navbar";
 import { Footer } from "../components/Footer";
+import { trackEvent } from "../utils/analytics";
 
 export function PostureCheck() {
   const [imageFile, setImageFile] = useState<File | null>(null);
@@ -22,6 +23,7 @@ export function PostureCheck() {
 
     setImageFile(file);
     setImagePreview(URL.createObjectURL(file));
+    trackEvent("photo_uploaded", { source: "upload" });
     setResult(null);
     setError("");
   };
@@ -29,6 +31,7 @@ export function PostureCheck() {
   const handleCameraCapture = (file: File, previewUrl: string) => {
   setImageFile(file);
   setImagePreview(previewUrl);
+  trackEvent("photo_captured", { source: "camera" });
   setResult(null);
   setError("");
 };
@@ -40,12 +43,15 @@ export function PostureCheck() {
       setIsLoading(true);
       setError("");
       setResult(null);
+      trackEvent("analysis_started");
 
       const aiResult = await analyzePostureImage(imageFile);
       setResult(aiResult);
+      trackEvent("analysis_completed");
     } catch (err) {
       console.error(err);
       setError("Unable to analyze this image. Please try another clear side-view image.");
+      trackEvent("analysis_failed");
     } finally {
       setIsLoading(false);
     }
@@ -77,14 +83,31 @@ export function PostureCheck() {
 
         <div className="max-w-2xl mx-auto bg-white border border-gray-200 rounded-[32px] p-8 shadow-sm">
 
-  {!imagePreview && !showCamera && (
-    <>
-      <UploadCard
-  onImageUpload={handleImageUpload}
-  onOpenCamera={() => setShowCamera(true)}
-/>
-    </>
-  )}
+{!imagePreview && !showCamera && (
+  <>
+    <div className="mb-6 rounded-2xl bg-[#F8F8F6] border border-gray-100 p-5 text-left">
+      <h3 className="text-lg font-semibold text-[#111111] mb-3">
+        For best AI posture analysis
+      </h3>
+
+      <ul className="space-y-2 text-sm text-gray-600">
+        <li>• Sit sideways to the camera, not facing front.</li>
+        <li>• Keep your head, neck, shoulder, and upper back clearly visible.</li>
+        <li>• Sit naturally as you usually work or study.</li>
+        <li>• Use good lighting and avoid blurry photos.</li>
+        <li>• Keep the camera at chest or shoulder height.</li>
+      </ul>
+    </div>
+
+    <UploadCard
+      onImageUpload={handleImageUpload}
+      onOpenCamera={() => {
+        trackEvent("camera_opened");
+        setShowCamera(true);
+      }}
+    />
+  </>
+)}
 
   {showCamera && (
     <CameraCapture

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Navbar } from "../components/Navbar";
 import { Footer } from "../components/Footer";
 import { Link } from "react-router-dom";
+import { trackEvent } from "../utils/analytics";
 
 export function BuyNow() {
   const [status, setStatus] = useState<"idle" | "submitting" | "success">("idle");
@@ -35,6 +36,7 @@ export function BuyNow() {
 
     if (result.success) {
       setStatus("success");
+      trackEvent("buy_now_form_submitted");
       form.reset();
     } else {
       alert(result.message || "Order could not be submitted.");
