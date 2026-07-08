@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react';
 import calibapp from "../assets/calibapp.jpeg";
 import training from "../assets/training.jpeg";
 import therapy from "../assets/therapy.jpeg";
-import realangle from "../assets/realangle.jpeg";
 
 const cards = [
   {

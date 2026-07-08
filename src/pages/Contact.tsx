@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
+import { trackEvent } from "../utils/analytics";
 import { 
   Mail, Phone, Building2, HelpCircle, 
   Instagram, Linkedin, Youtube, Check,
@@ -187,8 +188,11 @@ function ContactForm() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setStatus('submitting');
-    setTimeout(() => setStatus('success'), 1500);
-  };
+    setTimeout(() => {
+    setStatus("success");
+    trackEvent("contact_form_submitted");
+  }, 1500);
+}
 
   return (
     <section className="py-24 lg:py-32 bg-white text-[#111111]">

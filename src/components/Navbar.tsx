@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { ShoppingCart, Menu, X } from "lucide-react";
+import {  Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import logo from "../assets/alignlogo.png";
+import { trackEvent } from "../utils/analytics";
 
 const navLinks = [
   { name: "Home", href: "/" },
@@ -17,7 +18,9 @@ export function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
 
-  const isDarkTheme = location.pathname === "/";
+
+  const isDarkTheme =
+  ["/", "/why-alignpod", "/product", "/science"].includes(location.pathname);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -89,13 +92,13 @@ export function Navbar() {
         {/* Right Actions (Desktop & Mobile) */}
         <div className="flex items-center gap-4 z-50 relative">
 
-          <button className={`hidden md:flex items-center justify-center px-6 py-2.5 text-sm font-semibold rounded-full transition-all duration-300 hover:scale-105 ${
+          <Link to="/buy-now"   onClick={() => trackEvent("buy_now_clicked", { location: "hero" })} className={`hidden md:flex items-center justify-center px-6 py-2.5 text-sm font-semibold rounded-full transition-all duration-300 hover:scale-105 ${
             isScrolled || isDarkTheme
               ? "bg-white text-black hover:bg-gray-100 shadow-[0_0_20px_rgba(255,255,255,0.1)]"
               : "bg-[#111111] text-white hover:bg-black shadow-[0_4px_14px_rgba(0,0,0,0.1)]"
           }`}>
             Buy Now
-          </button>
+          </Link>
 
           {/* Mobile Menu Toggle */}
           <button
@@ -151,9 +154,9 @@ export function Navbar() {
                 transition={{ delay: navLinks.length * 0.1, duration: 0.4 }}
                 className="mt-auto pb-12"
               >
-                <button className="btn-primary-dark w-full">
+                <button className="btn-primary-dark">
                   Buy Now
-                </button>
+                  </button>
               </motion.div>
             </div>
           </motion.div>
