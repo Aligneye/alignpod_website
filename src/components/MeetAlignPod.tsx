@@ -1,5 +1,6 @@
 import { motion } from "motion/react";
 import { Activity, Vibrate, Sparkles , Smartphone } from "lucide-react";
+import apfinal from "../assets/apfinal2.png";
 
 const featuresLeft = [
   {
@@ -121,17 +122,11 @@ export function MeetAlignPod() {
               transition={{ repeat: Infinity, duration: 6, ease: "easeInOut" }}
               className="relative z-10 drop-shadow-[0_30px_40px_rgba(0,0,0,0.15)]"
             >
-              {/* Device Placeholder: Matte Grey Body */}
-              <div className="relative w-[130px] h-[210px] bg-gradient-to-br from-[#8A8D91] to-[#5C5F63] rounded-[36px] shadow-[inset_0_2px_6px_rgba(255,255,255,0.4),inset_0_-4px_8px_rgba(0,0,0,0.3)] border border-[#A1A4A8] flex flex-col items-center justify-center overflow-hidden">
-                {/* Highlight curve on top edge */}
-                <div className="absolute top-0 left-0 right-0 h-1/3 bg-gradient-to-b from-white/20 to-transparent pointer-events-none" />
-
-                {/* Circular White Button */}
-                <div className="relative w-16 h-16 bg-gradient-to-b from-[#FFFFFF] to-[#F0F0F0] rounded-full shadow-[0_4px_12px_rgba(0,0,0,0.15),inset_0_-2px_4px_rgba(0,0,0,0.05),inset_0_2px_4px_rgba(255,255,255,0.8)] border border-white/80 flex items-center justify-center transition-transform hover:scale-95 duration-300 cursor-pointer">
-                  {/* Button Inner Indent */}
-                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#F5F5F5] to-[#EBEBEB] shadow-[inset_0_2px_6px_rgba(0,0,0,0.06)]" />
-                </div>
-              </div>
+              <img
+                src={apfinal}
+                alt="AlignPod product visual"
+                className="w-[180px] sm:w-[220px] object-contain drop-shadow-[0_20px_40px_rgba(0,0,0,0.2)]"
+              />
 
               {/* Dynamic shadow directly below the device */}
               <motion.div
