@@ -102,7 +102,15 @@ export function PostureCheck() {
                   exit={{ opacity: 0, y: -10 }}
                   transition={{ duration: 0.22 }}
                 >
-                  <div className="mb-6 rounded-2xl bg-[#F8F8F6] border border-gray-100 p-5 text-left">
+                  <UploadCard
+                    onImageUpload={handleImageUpload}
+                    onOpenCamera={() => {
+                      trackEvent("camera_opened");
+                      setShowCamera(true);
+                    }}
+                  />
+
+                  <div className="mt-6 rounded-2xl bg-[#F8F8F6] border border-gray-100 p-5 text-left">
                     <h3 className="text-lg font-semibold text-[#111111] mb-3">
                       For best AI posture analysis
                     </h3>
@@ -115,14 +123,6 @@ export function PostureCheck() {
                       <li>• Keep the camera at chest or shoulder height.</li>
                     </ul>
                   </div>
-
-                  <UploadCard
-                    onImageUpload={handleImageUpload}
-                    onOpenCamera={() => {
-                      trackEvent("camera_opened");
-                      setShowCamera(true);
-                    }}
-                  />
                 </motion.div>
               )}
 

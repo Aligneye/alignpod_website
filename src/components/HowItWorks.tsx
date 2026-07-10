@@ -1,5 +1,5 @@
 import { motion } from "motion/react";
-import wearAlign from "../assets/wear-device.jpeg";
+import apfinal from "../assets/apfinal2.png";
 import calibrate from "../assets/calibrate.png"
 import realTime from "../assets/realtime-guide.png"
 import track from "../assets/track-progress.png"
@@ -9,8 +9,8 @@ const steps = [
     num: "01",
     title: "Wear AlignPod",
     desc: "Simply attach AlignPod to your upper back before starting work, studying, or daily activities.",
-    img: wearAlign,
-    alt: "Professional wearing AlignPod while working",
+    img: apfinal,
+    alt: "AlignPod product visual",
   },
   {
     num: "02",
