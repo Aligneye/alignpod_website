@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import neckBackPain from "../assets/neck-back-pain.jpg";
 import shoulderTightness from "../assets/shoulder-tightness.jpg";
@@ -11,7 +11,7 @@ const steps = [
     index: "01",
     title: "Neck & back pain",
     description:
-      "Sitting with a bent neck or rounded back puts extra pressure on your spine, leading to daily stiffness, pain, and discomfort.",
+      "Poor sitting posture, including a bent neck and rounded back, puts extra stress on your spine, causing daily stiffness, neck pain, discomfort, fatigue, and increasing the risk of long-term issues.",
     image: neckBackPain,
     alt: "Woman touching the back of her neck",
   },
@@ -20,7 +20,7 @@ const steps = [
     index: "02",
     title: "Shoulder tightness",
     description:
-      "Poor sitting posture keeps your shoulders rolled forward for long hours, causing tightness, heaviness, and upper-body strain.",
+      "Rolled-forward shoulders caused by poor sitting posture create lasting tightness, heaviness, muscle strain, restricted movement, and upper-body discomfort that builds up over time.",
     image: shoulderTightness,
     alt: "Woman touching her tight shoulder",
   },
@@ -29,7 +29,7 @@ const steps = [
     index: "03",
     title: "Low energy & fatigue",
     description:
-      "Slouching can restrict natural breathing and make your body work harder, leaving you feeling tired faster during work or study.",
+      "Poor posture limits natural breathing and forces your body to work harder, causing faster fatigue, lower energy, reduced concentration, and less productive work or study sessions.",
     image: lowEnergyFatigue,
     alt: "Woman resting her head on her laptop, fatigued",
   },
@@ -38,7 +38,7 @@ const steps = [
     index: "04",
     title: "Reduced focus",
     description:
-      "When your body feels stiff or uncomfortable, your attention keeps shifting from work to discomfort, affecting concentration and productivity.",
+      "When your body feels stiff or uncomfortable, your focus repeatedly shifts away from work, reducing concentration, productivity, and your ability to stay engaged throughout the day.",
     image: reducedFocus,
     alt: "Woman distracted by her phone at her desk",
   },
@@ -55,6 +55,17 @@ const fadeInUp = {
 
 export function WhyPostureMatters() {
   const [activeStep, setActiveStep] = useState<number | null>(1);
+
+  useEffect(() => {
+    const interval = window.setInterval(() => {
+      setActiveStep((current) => {
+        const nextStep = (current ?? 1) % steps.length + 1;
+        return nextStep;
+      });
+    }, 5000);
+
+    return () => window.clearInterval(interval);
+  }, []);
 
   const handleToggle = (stepId: number) => {
     setActiveStep((current) => (current === stepId ? null : stepId));
@@ -79,7 +90,7 @@ export function WhyPostureMatters() {
             Posture Is Not Just Position
           </span>
           <h2 className="heading-section text-[#111111] mb-6">
-            Every healthy posture starts with a small habit
+            The Cost of Poor Posture
           </h2>
 
           <motion.p
@@ -88,9 +99,7 @@ export function WhyPostureMatters() {
             transition={{ delay: 0.8, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
             className="relative z-10 text-lg sm:text-xl md:text-2xl text-gray-600 leading-relaxed font-light mt-16 max-w-2xl mx-auto"
           >
-            Long sitting hours, screen work, and unnoticed slouching can slowly
-            create stress on your neck, back, breathing, and focus. AlignPod is
-            built to make posture awareness effortless.
+            Hours of sitting strain your body. AlignPod makes posture awareness effortless.
           </motion.p>
         </motion.div>
 

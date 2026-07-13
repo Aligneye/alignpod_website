@@ -3,10 +3,8 @@ import { Hero } from "../components/Hero";
 import { WhyPostureMatters } from "../components/WhyPostureMatters";
 import { MeetAlignPod } from "../components/MeetAlignPod";
 import { HowItWorks } from "../components/HowItWorks";
-import { IntelligentModes } from "../components/IntelligentModes";
-import { SmartCalibration } from "../components/SmartCalibration";
 import { CompanionApp } from "../components/CompanionApp";
-import { DesignedForEveryLifestyle } from "../components/DesignedForEveryLifestyle";
+import IntelligentModes from "../components/IntelligentModes";
 import { EarlyUserFeedback } from "../components/EarlyUserFeedback";
 import { FAQ } from "../components/FAQ";
 import { BackedByVisionaries } from "../components/BackedByVisionaries";
@@ -22,14 +20,13 @@ export default function Home() {
       <MeetAlignPod />
       <HowItWorks />
       <IntelligentModes />
-      <SmartCalibration />
       <CompanionApp />
-      <DesignedForEveryLifestyle />
       <EarlyUserFeedback />
+      <Footer />
       <FAQ />
       <BackedByVisionaries />
       <FinalCTA />
-      <Footer />
+      
     </main>
   );
 }

@@ -1,6 +1,5 @@
 import { motion } from "motion/react";
 import { Check } from "lucide-react";
-import { DesignedForEveryLifestyle } from './DesignedForEveryLifestyle';
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 40 },
@@ -37,7 +36,7 @@ const therapyBullets = [
   "Designed for daily wellness breaks",
 ];
 
-export function IntelligentModes() {
+export default function IntelligentModes() {
   return (
     <section className="relative w-full py-24 lg:py-32 bg-[#0F1115] text-white overflow-hidden selection:bg-white/20 selection:text-white" id="training-therapy">
       {/* Background ambient glow */}

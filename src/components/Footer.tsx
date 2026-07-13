@@ -9,7 +9,7 @@ const footerLinks = [
       { label: "How It Works", href: "#how-it-works" },
       { label: "Training Mode", href: "#training-therapy" },
       { label: "Therapy Mode", href: "#training-therapy" },
-      { label: "Smart Calibration", href: "#calibration" },
+      { label: "Calibration Profiles", href: "#companion-app" },
       { label: "Companion App", href: "#companion-app" },
     ],
   },
