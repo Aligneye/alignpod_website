@@ -5,6 +5,7 @@ import {Link} from "react-router-dom";
 import analytics from "../assets/analytics.jpeg";
 import breathe from "../assets/breathe.jpeg";
 import ble from "../assets/ble.jpeg";
+import apfinal from "../assets/apfinal2.png";
 import { 
   Activity, Vibrate, Target, Smartphone,
   Check, Maximize, Feather, Layout, Settings
@@ -88,14 +89,13 @@ function Hero() {
           <motion.div
             animate={{ y: [-15, 15, -15] }}
             transition={{ repeat: Infinity, duration: 8, ease: "easeInOut" }}
-            className="relative z-10 w-[140px] sm:w-[160px] h-[220px] sm:h-[240px] bg-gradient-to-br from-[#8A8D91] via-[#6F7378] to-[#4B4F55] rounded-[20px] shadow-[0_40px_80px_rgba(0,0,0,0.1),inset_0_2px_4px_rgba(255,255,255,0.8),inset_0_-4px_8px_rgba(0,0,0,0.05)] border border-[#FFFFFF] flex flex-col items-center justify-center relative overflow-hidden backdrop-blur-xl"
+            className="relative z-10 flex items-center justify-center"
           >
-            {/* Glass reflection */}
-            <div className="absolute top-0 left-0 right-0 h-[40%] bg-gradient-to-b from-white/80 to-transparent pointer-events-none rounded-t-[40px]" />
-            {/* Center Button */}
-            <div className="relative w-[70px] h-[70px] bg-gradient-to-b from-[#FFFFFF] to-[#F0F0F0] rounded-[15px] shadow-[0_8px_24px_rgba(0,0,0,0.1),inset_0_-2px_4px_rgba(0,0,0,0.02)] border border-white flex items-center justify-center">
-               <div className="w-[50px] h-[50px] rounded-full bg-gradient-to-br from-[#FAFAFA] to-[#E5E5E5] shadow-[inset_0_2px_6px_rgba(0,0,0,0.03)]" />
-            </div>
+            <img
+              src={apfinal}
+              alt="AlignPod product visual"
+              className="w-[220px] sm:w-[260px] object-contain drop-shadow-[0_30px_50px_rgba(0,0,0,0.25)]"
+            />
           </motion.div>
           {/* Shadow */}
           <motion.div 
