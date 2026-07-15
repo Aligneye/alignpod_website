@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "motion/react";
+import { motion, AnimatePresence, type Variants } from "motion/react";
 import neckBackPain from "../assets/neck-back-pain.jpg";
 import shoulderTightness from "../assets/shoulder-tightness.jpg";
 import lowEnergyFatigue from "../assets/low-energy-fatigue.jpg";
@@ -44,12 +44,12 @@ const steps = [
   },
 ];
 
-const fadeInUp = {
+const fadeInUp: Variants = {
   hidden: { opacity: 0, y: 40 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] as const },
+    transition: { duration: 0.8, ease: "easeOut" },
   },
 };
 

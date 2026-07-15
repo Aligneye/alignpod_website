@@ -1,10 +1,11 @@
-import { motion } from 'motion/react';
+import { motion, type Variants } from 'motion/react';
 import { Check } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import apfinal from '../assets/apfinal2.png';
 
-const fadeInUp = {
+const fadeInUp: Variants = {
   hidden: { opacity: 0, y: 40 },
-  visible: { opacity: 1, y: 0, transition: { duration: 1, ease: [0.16, 1, 0.3, 1] } }
+  visible: { opacity: 1, y: 0, transition: { duration: 1, ease: "easeOut" } }
 };
 
 const staggerContainer = {
@@ -63,16 +64,12 @@ export function FinalCTA() {
              transition={{ repeat: Infinity, duration: 8, ease: "easeInOut" }}
              className="relative z-10 flex flex-col items-center"
            >
-             {/* The Device Placeholder */}
-             <div className="w-[160px] sm:w-[180px] h-[260px] sm:h-[280px] bg-gradient-to-br from-[#2A2E35] to-[#16181C] rounded-[48px] shadow-[0_40px_80px_rgba(0,0,0,0.4),inset_0_2px_4px_rgba(255,255,255,0.1),inset_0_-4px_8px_rgba(0,0,0,0.6)] border border-[#3A3F47] flex flex-col items-center justify-center relative overflow-hidden backdrop-blur-xl">
-               {/* Soft reflection */}
-               <div className="absolute top-0 left-0 right-0 h-[40%] bg-gradient-to-b from-white/5 to-transparent pointer-events-none rounded-t-[48px]" />
-               
-               {/* Center Button */}
-               <div className="relative w-[80px] h-[80px] bg-gradient-to-b from-[#FFFFFF] to-[#F0F0F0] rounded-full shadow-[0_8px_24px_rgba(0,0,0,0.3),inset_0_-2px_4px_rgba(0,0,0,0.05)] border border-white/80 flex items-center justify-center">
-                  <div className="w-[60px] h-[60px] rounded-full bg-gradient-to-br from-[#FAFAFA] to-[#E5E5E5] shadow-[inset_0_2px_6px_rgba(0,0,0,0.06)]" />
-               </div>
-             </div>
+             {/* Product Visual */}
+             <img
+               src={apfinal}
+               alt="AlignPod product visual"
+               className="w-[160px] sm:w-[200px] object-contain drop-shadow-[0_40px_80px_rgba(0,0,0,0.4)]"
+             />
              
              {/* Floor Shadow */}
              <motion.div 

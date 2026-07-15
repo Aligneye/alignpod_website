@@ -1,19 +1,19 @@
 import { motion } from "motion/react";
-import type { Step } from "./howItWorks.data";
+import type { Lifestyle } from "./RealLifePinned";
 
-interface HowItWorksMobileProps {
-  steps: Step[];
+interface RealLifeMobileProps {
+  lifestyles: Lifestyle[];
 }
 
-export function HowItWorksMobile({ steps }: HowItWorksMobileProps) {
+export function RealLifeMobile({ lifestyles }: RealLifeMobileProps) {
   return (
     <div className="max-w-7xl mx-auto px-6 lg:px-8">
       <div className="flex flex-col gap-24 lg:gap-40">
-        {steps.map((step, index) => {
+        {lifestyles.map((item, index) => {
           const isEven = index % 2 === 0;
           return (
             <div
-              key={step.num}
+              key={item.num}
               className="flex flex-col lg:flex-row items-center gap-12 lg:gap-24 relative"
             >
               {/* Image Section */}
@@ -35,8 +35,8 @@ export function HowItWorksMobile({ steps }: HowItWorksMobileProps) {
                       whileInView={{ scale: 1 }}
                       viewport={{ once: true }}
                       transition={{ duration: 1.5, ease: "easeOut" }}
-                      src={step.img}
-                      alt={step.alt}
+                      src={item.image}
+                      alt={item.title}
                       className="w-full h-full object-cover"
                     />
                     <div className="absolute inset-0 ring-1 ring-inset ring-black/5 rounded-[24px] sm:rounded-[32px] pointer-events-none"></div>
@@ -58,21 +58,21 @@ export function HowItWorksMobile({ steps }: HowItWorksMobileProps) {
               >
                 <div className="relative">
                   <span className="absolute -top-16 -left-6 sm:-left-10 text-[120px] sm:text-[160px] font-display font-bold text-gray-50 select-none pointer-events-none leading-none tracking-tighter z-0">
-                    {step.num}
+                    {item.num}
                   </span>
 
                   <div className="relative z-10 pt-8 sm:pt-12">
                     <div className="flex items-center gap-4 mb-6">
                       <div className="h-[1px] w-12 bg-gray-300"></div>
                       <span className="text-sm font-semibold tracking-widest text-[#6B7280] uppercase">
-                        Step {step.num}
+                        {item.num}
                       </span>
                     </div>
                     <h3 className="text-3xl sm:text-4xl lg:text-5xl font-display font-semibold mb-6 text-[#111111] leading-[1.1]">
-                      {step.title}
+                      {item.title}
                     </h3>
                     <p className="text-lg sm:text-xl text-[#6B7280] leading-relaxed font-light max-w-md">
-                      {step.desc}
+                      {item.desc}
                     </p>
                   </div>
                 </div>
