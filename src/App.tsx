@@ -3,7 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { useEffect } from "react";
+import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import Home from "./pages/Home";
 import WhyAlignPod from "./pages/WhyAlignPod";
 import Product from "./pages/Product";
@@ -18,11 +19,24 @@ import { SEO } from "./components/SEO";
 import { GoogleAnalytics } from "./components/GoogleAnalytics";
 import { MicrosoftClarity } from "./components/MicrosoftClarity";
 
+function ScrollToTop() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+  }, [pathname]);
+
+  return null;
+}
+
 export default function App() {
   return (
     <>
     <LeadPopup />
     <Router>
+      <ScrollToTop />
       <GoogleAnalytics />
       <MicrosoftClarity />
       <Routes>

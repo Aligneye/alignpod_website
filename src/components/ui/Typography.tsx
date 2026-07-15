@@ -1,23 +1,31 @@
 import React from "react";
 import clsx from "clsx";
 import { twMerge } from "tailwind-merge";
-import { motion, HTMLMotionProps } from "motion/react";
+import { motion, type HTMLMotionProps } from "motion/react";
 
 function cn(...inputs: (string | undefined | null | false)[]) {
   return twMerge(clsx(inputs));
 }
 
-export const HeroHeading = React.forwardRef<HTMLHeadingElement, React.HTMLAttributes<HTMLHeadingElement> & { asMotion?: boolean }>((props, ref) => {
+type HeroHeadingProps = React.HTMLAttributes<HTMLHeadingElement> & HTMLMotionProps<"h1"> & { asMotion?: boolean };
+
+export const HeroHeading = React.forwardRef<HTMLHeadingElement, HeroHeadingProps>((props, ref) => {
   const { className, asMotion, ...rest } = props;
   const classes = cn("font-display font-bold tracking-tight leading-[1.1] text-[clamp(2.5rem,6vw+1rem,5.5rem)]", className);
-  if (asMotion) return <motion.h1 ref={ref} className={classes} {...(rest as HTMLMotionProps<"h1">)} />;
+  if (asMotion) {
+    return <motion.h1 ref={ref} className={classes} {...rest} />;
+  }
   return <h1 ref={ref} className={classes} {...rest} />;
 });
 
-export const SectionHeading = React.forwardRef<HTMLHeadingElement, React.HTMLAttributes<HTMLHeadingElement> & { asMotion?: boolean }>((props, ref) => {
+type SectionHeadingProps = React.HTMLAttributes<HTMLHeadingElement> & HTMLMotionProps<"h2"> & { asMotion?: boolean };
+
+export const SectionHeading = React.forwardRef<HTMLHeadingElement, SectionHeadingProps>((props, ref) => {
   const { className, asMotion, ...rest } = props;
   const classes = cn("font-display font-bold tracking-tight mb-6 text-[clamp(2rem,4vw+1rem,4rem)]", className);
-  if (asMotion) return <motion.h2 ref={ref} className={classes} {...(rest as HTMLMotionProps<"h2">)} />;
+  if (asMotion) {
+    return <motion.h2 ref={ref} className={classes} {...rest} />;
+  }
   return <h2 ref={ref} className={classes} {...rest} />;
 });
 
@@ -27,9 +35,13 @@ export const CardHeading = React.forwardRef<HTMLHeadingElement, React.HTMLAttrib
   return <h3 ref={ref} className={classes} {...rest} />;
 });
 
-export const BodyText = React.forwardRef<HTMLParagraphElement, React.HTMLAttributes<HTMLParagraphElement> & { asMotion?: boolean }>((props, ref) => {
+type BodyTextProps = React.HTMLAttributes<HTMLParagraphElement> & HTMLMotionProps<"p"> & { asMotion?: boolean };
+
+export const BodyText = React.forwardRef<HTMLParagraphElement, BodyTextProps>((props, ref) => {
   const { className, asMotion, ...rest } = props;
   const classes = cn("text-base sm:text-lg lg:text-xl font-light leading-relaxed", className);
-  if (asMotion) return <motion.p ref={ref} className={classes} {...(rest as HTMLMotionProps<"p">)} />;
+  if (asMotion) {
+    return <motion.p ref={ref} className={classes} {...rest} />;
+  }
   return <p ref={ref} className={classes} {...rest} />;
 });

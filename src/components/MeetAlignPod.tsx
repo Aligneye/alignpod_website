@@ -1,39 +1,65 @@
-import { motion } from "motion/react";
+import { useState } from "react";
+import { motion, type Variants } from "motion/react";
 import { Activity, Vibrate, Sparkles , Smartphone } from "lucide-react";
 import apfinal from "../assets/apfinal2.png";
+import { FeatureCard, type Feature } from "./FeatureCard";
 
-const featuresLeft = [
+const featuresLeft: Feature[] = [
   {
+    id: "realtime-tracking",
     title: "Real-time posture tracking",
     text: "Continuously monitors your posture angle while you sit, work, or study.",
     icon: Activity,
+    bullets: [
+      "Detects posture continuously",
+      "Smart sensor calibration",
+      "Low power monitoring",
+    ],
   },
   {
+    id: "smart-training",
     title: "Smart posture training",
     text: "Trains healthier posture habits with timely vibration alerts whenever slouching is detected.",
-    icon: Sparkles, 
+    icon: Sparkles,
+    bullets: [
+      "Instant vibration reminders",
+      "Builds healthy posture habits",
+      "Adaptive feedback",
+    ],
   },
 ];
 
-const featuresRight = [
+const featuresRight: Feature[] = [
   {
+    id: "targeted-therapy",
     title: "Targeted vibration therapy",
     text: "Delivers soothing vibration sessions to help relax muscles, reduce stiffness, and support everyday comfort.",
     icon: Vibrate,
+    bullets: [
+      "Relaxing vibration modes",
+      "Helps reduce stiffness",
+      "Adjustable intensity",
+    ],
   },
   {
+    id: "app-insights",
     title: "Mobile app insights",
     text: "Syncs posture data with the companion app to help track progress over time.",
     icon: Smartphone,
+    bullets: [
+      "Daily posture score",
+      "Weekly progress reports",
+      "Habit streak tracking",
+    ],
   },
 ];
 
-const fadeInUp = {
+const fadeInUp: Variants = {
   hidden: { opacity: 0, y: 40 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] },
+    transition: { duration: 0.8, ease: "easeOut" },
   },
 };
 
@@ -48,6 +74,12 @@ const staggerContainer = {
 };
 
 export function MeetAlignPod() {
+  const [activeCard, setActiveCard] = useState<string | null>(null);
+
+  const toggleCard = (id: string) => {
+    setActiveCard((prev) => (prev === id ? null : id));
+  };
+
   return (
     <section className="relative w-full py-24 lg:py-32 bg-[#0E1014] text-white overflow-hidden selection:bg-white selection:text-black" id="meet-alignpod">
       {/* Subtle Premium Background Texture */}
@@ -88,21 +120,13 @@ export function MeetAlignPod() {
         >
           {/* Left Column Features (Desktop) / Top Features (Mobile) */}
           <div className="flex flex-col gap-6 order-2 lg:order-1">
-            {featuresLeft.map((feature, index) => (
-              <motion.div
-                key={index}
-                variants={fadeInUp}
-                className="group rounded-[28px] bg-white/[0.06] border border-white/10 p-8 flex flex-col backdrop-blur-sm hover:bg-white/[0.09] hover:border-white/20 transition-all duration-300"
-              >
-                <div className="w-12 h-12 rounded-2xl bg-white/10 border border-white/10 text-white flex items-center justify-center mb-6 group-hover:bg-white group-hover:text-[#111111] transition-colors duration-300">
-                  <feature.icon className="w-5 h-5" strokeWidth={1.5} />
-                </div>
-                <h3 className="heading-card text-xl text-white">
-                  {feature.title}
-                </h3>
-                <p className="text-body text-white/60">
-                  {feature.text}
-                </p>
+            {featuresLeft.map((feature) => (
+              <motion.div key={feature.id} variants={fadeInUp}>
+                <FeatureCard
+                  feature={feature}
+                  isActive={activeCard === feature.id}
+                  onToggle={toggleCard}
+                />
               </motion.div>
             ))}
           </div>
@@ -143,21 +167,13 @@ export function MeetAlignPod() {
 
           {/* Right Column Features (Desktop) / Bottom Features (Mobile) */}
           <div className="flex flex-col gap-6 order-3">
-            {featuresRight.map((feature, index) => (
-              <motion.div
-                key={index}
-                variants={fadeInUp}
-                className="group flex flex-col rounded-[28px] bg-white/[0.06] border border-white/10 backdrop-blur-md p-8 transition-all duration-300 hover:bg-white/[0.08] hover:border-white/20 hover:-translate-y-1"
-              >
-                <div className="w-12 h-12 rounded-2xl bg-white/10 border border-white/10 text-white flex items-center justify-center mb-6 group-hover:bg-white group-hover:text-[#111111] transition-colors duration-300">
-                  <feature.icon className="w-5 h-5" strokeWidth={1.5} />
-                </div>
-                <h3 className="heading-card text-xl">
-                  {feature.title}
-                </h3>
-                <p className="text-body text-[#6B7280]">
-                  {feature.text}
-                </p>
+            {featuresRight.map((feature) => (
+              <motion.div key={feature.id} variants={fadeInUp}>
+                <FeatureCard
+                  feature={feature}
+                  isActive={activeCard === feature.id}
+                  onToggle={toggleCard}
+                />
               </motion.div>
             ))}
           </div>
