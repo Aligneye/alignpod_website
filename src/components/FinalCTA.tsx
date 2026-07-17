@@ -110,9 +110,8 @@ export function FinalCTA() {
             <button className="btn-primary-dark w-full sm:w-auto">
               Get Started
             </button>
-            <Link to="/contact"
-            className="inline-flex items-center justify-center px-8 py-4 rounded-full bg-[#111111] text-white hover:bg-black transition duration-300">
-            Contact Us
+            <Link to="/contact" className="btn-secondary-dark w-full sm:w-auto">
+              Contact Us
             </Link>
           </motion.div>
 

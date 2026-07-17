@@ -455,7 +455,7 @@ function Specifications() {
           variants={fadeInUp}
           className="mb-16 text-center"
         >
-          <h2 className="text-3xl sm:text-4xl font-display font-bold tracking-tight mb-6">
+          <h2 className="heading-section">
             Built for everyday posture support.
           </h2>
         </motion.div>
@@ -510,7 +510,7 @@ function FinalCTA() {
           whileInView="visible"
           viewport={{ once: true }}
           variants={fadeInUp}
-          className="text-5xl sm:text-6xl lg:text-7xl font-display font-bold tracking-tight mb-8"
+          className="heading-hero mb-8"
         >
           Ready to experience AlignPod?
         </motion.h2>

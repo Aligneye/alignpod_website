@@ -120,7 +120,7 @@ export function WhyPostureMatters() {
                       className={`w-full rounded-[22px] border px-5 py-4 text-left transition-all duration-300 ease-out ${
                         isActive
                           ? "border-[#111111] bg-[#111111] text-white shadow-[0_12px_35px_rgba(17,17,17,0.16)]"
-                          : "border-white/60 bg-white/70 text-[#f5f5f5] hover:bg-white/90 hover:text-[#111111]"
+                          : "border-gray-200 bg-white/70 text-[#111111] hover:bg-white hover:border-gray-300 hover:shadow-[0_4px_20px_rgba(0,0,0,0.04)]"
                       }`}
                     >
                       <div className="flex items-center justify-between gap-4">
