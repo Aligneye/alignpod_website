@@ -1,8 +1,11 @@
 import { useState } from "react";
+import { motion, AnimatePresence } from "motion/react";
+import { Check } from "lucide-react";
 import { Navbar } from "../components/Navbar";
 import { Footer } from "../components/Footer";
 import { Link } from "react-router-dom";
 import { trackEvent } from "../utils/analytics";
+import { FormInput, FormTextarea } from "../components/ui/FormInput";
 
 export function BuyNow() {
   const [status, setStatus] = useState<"idle" | "submitting" | "success">("idle");
@@ -52,64 +55,102 @@ export function BuyNow() {
     <>
       <Navbar />
 
-      <main className="min-h-screen bg-white pt-28 px-6">
-        <section className="max-w-5xl mx-auto py-16 lg:py-24">
-          <div className="text-center mb-12">
-            <p className="text-sm tracking-[0.25em] uppercase text-gray-500 mb-4">
+      <main className="min-h-screen bg-[#F8F8F6] pt-32 pb-24 px-6">
+        <section className="max-w-5xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="text-center mb-16"
+          >
+            <span className="inline-block text-xs font-semibold tracking-[0.2em] text-[#6B7280] uppercase mb-6">
               Order AlignPod
-            </p>
+            </span>
 
-            <h1 className="text-5xl md:text-7xl font-semibold text-[#111111] mb-6">
+            <h1 className="heading-hero text-[#111111] mb-6">
               Buy AlignPod
             </h1>
 
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            <p className="text-body text-[#6B7280] max-w-2xl mx-auto">
               Fill in your details and our team will contact you to confirm availability, pricing, payment, and delivery.
             </p>
-          </div>
+          </motion.div>
 
-          <div className="bg-white rounded-[36px] border border-gray-200 shadow-sm p-8 md:p-12">
-            {status === "success" ? (
-              <div className="text-center py-12">
-                <h2 className="text-3xl font-semibold text-[#111111] mb-4">
-                  Order Request Received
-                </h2>
-                <p className="text-gray-600">
-                  Thank you. Our team will contact you shortly to confirm your AlignPod order.
-                </p>
-              </div>
-            ) : (
-              <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <input required name="name" placeholder="Full Name" className="bg-[#F8F8F6] border border-gray-200 rounded-2xl px-6 py-4 placeholder:text-gray-800 text-black" />
-                <input required name="email" type="email" placeholder="Email Address" className="bg-[#F8F8F6] border border-gray-200 rounded-2xl px-6 py-4 placeholder:text-gray-800 text-black" />
-                <input required name="phone" type="tel" placeholder="Phone Number" className="bg-[#F8F8F6] border border-gray-200 rounded-2xl px-6 py-4 placeholder:text-gray-800 text-black" />
-                <input name="quantity" type="number" min="1"  placeholder="Quantity" className="bg-[#F8F8F6] border border-gray-200 rounded-2xl px-6 py-4 placeholder:text-gray-800 text-black" />
-
-                <textarea
-                  required
-                  name="address"
-                  placeholder="Delivery Address"
-                  rows={4}
-                  className="md:col-span-2 bg-[#F8F8F6] border border-gray-200 rounded-2xl px-6 py-4 resize-none placeholder:text-gray-800 text-black"
-                />
-
-                <textarea
-                  name="message"
-                  placeholder="Any note or special requirement?"
-                  rows={4}
-                  className="md:col-span-2 bg-[#F8F8F6] border border-gray-200 rounded-2xl px-6 py-4 resize-none placeholder:text-gray-800 text-black"
-                />
-
-                <button
-                  type="submit"
-                  disabled={status === "submitting"}
-                  className="md:col-span-2 rounded-full bg-[#111111] text-white px-8 py-4 font-semibold hover:bg-black transition"
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="bg-white rounded-[32px] sm:rounded-[40px] border border-[#E5E7EB] shadow-[0_4px_20px_rgba(0,0,0,0.03)] p-6 sm:p-10 lg:p-12"
+          >
+            <AnimatePresence mode="wait">
+              {status === "success" ? (
+                <motion.div
+                  key="success"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                  className="flex flex-col items-center justify-center text-center py-8 sm:py-12"
                 >
-                  {status === "submitting" ? "Submitting..." : "Submit Order Request"}
-                </button>
-              </form>
-            )}
-          </div>
+                  <motion.div
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    transition={{ type: "spring", stiffness: 200, damping: 20, delay: 0.1 }}
+                    className="w-20 h-20 bg-emerald-50 rounded-full flex items-center justify-center mb-6"
+                  >
+                    <Check className="w-10 h-10 text-emerald-500" strokeWidth={2} />
+                  </motion.div>
+                  <h2 className="heading-card text-[#111111] mb-4">
+                    Order Request Received
+                  </h2>
+                  <p className="text-[#6B7280] text-lg max-w-md mb-10">
+                    Thank you. Our team will contact you shortly to confirm your AlignPod order.
+                  </p>
+                  <Link to="/" className="btn-secondary-light">
+                    Back to Homepage
+                  </Link>
+                </motion.div>
+              ) : (
+                <motion.form
+                  key="form"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  onSubmit={handleSubmit}
+                  className="grid grid-cols-1 md:grid-cols-2 gap-6"
+                >
+                  <FormInput required name="name" label="Full Name" placeholder="John Doe" />
+                  <FormInput required name="email" type="email" label="Email Address" placeholder="john@example.com" />
+                  <FormInput required name="phone" type="tel" label="Phone Number" placeholder="+1 (555) 000-0000" />
+                  <FormInput name="quantity" type="number" min="1" label="Quantity" placeholder="1" />
+
+                  <div className="md:col-span-2">
+                    <FormTextarea required name="address" label="Delivery Address" rows={4} placeholder="Street, city, state, ZIP" />
+                  </div>
+
+                  <div className="md:col-span-2">
+                    <FormTextarea name="message" label="Any note or special requirement? (Optional)" rows={4} placeholder="Let us know if there's anything else we should know" />
+                  </div>
+
+                  <button
+                    type="submit"
+                    disabled={status === "submitting"}
+                    className="md:col-span-2 btn-primary-light flex justify-center items-center disabled:opacity-70 disabled:cursor-not-allowed"
+                  >
+                    {status === "submitting" ? (
+                      <motion.div
+                        animate={{ rotate: 360 }}
+                        transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
+                        className="w-6 h-6 border-2 border-white/20 border-t-white rounded-full"
+                      />
+                    ) : (
+                      "Submit Order Request"
+                    )}
+                  </button>
+                </motion.form>
+              )}
+            </AnimatePresence>
+          </motion.div>
         </section>
       </main>
 

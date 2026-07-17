@@ -323,7 +323,7 @@ function Pipeline() {
           variants={fadeInUp}
           className="mb-16"
         >
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-display font-bold tracking-tight mb-6">
+          <h2 className="heading-section">
             How AlignPod Understands Movement
           </h2>
         </motion.div>
@@ -694,10 +694,10 @@ function PersonalizedProfiles() {
           variants={fadeInUp}
           className="mb-16 text-center max-w-3xl mx-auto"
         >
-          <h2 className="text-3xl sm:text-4xl font-display font-bold tracking-tight mb-6">
+          <h2 className="heading-section">
             Personalized For Every User
           </h2>
-          <p className="text-lg text-[#6B7280] leading-relaxed font-light">
+          <p className="text-body text-[#6B7280]">
             Multiple profiles support different sitting styles and family members.
           </p>
         </motion.div>
@@ -768,7 +768,7 @@ function FinalCTA() {
           whileInView="visible"
           viewport={{ once: true }}
           variants={fadeInUp}
-          className="text-5xl sm:text-6xl font-display font-bold tracking-tight mb-12"
+          className="heading-hero mb-12"
         >
           Experience the science behind AlignPod.
         </motion.h2>

@@ -169,10 +169,10 @@ function Shortcomings() {
           variants={fadeInUp}
           className="mb-16 lg:mb-24 text-center max-w-3xl mx-auto"
         >
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-display font-bold tracking-tight mb-6">
+          <h2 className="heading-section text-white">
             Why traditional posture devices fall short.
           </h2>
-          <p className="text-lg sm:text-xl text-white/65 leading-relaxed font-light">
+          <p className="text-body text-white/65">
             We studied the limitations of early posture wearables to understand why people stop using them after a few weeks.
           </p>
         </motion.div>
@@ -223,7 +223,7 @@ function Differences() {
           variants={fadeInUp}
           className="mb-16 lg:mb-24 text-center"
         >
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-display font-bold tracking-tight mb-6">
+          <h2 className="heading-section">
             How AlignPod is different.
           </h2>
         </motion.div>
@@ -326,7 +326,7 @@ function TwoExperiences() {
             <div className="w-16 h-16 rounded-full bg-white/5 border border-white/10 flex items-center justify-center mb-8 text-white relative z-10">
                <Activity className="w-8 h-8" strokeWidth={1.5} />
             </div>
-            <h3 className="text-3xl sm:text-4xl font-display font-bold mb-4 relative z-10">Training Mode</h3>
+            <h3 className="text-3xl font-display font-bold mb-4 relative z-10">Training Mode</h3>
             <p className="text-[#9CA3AF] text-lg leading-relaxed font-light relative z-10">Gentle haptic reminders when you deviate from your calibrated posture. Builds long-term awareness and muscle memory.</p>
           </motion.div>
 
@@ -342,7 +342,7 @@ function TwoExperiences() {
             <div className="w-16 h-16 rounded-full bg-white/5 border border-white/10 flex items-center justify-center mb-8 text-white relative z-10">
                <Vibrate className="w-8 h-8" strokeWidth={1.5} />
             </div>
-            <h3 className="text-3xl sm:text-4xl font-display font-bold mb-4 relative z-10">Therapy Mode</h3>
+            <h3 className="text-3xl font-display font-bold mb-4 relative z-10">Therapy Mode</h3>
             <p className="text-[#9CA3AF] text-lg leading-relaxed font-light relative z-10">Dedicated sessions of rhythmic, soothing vibrations designed to relax the upper back after long sitting hours.</p>
           </motion.div>
         </div>
@@ -598,7 +598,7 @@ function WhyAlignPodCTA() {
           whileInView="visible"
           viewport={{ once: true }}
           variants={fadeInUp}
-          className="text-5xl sm:text-6xl lg:text-7xl font-display font-bold tracking-tight mb-12"
+          className="heading-hero mb-12"
         >
           Ready to experience AlignPod?
         </motion.h2>
