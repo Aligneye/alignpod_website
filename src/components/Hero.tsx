@@ -57,7 +57,7 @@ export function Hero() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-            className="flex flex-col justify-center max-w-2xl order-2 lg:order-1"
+            className="flex flex-col justify-center max-w-2xl"
           >
             <h1 className="heading-hero mb-6 mt-8">
               Redefine your
@@ -100,31 +100,9 @@ export function Hero() {
             </div>
           </motion.div>
 
-          {/* RIGHT SIDE: Product Showcase */}
-          <div className="relative flex justify-center items-center order-1 lg:order-2 h-[40vh] sm:h-[50vh] lg:h-auto">
-            {/* Ambient subtle glow behind product */}
+          {/* RIGHT SIDE: Ambient glow accent (desktop only — no product visual here, video already carries the imagery) */}
+          <div className="relative hidden lg:flex justify-center items-center order-2">
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] max-w-lg bg-white/5 blur-[100px] rounded-full pointer-events-none" />
-
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 1.2, ease: "easeOut", delay: 0.2 }}
-              className="relative z-10 w-full max-w-md"
-            >
-              <motion.div
-                animate={{
-                  y: [-12, 12, -12],
-                  rotateZ: [-1, 1, -1],
-                }}
-                transition={{
-                  repeat: Infinity,
-                  duration: 6,
-                  ease: "easeInOut",
-                }}
-                className="relative flex justify-center drop-shadow-2xl"
-              >
-              </motion.div>
-            </motion.div>
           </div>
         </div>
       </div>

@@ -201,7 +201,7 @@ export function CompanionApp() {
               >
                 <div className="absolute inset-0 bg-gradient-to-br from-gray-50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                 <div className="relative z-10">
-                  <div>
+                  <div className="icon-box-dark group-hover:bg-white group-hover:text-[#111111] transition-colors duration-300">
                     <card.icon className="w-5 h-5" strokeWidth={1.5} />
                   </div>
                   <h4 className="heading-card text-white">
