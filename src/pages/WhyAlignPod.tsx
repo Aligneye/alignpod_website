@@ -1,4 +1,5 @@
 import { motion, AnimatePresence, type Variants } from 'motion/react';
+import { Link } from 'react-router-dom';
 import calibapp from "../assets/calibapp.jpeg";
 import realangle from "../assets/realangle.jpeg";
 import training from "../assets/training.jpeg";
@@ -315,12 +316,13 @@ function TwoExperiences() {
 
         <div className="flex flex-col lg:flex-row gap-6 lg:gap-8 justify-center">
           {/* Training */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
+            whileHover={{ y: -8 }}
             transition={{ duration: 0.8 }}
-            className="flex-1 bg-[#16181C] p-10 lg:p-16 rounded-[40px] border border-white/5 relative overflow-hidden group text-left"
+            className="flex-1 bg-[#16181C] p-10 lg:p-16 rounded-[40px] border border-white/5 relative overflow-hidden group text-left hover:border-white/10 hover:shadow-[0_20px_50px_-15px_rgba(0,0,0,0.4)] transition-[border-color,box-shadow] duration-500"
           >
             <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/10 blur-[80px] rounded-full group-hover:bg-blue-500/20 transition-colors duration-700"></div>
             <div className="w-16 h-16 rounded-full bg-white/5 border border-white/10 flex items-center justify-center mb-8 text-white relative z-10">
@@ -331,12 +333,13 @@ function TwoExperiences() {
           </motion.div>
 
           {/* Therapy */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
+            whileHover={{ y: -8 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="flex-1 bg-[#16181C] p-10 lg:p-16 rounded-[40px] border border-white/5 relative overflow-hidden group text-left"
+            className="flex-1 bg-[#16181C] p-10 lg:p-16 rounded-[40px] border border-white/5 relative overflow-hidden group text-left hover:border-white/10 hover:shadow-[0_20px_50px_-15px_rgba(0,0,0,0.4)] transition-[border-color,box-shadow] duration-500"
           >
             <div className="absolute top-0 left-0 w-64 h-64 bg-emerald-500/10 blur-[80px] rounded-full group-hover:bg-emerald-500/20 transition-colors duration-700"></div>
             <div className="w-16 h-16 rounded-full bg-white/5 border border-white/10 flex items-center justify-center mb-8 text-white relative z-10">
@@ -495,7 +498,7 @@ function Ecosystem() {
 
         {/* Floating Phones Representation */}
         <div className="relative h-[500px] sm:h-[700px] w-full flex justify-center items-center perspective-[2000px]">
-          <div className="absolute left-1/2 top-1/2-translate-x-1/2 -translate-y-1/2 w-[650px] h-[650px] rounded-full bg-cyan-400/10 blur-[120px]" />
+          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[650px] rounded-full bg-cyan-400/10 blur-[120px]" />
            <motion.div 
              animate={{ y: [-15, 15, -15] }}
              transition={{ repeat: Infinity, duration: 7, ease: "easeInOut" }}
@@ -504,12 +507,12 @@ function Ecosystem() {
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-28 h-6 bg-[#E5E7EB] rounded-b-3xl"></div>
               <img
               src={realangle}
-              alt="Live Posture"
+              alt="Live posture angle view in the AlignPod app"
               className="w-full h-full object-cover"
     />
            </motion.div>
 
-           <motion.div 
+           <motion.div
              initial={{ x: 0, rotateY: 0, z: 0 }}
              whileInView={{ x: -180, rotateY: 20, z: -150 }}
              transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
@@ -518,13 +521,13 @@ function Ecosystem() {
              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-28 h-6 bg-[#E5E7EB] rounded-b-3xl"></div>
              <img
               src={training}
-              alt="Live Posture"
+              alt="Training mode screen in the AlignPod app"
               className="w-full h-full object-cover"
     />
-         
+
            </motion.div>
 
-           <motion.div 
+           <motion.div
              initial={{ x: 0, rotateY: 0, z: 0 }}
              whileInView={{ x: 180, rotateY: -20, z: -150 }}
              transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
@@ -533,7 +536,7 @@ function Ecosystem() {
              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-28 h-6 bg-[#E5E7EB] rounded-b-3xl"></div>
                   <img
               src={calibapp}
-              alt="Live Posture"
+              alt="Calibration screen in the AlignPod app"
               className="w-full h-full object-cover"
     />
            </motion.div>
@@ -610,12 +613,12 @@ function WhyAlignPodCTA() {
           variants={fadeInUp}
           className="flex flex-col sm:flex-row items-center gap-6"
         >
-          <button className="w-full sm:w-auto btn-primary-dark">
+          <Link to="/product" className="w-full sm:w-auto btn-primary-dark">
             Explore Product
-          </button>
-          <button className="w-full sm:w-auto btn-secondary-dark">
+          </Link>
+          <Link to="/contact" className="w-full sm:w-auto btn-secondary-dark">
             Contact Us
-          </button>
+          </Link>
         </motion.div>
       </div>
     </section>

@@ -1,9 +1,11 @@
-import { motion, type Variants } from 'motion/react';
+import { motion, useInView, useMotionValue, useTransform, animate, type Variants } from 'motion/react';
+import { useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
 import record from "../assets/record.jpeg";
 import dayrecord from "../assets/dayrecord.jpeg";
-import { 
+import {
   Target, Smartphone, Activity, Vibrate, Users, Check,
   ChevronDown, Brain, Zap, ArrowDown
 } from 'lucide-react';
@@ -224,14 +226,56 @@ function PainReductionChart() {
   );
 }
 
+function StatRing({ value, label }: { value: number; label: string }) {
+  const radius = 42;
+  const circumference = 2 * Math.PI * radius;
+  const ref = useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const count = useMotionValue(0);
+  const rounded = useTransform(count, (latest) => Math.round(latest));
+
+  useEffect(() => {
+    if (!isInView) return;
+    const controls = animate(count, value, { duration: 1.4, ease: "easeOut" });
+    return () => controls.stop();
+  }, [isInView, value, count]);
+
+  return (
+    <motion.div ref={ref} variants={fadeInUp} className="flex flex-col items-center">
+      <div className="relative w-36 h-36 sm:w-40 sm:h-40">
+        <svg viewBox="0 0 100 100" className="w-full h-full -rotate-90">
+          <circle cx="50" cy="50" r={radius} fill="none" stroke="#D1FAE5" strokeWidth="8" />
+          <motion.circle
+            cx="50"
+            cy="50"
+            r={radius}
+            fill="none"
+            stroke="#10B981"
+            strokeWidth="8"
+            strokeLinecap="round"
+            strokeDasharray={circumference}
+            initial={{ strokeDashoffset: circumference }}
+            animate={isInView ? { strokeDashoffset: circumference * (1 - value / 100) } : undefined}
+            transition={{ duration: 1.4, ease: "easeOut" }}
+          />
+        </svg>
+        <div className="absolute inset-0 flex items-center justify-center">
+          <span className="flex items-baseline text-3xl sm:text-4xl font-display font-bold text-emerald-600 tabular-nums">
+            <motion.span>{rounded}</motion.span>%
+          </span>
+        </div>
+      </div>
+      <span className="mt-6 font-medium text-[#6B7280] text-center max-w-[160px]">{label}</span>
+    </motion.div>
+  );
+}
+
 function ResultsStats() {
   const stats = [
     { value: 46, label: "Pain reduction" },
     { value: 86, label: "Posture improvement" },
     { value: 65, label: "Improved sitting discomfort" },
   ];
-  const radius = 42;
-  const circumference = 2 * Math.PI * radius;
 
   return (
     <section className="py-24 lg:py-32 bg-white text-[#111111]">
@@ -247,7 +291,7 @@ function ResultsStats() {
             Real Results
           </span>
           <h2 className="heading-section text-[#111111]">
-            Delivering results. Period.
+            Measurable Results
           </h2>
         </motion.div>
 
@@ -259,33 +303,7 @@ function ResultsStats() {
           className="grid grid-cols-1 sm:grid-cols-3 gap-10 sm:gap-8 mb-16"
         >
           {stats.map((stat) => (
-            <motion.div key={stat.label} variants={fadeInUp} className="flex flex-col items-center">
-              <div className="relative w-36 h-36 sm:w-40 sm:h-40">
-                <svg viewBox="0 0 100 100" className="w-full h-full -rotate-90">
-                  <circle cx="50" cy="50" r={radius} fill="none" stroke="#D1FAE5" strokeWidth="8" />
-                  <motion.circle
-                    cx="50"
-                    cy="50"
-                    r={radius}
-                    fill="none"
-                    stroke="#10B981"
-                    strokeWidth="8"
-                    strokeLinecap="round"
-                    strokeDasharray={circumference}
-                    initial={{ strokeDashoffset: circumference }}
-                    whileInView={{ strokeDashoffset: circumference * (1 - stat.value / 100) }}
-                    transition={{ duration: 1.2, ease: "easeOut" }}
-                    viewport={{ once: true }}
-                  />
-                </svg>
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="text-3xl sm:text-4xl font-display font-bold text-emerald-600">
-                    {stat.value}%
-                  </span>
-                </div>
-              </div>
-              <span className="mt-6 font-medium text-[#6B7280] text-center max-w-[160px]">{stat.label}</span>
-            </motion.div>
+            <StatRing key={stat.label} value={stat.value} label={stat.label} />
           ))}
         </motion.div>
 
@@ -664,17 +682,17 @@ function CompanionApp() {
            >
               <div className="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-5 bg-[#E5E7EB] rounded-b-2xl"></div>
               <span className="font-display font-bold text-lg mb-8">History</span>
-              <img src={dayrecord} alt="record of sessions of day" className='w-full h-full object-cover' />
+              <img src={dayrecord} alt="Daily posture session history in the AlignPod app" className='w-full h-full object-cover' />
            </motion.div>
 
-           <motion.div 
+           <motion.div
              initial={{ x: 0, rotateY: 0, z: 0 }}
              whileInView={{ x: -160, rotateY: 15, z: -100 }}
              transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
              className="hidden lg:flex absolute z-10 w-[240px] sm:w-[280px] h-[480px] sm:h-[560px] bg-[#FAFAFA] rounded-[40px] shadow-xl border-[6px] border-[#E5E7EB] flex-col p-5 items-center pt-16 opacity-90"
            >
              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-5 bg-[#E5E7EB] rounded-b-2xl"></div>
-             <img src={record} alt="record of sessions of day" className='w-full h-full object-cover' />
+             <img src={record} alt="Long-term posture trend record in the AlignPod app" className='w-full h-full object-cover' />
            </motion.div>
         </div>
       </div>
@@ -780,12 +798,12 @@ function FinalCTA() {
           variants={fadeInUp}
           className="flex flex-col sm:flex-row items-center gap-6"
         >
-          <button className="w-full sm:w-auto btn-primary-dark">
+          <Link to="/product" className="w-full sm:w-auto btn-primary-dark">
             Explore Product
-          </button>
-          <button className="w-full sm:w-auto btn-secondary-dark">
+          </Link>
+          <Link to="/contact" className="w-full sm:w-auto btn-secondary-dark">
             Contact Us
-          </button>
+          </Link>
         </motion.div>
       </div>
     </section>

@@ -148,15 +148,22 @@ export function Navbar() {
                   </motion.div>
                 );
               })}
-              <motion.div 
+              <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: navLinks.length * 0.1, duration: 0.4 }}
                 className="mt-auto pb-12"
               >
-                <button className="btn-primary-dark">
+                <Link
+                  to="/buy-now"
+                  onClick={() => {
+                    setIsMobileMenuOpen(false);
+                    trackEvent("buy_now_clicked", { location: "mobile_menu" });
+                  }}
+                  className="btn-primary-dark block text-center"
+                >
                   Buy Now
-                  </button>
+                </Link>
               </motion.div>
             </div>
           </motion.div>
