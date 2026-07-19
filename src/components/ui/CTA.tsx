@@ -1,5 +1,5 @@
 import React from "react";
-import { motion, HTMLMotionProps } from "motion/react";
+import { motion, HTMLMotionProps, type Variants } from "motion/react";
 import clsx from "clsx";
 import { twMerge } from "tailwind-merge";
 import { Button } from "./Button";
@@ -19,9 +19,9 @@ interface CTAProps {
 }
 
 export function CTA({ title, description, primaryAction, secondaryAction, variant = "dark", className }: CTAProps) {
-  const fadeInUp = {
+  const fadeInUp: Variants = {
     hidden: { opacity: 0, y: 40 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } }
+    visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } }
   };
 
   const isDark = variant === "dark";

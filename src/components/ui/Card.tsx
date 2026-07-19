@@ -24,8 +24,10 @@ export const Card = React.forwardRef<HTMLDivElement, CardProps>(
     const classes = cn(baseStyles, variants[variant], className);
 
     if (asMotion) {
+      const motionProps = props as unknown as HTMLMotionProps<"div">;
+
       return (
-        <motion.div ref={ref} className={classes} {...(props as HTMLMotionProps<"div">)}>
+        <motion.div ref={ref} className={classes} {...motionProps}>
           {children}
         </motion.div>
       );

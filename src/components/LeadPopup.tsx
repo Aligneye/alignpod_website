@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
 import { trackEvent } from "../utils/analytics";
+import { supabase } from "../lib/supabase";
 
 export function LeadPopup() {
   const [showPopup, setShowPopup] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-
-  const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyWrXO4DRNMl5fguTkL3_PXhtwvHTfS5yfsYcML0TJFbatzigLODPwAYcffCws2Hf7d9A/exec";
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -30,18 +29,19 @@ export function LeadPopup() {
       email: (form.elements.namedItem("email") as HTMLInputElement).value,
       phone: (form.elements.namedItem("phone") as HTMLInputElement).value,
       message: (form.elements.namedItem("message") as HTMLTextAreaElement).value,
-      source: "Website Popup",
     };
 
     try {
-      await fetch(GOOGLE_SCRIPT_URL, {
-        method: "POST",
-        mode: "no-cors",
-        headers: {
-          "Content-Type": "text/plain;charset=utf-8",
+      const { error } = await supabase.from("contact_requests").insert([
+        {
+          name: data.name,
+          email: data.email,
+          phone: data.phone,
+          question: data.message,
         },
-        body: JSON.stringify(data),
-      });
+      ]);
+
+      if (error) throw error;
 
       setSubmitted(true);
       localStorage.setItem("leadPopupSubmitted", "true");
@@ -53,6 +53,7 @@ export function LeadPopup() {
         setShowPopup(false);
       }, 2000);
     } catch (error) {
+      console.error("Supabase insert error:", error);
       alert("Something went wrong. Please try again.");
     } finally {
       setIsSubmitting(false);
@@ -87,7 +88,7 @@ return (
       {!submitted ? (
         <div className="relative z-10 p-6 sm:p-6 pt-2">
           <div className="inline-flex items-center rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-xs text-white/70 mb-5">
-            AlignEye Support
+            Connect with us
           </div>
 
           <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight mb-3">

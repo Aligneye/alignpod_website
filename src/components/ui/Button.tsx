@@ -33,8 +33,10 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     const classes = cn(baseStyles, variants[variant], sizes[size], className);
 
     if (asMotion) {
+      const motionProps = props as unknown as HTMLMotionProps<"button">;
+
       return (
-        <motion.button ref={ref} className={classes} {...(props as HTMLMotionProps<"button">)}>
+        <motion.button ref={ref} className={classes} {...motionProps}>
           {children}
         </motion.button>
       );

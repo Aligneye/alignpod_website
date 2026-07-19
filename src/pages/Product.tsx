@@ -1,4 +1,4 @@
-import { motion } from 'motion/react';
+import { motion, type Variants } from 'motion/react';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
 import {Link} from "react-router-dom";
@@ -11,9 +11,9 @@ import {
   Check, Maximize, Feather, Layout, Settings
 } from 'lucide-react';
 
-const fadeInUp = {
+const fadeInUp: Variants = {
   hidden: { opacity: 0, y: 40 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } }
+  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } }
 };
 
 const staggerContainer = {
@@ -455,7 +455,7 @@ function Specifications() {
           variants={fadeInUp}
           className="mb-16 text-center"
         >
-          <h2 className="text-3xl sm:text-4xl font-display font-bold tracking-tight mb-6">
+          <h2 className="heading-section">
             Built for everyday posture support.
           </h2>
         </motion.div>
@@ -498,10 +498,11 @@ function FinalCTA() {
           transition={{ duration: 1 }}
           className="mb-16"
         >
-          <div className="w-[140px] h-[220px] mx-auto bg-gradient-to-br from-[#2A2E35] to-[#16181C] rounded-[48px] shadow-[0_20px_40px_rgba(0,0,0,0.5),inset_0_2px_4px_rgba(255,255,255,0.1)] border border-[#3A3F47] flex flex-col items-center justify-center relative overflow-hidden backdrop-blur-xl">
-               <div className="absolute top-0 left-0 right-0 h-[40%] bg-gradient-to-b from-white/10 to-transparent rounded-t-[48px]" />
-               <div className="w-[60px] h-[60px] bg-gradient-to-br from-[#FAFAFA] to-[#E5E5E5] rounded-full shadow-inner border border-white/80" />
-          </div>
+          <img
+            src={apfinal}
+            alt="AlignPod device"
+            className="w-[150px] mx-auto object-contain drop-shadow-[0_30px_60px_rgba(0,0,0,0.5)]"
+          />
         </motion.div>
 
         <motion.h2 
@@ -509,7 +510,7 @@ function FinalCTA() {
           whileInView="visible"
           viewport={{ once: true }}
           variants={fadeInUp}
-          className="text-5xl sm:text-6xl lg:text-7xl font-display font-bold tracking-tight mb-8"
+          className="heading-hero mb-8"
         >
           Ready to experience AlignPod?
         </motion.h2>

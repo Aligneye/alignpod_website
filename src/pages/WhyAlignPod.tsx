@@ -1,18 +1,23 @@
-import { motion, AnimatePresence } from 'motion/react';
+import { motion, AnimatePresence, type Variants } from 'motion/react';
+import { Link } from 'react-router-dom';
 import calibapp from "../assets/calibapp.jpeg";
 import realangle from "../assets/realangle.jpeg";
 import training from "../assets/training.jpeg";
+import apfinal from "../assets/apfinal2.png";
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
+import { useMediaQuery } from '../hooks/useMediaQuery';
+import { RealLifePinned } from '../components/RealLifePinned';
+import { RealLifeMobile } from '../components/RealLifeMobile';
 import { 
   Target, XCircle, SlidersHorizontal, 
   Smartphone, Activity, Vibrate, Users, Check,
   ChevronDown
 } from 'lucide-react';
 
-const fadeInUp = {
+const fadeInUp: Variants = {
   hidden: { opacity: 0, y: 40 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } }
+  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } }
 };
 
 const staggerContainer = {
@@ -61,7 +66,7 @@ function Hero() {
           AlignPod wasn't created to simply remind you to sit straighter. It was designed to help people build healthier posture habits through awareness, personalization, and consistency.
         </motion.p>
 
-        {/* Floating Device Placeholder */}
+        {/* Floating Device Visual */}
         <motion.div
           initial={{ opacity: 0, y: 40, scale: 0.95 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -71,17 +76,16 @@ function Hero() {
           <motion.div
             animate={{ y: [-15, 15, -15] }}
             transition={{ repeat: Infinity, duration: 8, ease: "easeInOut" }}
-            className="relative z-10 w-[140px] sm:w-[160px] h-[220px] sm:h-[240px] bg-gradient-to-br from-[#8A8D91] via-[#6F7378] to-[#4B4F55] rounded-[20px] shadow-[0_40px_80px_rgba(0,0,0,0.1),inset_0_2px_4px_rgba(255,255,255,0.8),inset_0_-4px_8px_rgba(0,0,0,0.05)] border border-[#FFFFFF] flex flex-col items-center justify-center relative overflow-hidden backdrop-blur-xl"
+            className="relative z-10"
           >
-            {/* Glass reflection */}
-            <div className="absolute top-0 left-0 right-0 h-[40%] bg-gradient-to-b from-white/80 to-transparent pointer-events-none rounded-t-[40px]" />
-            {/* Center Button */}
-            <div className="relative w-[70px] h-[70px] bg-gradient-to-b from-[#FFFFFF] to-[#F0F0F0] rounded-[15px] shadow-[0_8px_24px_rgba(0,0,0,0.1),inset_0_-2px_4px_rgba(0,0,0,0.02)] border border-white flex items-center justify-center">
-               <div className="w-[50px] h-[50px] rounded-full bg-gradient-to-br from-[#FAFAFA] to-[#E5E5E5] shadow-[inset_0_2px_6px_rgba(0,0,0,0.03)]" />
-            </div>
+            <img
+              src={apfinal}
+              alt="AlignPod device"
+              className="w-[160px] sm:w-[200px] object-contain drop-shadow-[0_40px_80px_rgba(0,0,0,0.35)]"
+            />
           </motion.div>
           {/* Shadow */}
-          <motion.div 
+          <motion.div
             animate={{ scale: [1, 0.7, 1], opacity: [0.15, 0.05, 0.15] }}
             transition={{ repeat: Infinity, duration: 8, ease: "easeInOut" }}
             className="absolute -bottom-8 w-32 h-6 bg-black rounded-[100%] blur-[12px]"
@@ -166,10 +170,10 @@ function Shortcomings() {
           variants={fadeInUp}
           className="mb-16 lg:mb-24 text-center max-w-3xl mx-auto"
         >
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-display font-bold tracking-tight mb-6">
+          <h2 className="heading-section text-white">
             Why traditional posture devices fall short.
           </h2>
-          <p className="text-lg sm:text-xl text-white/65 leading-relaxed font-light">
+          <p className="text-body text-white/65">
             We studied the limitations of early posture wearables to understand why people stop using them after a few weeks.
           </p>
         </motion.div>
@@ -220,7 +224,7 @@ function Differences() {
           variants={fadeInUp}
           className="mb-16 lg:mb-24 text-center"
         >
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-display font-bold tracking-tight mb-6">
+          <h2 className="heading-section">
             How AlignPod is different.
           </h2>
         </motion.div>
@@ -233,18 +237,17 @@ function Differences() {
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8"
         >
           {differencesData.map((item, idx) => (
-            <motion.div 
+            <motion.div
               key={idx}
               variants={fadeInUp}
-              className="group card-light flex flex-col"
+              className="group card-light flex flex-col cursor-pointer transition-[background-color,border-color,box-shadow,transform] duration-[350ms] ease-in-out hover:bg-black hover:border-black hover:shadow-[0_20px_50px_rgba(0,0,0,0.35)] hover:scale-[1.02]"
             >
-              <div className="absolute inset-0 bg-gradient-to-br from-white/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
               <div className="relative z-10 flex flex-col flex-grow">
-                <div className="icon-box-light bg-white border-gray-200 group-hover:bg-[#111111] group-hover:text-white transition-colors duration-300">
+                <div className="icon-box-light group-hover:bg-white/10 group-hover:border-white/10 group-hover:text-white transition-colors duration-[350ms] ease-in-out">
                   <item.icon className="w-5 h-5" strokeWidth={1.5} />
                 </div>
-                <h3 className="heading-card text-xl">{item.title}</h3>
-                <p className="text-body text-[#6B7280]">{item.desc}</p>
+                <h3 className="heading-card text-xl text-[#111111] group-hover:text-white transition-colors duration-[350ms] ease-in-out">{item.title}</h3>
+                <p className="text-body text-[#6B7280] group-hover:text-white transition-colors duration-[350ms] ease-in-out">{item.desc}</p>
               </div>
             </motion.div>
           ))}
@@ -255,18 +258,21 @@ function Differences() {
 }
 
 const lifestyles = [
-  { title: "Office Professionals", desc: "Maintain energy and reduce the strain of long meetings and focused desk work. AlignPod acts as a silent partner to keep you aligned without breaking your flow.", image: "https://images.unsplash.com/photo-1497215728101-856f4ea42174?q=80&w=800&auto=format&fit=crop" },
-  { title: "Students", desc: "Long study sessions can compromise posture. The dedicated study profile ensures you stay aware and focused without annoying vibrations.", image: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?q=80&w=800&auto=format&fit=crop" },
-  { title: "Developers", desc: "Deep coding sessions often result in the 'developer hunch.' Set a relaxed coding profile that only alerts you when you deeply slouch.", image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=800&auto=format&fit=crop" },
-  { title: "Gamers", desc: "Keep a healthy posture during intense gaming sessions. A specialized profile accommodates natural leans while preventing severe slumps.", image: "https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=800&auto=format&fit=crop" },
-  { title: "Remote Workers", desc: "Working from home often means the sofa becomes the office. AlignPod helps maintain structure even in relaxed, unstructured environments.", image: "https://images.unsplash.com/photo-1593642632823-8f785ba67e45?q=80&w=800&auto=format&fit=crop" }
+  { num: "01", title: "Office Professionals", desc: "Maintain energy and reduce the strain of long meetings and focused desk work. AlignPod acts as a silent partner to keep you aligned without breaking your flow.", image: "https://images.unsplash.com/photo-1497215728101-856f4ea42174?q=80&w=800&auto=format&fit=crop" },
+  { num: "02", title: "Students", desc: "Long study sessions can compromise posture. The dedicated study profile ensures you stay aware and focused without annoying vibrations.", image: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?q=80&w=800&auto=format&fit=crop" },
+  { num: "03", title: "Developers", desc: "Deep coding sessions often result in the 'developer hunch.' Set a relaxed coding profile that only alerts you when you deeply slouch.", image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=800&auto=format&fit=crop" },
+  { num: "04", title: "Gamers", desc: "Keep a healthy posture during intense gaming sessions. A specialized profile accommodates natural leans while preventing severe slumps.", image: "https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=800&auto=format&fit=crop" },
+  { num: "05", title: "Remote Workers", desc: "Working from home often means the sofa becomes the office. AlignPod helps maintain structure even in relaxed, unstructured environments.", image: "https://images.unsplash.com/photo-1593642632823-8f785ba67e45?q=80&w=800&auto=format&fit=crop" }
 ];
 
 function RealLife() {
+  // Pinned scroll effect only makes sense on wider, two-column layouts.
+  const isDesktop = useMediaQuery("(min-width: 1024px)");
+
   return (
-    <section className="py-24 lg:py-32 bg-[#F8F8F6] text-[#111111] overflow-hidden">
+    <section className="py-24 lg:py-32 bg-[#F8F8F6] text-[#111111]">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <motion.div 
+        <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
@@ -277,37 +283,13 @@ function RealLife() {
             Designed around real life.
           </h2>
         </motion.div>
-
-        <div className="flex flex-col gap-24 lg:gap-32">
-          {lifestyles.map((item, idx) => {
-            const isEven = idx % 2 === 0;
-            return (
-              <div key={idx} className={`flex flex-col ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'} gap-12 lg:gap-20 items-center`}>
-                <motion.div 
-                  initial={{ opacity: 0, x: isEven ? -40 : 40 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true, margin: "-100px" }}
-                  transition={{ duration: 0.8, ease: "easeOut" }}
-                  className="w-full lg:w-1/2 relative rounded-[40px] overflow-hidden aspect-[4/3] bg-gray-200 border border-gray-200 shadow-sm"
-                >
-                  <img src={item.image} alt={item.title} className="w-full h-full object-cover" loading="lazy" />
-                  <div className="absolute inset-0 bg-black/5 mix-blend-multiply"></div>
-                </motion.div>
-                <motion.div 
-                  initial={{ opacity: 0, y: 40 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-100px" }}
-                  transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-                  className="w-full lg:w-1/2 flex flex-col"
-                >
-                  <h3 className="text-3xl sm:text-4xl lg:text-5xl font-display font-bold tracking-tight mb-6">{item.title}</h3>
-                  <p className="text-lg sm:text-xl text-[#6B7280] leading-relaxed font-light">{item.desc}</p>
-                </motion.div>
-              </div>
-            );
-          })}
-        </div>
       </div>
+
+      {isDesktop ? (
+        <RealLifePinned lifestyles={lifestyles} />
+      ) : (
+        <RealLifeMobile lifestyles={lifestyles} />
+      )}
     </section>
   );
 }
@@ -334,34 +316,36 @@ function TwoExperiences() {
 
         <div className="flex flex-col lg:flex-row gap-6 lg:gap-8 justify-center">
           {/* Training */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
+            whileHover={{ y: -8 }}
             transition={{ duration: 0.8 }}
-            className="flex-1 bg-[#16181C] p-10 lg:p-16 rounded-[40px] border border-white/5 relative overflow-hidden group text-left"
+            className="flex-1 bg-[#16181C] p-10 lg:p-16 rounded-[40px] border border-white/5 relative overflow-hidden group text-left hover:border-white/10 hover:shadow-[0_20px_50px_-15px_rgba(0,0,0,0.4)] transition-[border-color,box-shadow] duration-500"
           >
             <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/10 blur-[80px] rounded-full group-hover:bg-blue-500/20 transition-colors duration-700"></div>
             <div className="w-16 h-16 rounded-full bg-white/5 border border-white/10 flex items-center justify-center mb-8 text-white relative z-10">
                <Activity className="w-8 h-8" strokeWidth={1.5} />
             </div>
-            <h3 className="text-3xl sm:text-4xl font-display font-bold mb-4 relative z-10">Training Mode</h3>
+            <h3 className="text-3xl font-display font-bold mb-4 relative z-10">Training Mode</h3>
             <p className="text-[#9CA3AF] text-lg leading-relaxed font-light relative z-10">Gentle haptic reminders when you deviate from your calibrated posture. Builds long-term awareness and muscle memory.</p>
           </motion.div>
 
           {/* Therapy */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
+            whileHover={{ y: -8 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="flex-1 bg-[#16181C] p-10 lg:p-16 rounded-[40px] border border-white/5 relative overflow-hidden group text-left"
+            className="flex-1 bg-[#16181C] p-10 lg:p-16 rounded-[40px] border border-white/5 relative overflow-hidden group text-left hover:border-white/10 hover:shadow-[0_20px_50px_-15px_rgba(0,0,0,0.4)] transition-[border-color,box-shadow] duration-500"
           >
             <div className="absolute top-0 left-0 w-64 h-64 bg-emerald-500/10 blur-[80px] rounded-full group-hover:bg-emerald-500/20 transition-colors duration-700"></div>
             <div className="w-16 h-16 rounded-full bg-white/5 border border-white/10 flex items-center justify-center mb-8 text-white relative z-10">
                <Vibrate className="w-8 h-8" strokeWidth={1.5} />
             </div>
-            <h3 className="text-3xl sm:text-4xl font-display font-bold mb-4 relative z-10">Therapy Mode</h3>
+            <h3 className="text-3xl font-display font-bold mb-4 relative z-10">Therapy Mode</h3>
             <p className="text-[#9CA3AF] text-lg leading-relaxed font-light relative z-10">Dedicated sessions of rhythmic, soothing vibrations designed to relax the upper back after long sitting hours.</p>
           </motion.div>
         </div>
@@ -514,7 +498,7 @@ function Ecosystem() {
 
         {/* Floating Phones Representation */}
         <div className="relative h-[500px] sm:h-[700px] w-full flex justify-center items-center perspective-[2000px]">
-          <div className="absolute left-1/2 top-1/2-translate-x-1/2 -translate-y-1/2 w-[650px] h-[650px] rounded-full bg-cyan-400/10 blur-[120px]" />
+          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[650px] rounded-full bg-cyan-400/10 blur-[120px]" />
            <motion.div 
              animate={{ y: [-15, 15, -15] }}
              transition={{ repeat: Infinity, duration: 7, ease: "easeInOut" }}
@@ -523,12 +507,12 @@ function Ecosystem() {
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-28 h-6 bg-[#E5E7EB] rounded-b-3xl"></div>
               <img
               src={realangle}
-              alt="Live Posture"
+              alt="Live posture angle view in the AlignPod app"
               className="w-full h-full object-cover"
     />
            </motion.div>
 
-           <motion.div 
+           <motion.div
              initial={{ x: 0, rotateY: 0, z: 0 }}
              whileInView={{ x: -180, rotateY: 20, z: -150 }}
              transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
@@ -537,13 +521,13 @@ function Ecosystem() {
              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-28 h-6 bg-[#E5E7EB] rounded-b-3xl"></div>
              <img
               src={training}
-              alt="Live Posture"
+              alt="Training mode screen in the AlignPod app"
               className="w-full h-full object-cover"
     />
-         
+
            </motion.div>
 
-           <motion.div 
+           <motion.div
              initial={{ x: 0, rotateY: 0, z: 0 }}
              whileInView={{ x: 180, rotateY: -20, z: -150 }}
              transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
@@ -552,7 +536,7 @@ function Ecosystem() {
              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-28 h-6 bg-[#E5E7EB] rounded-b-3xl"></div>
                   <img
               src={calibapp}
-              alt="Live Posture"
+              alt="Calibration screen in the AlignPod app"
               className="w-full h-full object-cover"
     />
            </motion.div>
@@ -605,10 +589,11 @@ function WhyAlignPodCTA() {
           transition={{ duration: 1 }}
           className="mb-16"
         >
-          <div className="w-[120px] h-[200px] mx-auto bg-gradient-to-br from-[#2A2E35] to-[#16181C] rounded-[40px] shadow-[0_20px_40px_rgba(0,0,0,0.5),inset_0_2px_4px_rgba(255,255,255,0.1)] border border-[#3A3F47] flex flex-col items-center justify-center relative overflow-hidden backdrop-blur-xl">
-               <div className="absolute top-0 left-0 right-0 h-[40%] bg-gradient-to-b from-white/10 to-transparent rounded-t-[40px]" />
-               <div className="w-[50px] h-[50px] bg-gradient-to-br from-[#FAFAFA] to-[#E5E5E5] rounded-full shadow-inner border border-white/80" />
-          </div>
+          <img
+            src={apfinal}
+            alt="AlignPod device"
+            className="w-[140px] mx-auto object-contain drop-shadow-[0_30px_60px_rgba(0,0,0,0.5)]"
+          />
         </motion.div>
 
         <motion.h2 
@@ -616,7 +601,7 @@ function WhyAlignPodCTA() {
           whileInView="visible"
           viewport={{ once: true }}
           variants={fadeInUp}
-          className="text-5xl sm:text-6xl lg:text-7xl font-display font-bold tracking-tight mb-12"
+          className="heading-hero mb-12"
         >
           Ready to experience AlignPod?
         </motion.h2>
@@ -628,12 +613,12 @@ function WhyAlignPodCTA() {
           variants={fadeInUp}
           className="flex flex-col sm:flex-row items-center gap-6"
         >
-          <button className="w-full sm:w-auto btn-primary-dark">
+          <Link to="/product" className="w-full sm:w-auto btn-primary-dark">
             Explore Product
-          </button>
-          <button className="w-full sm:w-auto btn-secondary-dark">
+          </Link>
+          <Link to="/contact" className="w-full sm:w-auto btn-secondary-dark">
             Contact Us
-          </button>
+          </Link>
         </motion.div>
       </div>
     </section>

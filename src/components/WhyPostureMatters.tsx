@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "motion/react";
+import { motion, AnimatePresence, type Variants } from "motion/react";
 import neckBackPain from "../assets/neck-back-pain.jpg";
 import shoulderTightness from "../assets/shoulder-tightness.jpg";
 import lowEnergyFatigue from "../assets/low-energy-fatigue.jpg";
@@ -44,28 +44,30 @@ const steps = [
   },
 ];
 
-const fadeInUp = {
+const fadeInUp: Variants = {
   hidden: { opacity: 0, y: 40 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] as const },
+    transition: { duration: 0.8, ease: "easeOut" },
   },
 };
 
 export function WhyPostureMatters() {
   const [activeStep, setActiveStep] = useState<number | null>(1);
 
+  // Restarts on every activeStep change (auto-advance or manual click) so the
+  // countdown — and its visible progress bar below — always reflects real time
+  // left on the currently shown step, instead of drifting after a manual pick.
   useEffect(() => {
-    const interval = window.setInterval(() => {
-      setActiveStep((current) => {
-        const nextStep = (current ?? 1) % steps.length + 1;
-        return nextStep;
-      });
+    if (activeStep === null) return;
+
+    const timeout = window.setTimeout(() => {
+      setActiveStep((current) => ((current ?? 0) % steps.length) + 1);
     }, 5000);
 
-    return () => window.clearInterval(interval);
-  }, []);
+    return () => window.clearTimeout(timeout);
+  }, [activeStep]);
 
   const handleToggle = (stepId: number) => {
     setActiveStep((current) => (current === stepId ? null : stepId));
@@ -117,10 +119,11 @@ export function WhyPostureMatters() {
                   >
                     <button
                       onClick={() => handleToggle(step.id)}
-                      className={`w-full rounded-[22px] border px-5 py-4 text-left transition-all duration-300 ease-out ${
+                      aria-expanded={isActive}
+                      className={`relative w-full overflow-hidden rounded-[22px] border px-5 py-4 text-left transition-all duration-300 ease-out ${
                         isActive
                           ? "border-[#111111] bg-[#111111] text-white shadow-[0_12px_35px_rgba(17,17,17,0.16)]"
-                          : "border-white/60 bg-white/70 text-[#f5f5f5] hover:bg-white/90 hover:text-[#111111]"
+                          : "border-gray-200 bg-white/70 text-[#111111] hover:bg-white hover:border-gray-300 hover:shadow-[0_4px_20px_rgba(0,0,0,0.04)]"
                       }`}
                     >
                       <div className="flex items-center justify-between gap-4">
@@ -131,6 +134,19 @@ export function WhyPostureMatters() {
                           {step.title}
                         </span>
                       </div>
+
+                      {/* Auto-advance progress — fills over the 5s dwell time on this step */}
+                      {isActive && (
+                        <motion.div
+                          key={`progress-${step.id}`}
+                          initial={{ scaleX: 0 }}
+                          animate={{ scaleX: 1 }}
+                          transition={{ duration: 5, ease: "linear" }}
+                          style={{ transformOrigin: "left" }}
+                          className="absolute bottom-0 left-0 h-[3px] w-full bg-white/40"
+                          aria-hidden="true"
+                        />
+                      )}
                     </button>
 
                     <AnimatePresence initial={false}>

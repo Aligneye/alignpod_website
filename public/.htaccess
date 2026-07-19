@@ -1,0 +1,10 @@
+RewriteEngine On
+
+# Serve real files and directories directly
+RewriteCond %{REQUEST_FILENAME} -f
+RewriteRule ^ - [L]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# Fall back to index.html for client-side routes only
+RewriteRule ^ index.html [L]
