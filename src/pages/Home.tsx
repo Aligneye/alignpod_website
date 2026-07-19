@@ -22,10 +22,10 @@ export default function Home() {
       <IntelligentModes />
       <CompanionApp />
       <EarlyUserFeedback />
-      <Footer />
+      <FinalCTA />
       <FAQ />
       <BackedByVisionaries />
-      <FinalCTA />
+      <Footer />
       
     </main>
   );

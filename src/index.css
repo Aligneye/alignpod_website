@@ -5,7 +5,7 @@ body,
 #root {
   width: 100%;
   max-width: 100%;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 @theme {
@@ -21,7 +21,7 @@ body,
 @layer base {
   body {
     @apply bg-deep-black text-white antialiased selection:bg-white selection:text-black;
-    overflow-x: hidden;
+    overflow-x: clip;
   }
 }
 

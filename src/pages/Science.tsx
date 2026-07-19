@@ -1,16 +1,18 @@
-import { motion } from 'motion/react';
+import { motion, useInView, useMotionValue, useTransform, animate, type Variants } from 'motion/react';
+import { useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
 import record from "../assets/record.jpeg";
 import dayrecord from "../assets/dayrecord.jpeg";
-import { 
+import {
   Target, Smartphone, Activity, Vibrate, Users, Check,
   ChevronDown, Brain, Zap, ArrowDown
 } from 'lucide-react';
 
-const fadeInUp = {
+const fadeInUp: Variants = {
   hidden: { opacity: 0, y: 40 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } }
+  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } }
 };
 
 const staggerContainer = {
@@ -143,6 +145,182 @@ function WhyPostureMatters() {
   );
 }
 
+function PainReductionChart() {
+  const points = [
+    { x: 40, y: 42, label: "Before" },
+    { x: 200, y: 112, label: "Mid Training Plan" },
+    { x: 360, y: 182, label: "End Of Training Plan" },
+  ];
+
+  return (
+    <section className="py-24 lg:py-32 bg-[#0E1014] text-white overflow-hidden relative">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,#1A1E26_0%,transparent_70%)] opacity-80"></div>
+
+      <div className="relative z-10 max-w-4xl mx-auto px-6 lg:px-8 text-center">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={fadeInUp}
+          className="mb-16"
+        >
+          <span className="inline-block text-xs font-semibold tracking-[0.2em] text-white/60 uppercase mb-4">
+            Our users report
+          </span>
+          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-display font-bold tracking-tight">
+            46% less pain
+          </h2>
+        </motion.div>
+
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={fadeInUp}
+          className="flex items-stretch gap-4 sm:gap-8 text-left"
+        >
+          <div className="flex flex-col justify-between py-2 text-xs sm:text-sm text-white/50 font-medium shrink-0">
+            <span>Worst Pain</span>
+            <span>Moderate Pain</span>
+            <span>No Pain</span>
+          </div>
+
+          <div className="flex-1 min-w-0">
+            <svg viewBox="0 0 400 220" className="w-full h-auto">
+              <motion.path
+                d="M40,42 C110,60 140,112 200,112 C260,112 300,155 360,182"
+                fill="none"
+                stroke="#34D399"
+                strokeWidth="2"
+                strokeLinecap="round"
+                initial={{ pathLength: 0 }}
+                whileInView={{ pathLength: 1 }}
+                transition={{ duration: 1.5, ease: "easeInOut" }}
+                viewport={{ once: true }}
+              />
+              {points.map((p, i) => (
+                <motion.circle
+                  key={p.label}
+                  cx={p.x}
+                  cy={p.y}
+                  r="6"
+                  fill="#34D399"
+                  stroke="#0E1014"
+                  strokeWidth="3"
+                  initial={{ scale: 0 }}
+                  whileInView={{ scale: 1 }}
+                  transition={{ delay: 1 + i * 0.15, duration: 0.3 }}
+                  viewport={{ once: true }}
+                />
+              ))}
+            </svg>
+            <div className="flex justify-between text-xs sm:text-sm text-white/50 font-medium mt-2 gap-2">
+              <span className="text-left">{points[0].label}</span>
+              <span className="text-center">{points[1].label}</span>
+              <span className="text-right">{points[2].label}</span>
+            </div>
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  );
+}
+
+function StatRing({ value, label }: { value: number; label: string }) {
+  const radius = 42;
+  const circumference = 2 * Math.PI * radius;
+  const ref = useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const count = useMotionValue(0);
+  const rounded = useTransform(count, (latest) => Math.round(latest));
+
+  useEffect(() => {
+    if (!isInView) return;
+    const controls = animate(count, value, { duration: 1.4, ease: "easeOut" });
+    return () => controls.stop();
+  }, [isInView, value, count]);
+
+  return (
+    <motion.div ref={ref} variants={fadeInUp} className="flex flex-col items-center">
+      <div className="relative w-36 h-36 sm:w-40 sm:h-40">
+        <svg viewBox="0 0 100 100" className="w-full h-full -rotate-90">
+          <circle cx="50" cy="50" r={radius} fill="none" stroke="#D1FAE5" strokeWidth="8" />
+          <motion.circle
+            cx="50"
+            cy="50"
+            r={radius}
+            fill="none"
+            stroke="#10B981"
+            strokeWidth="8"
+            strokeLinecap="round"
+            strokeDasharray={circumference}
+            initial={{ strokeDashoffset: circumference }}
+            animate={isInView ? { strokeDashoffset: circumference * (1 - value / 100) } : undefined}
+            transition={{ duration: 1.4, ease: "easeOut" }}
+          />
+        </svg>
+        <div className="absolute inset-0 flex items-center justify-center">
+          <span className="flex items-baseline text-3xl sm:text-4xl font-display font-bold text-emerald-600 tabular-nums">
+            <motion.span>{rounded}</motion.span>%
+          </span>
+        </div>
+      </div>
+      <span className="mt-6 font-medium text-[#6B7280] text-center max-w-[160px]">{label}</span>
+    </motion.div>
+  );
+}
+
+function ResultsStats() {
+  const stats = [
+    { value: 46, label: "Pain reduction" },
+    { value: 86, label: "Posture improvement" },
+    { value: 65, label: "Improved sitting discomfort" },
+  ];
+
+  return (
+    <section className="py-24 lg:py-32 bg-white text-[#111111]">
+      <div className="max-w-5xl mx-auto px-6 lg:px-8 text-center">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={fadeInUp}
+          className="mb-16"
+        >
+          <span className="inline-block text-xs font-semibold tracking-[0.2em] text-gray-500 uppercase mb-4">
+            Real Results
+          </span>
+          <h2 className="heading-section text-[#111111]">
+            Measurable Results
+          </h2>
+        </motion.div>
+
+        <motion.div
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          className="grid grid-cols-1 sm:grid-cols-3 gap-10 sm:gap-8 mb-16"
+        >
+          {stats.map((stat) => (
+            <StatRing key={stat.label} value={stat.value} label={stat.label} />
+          ))}
+        </motion.div>
+
+        <motion.p
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={fadeInUp}
+          className="text-xl sm:text-2xl font-display font-semibold text-[#111111]"
+        >
+          <span className="text-emerald-600">4 out of 5</span> would recommend
+        </motion.p>
+      </div>
+    </section>
+  );
+}
+
 function Pipeline() {
   const steps = [
     { title: "Body Movement", icon: Activity },
@@ -163,7 +341,7 @@ function Pipeline() {
           variants={fadeInUp}
           className="mb-16"
         >
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-display font-bold tracking-tight mb-6">
+          <h2 className="heading-section">
             How AlignPod Understands Movement
           </h2>
         </motion.div>
@@ -504,17 +682,17 @@ function CompanionApp() {
            >
               <div className="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-5 bg-[#E5E7EB] rounded-b-2xl"></div>
               <span className="font-display font-bold text-lg mb-8">History</span>
-              <img src={dayrecord} alt="record of sessions of day" className='w-full h-full object-cover' />
+              <img src={dayrecord} alt="Daily posture session history in the AlignPod app" className='w-full h-full object-cover' />
            </motion.div>
 
-           <motion.div 
+           <motion.div
              initial={{ x: 0, rotateY: 0, z: 0 }}
              whileInView={{ x: -160, rotateY: 15, z: -100 }}
              transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
              className="hidden lg:flex absolute z-10 w-[240px] sm:w-[280px] h-[480px] sm:h-[560px] bg-[#FAFAFA] rounded-[40px] shadow-xl border-[6px] border-[#E5E7EB] flex-col p-5 items-center pt-16 opacity-90"
            >
              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-5 bg-[#E5E7EB] rounded-b-2xl"></div>
-             <img src={record} alt="record of sessions of day" className='w-full h-full object-cover' />
+             <img src={record} alt="Long-term posture trend record in the AlignPod app" className='w-full h-full object-cover' />
            </motion.div>
         </div>
       </div>
@@ -534,10 +712,10 @@ function PersonalizedProfiles() {
           variants={fadeInUp}
           className="mb-16 text-center max-w-3xl mx-auto"
         >
-          <h2 className="text-3xl sm:text-4xl font-display font-bold tracking-tight mb-6">
+          <h2 className="heading-section">
             Personalized For Every User
           </h2>
-          <p className="text-lg text-[#6B7280] leading-relaxed font-light">
+          <p className="text-body text-[#6B7280]">
             Multiple profiles support different sitting styles and family members.
           </p>
         </motion.div>
@@ -608,7 +786,7 @@ function FinalCTA() {
           whileInView="visible"
           viewport={{ once: true }}
           variants={fadeInUp}
-          className="text-5xl sm:text-6xl font-display font-bold tracking-tight mb-12"
+          className="heading-hero mb-12"
         >
           Experience the science behind AlignPod.
         </motion.h2>
@@ -620,12 +798,12 @@ function FinalCTA() {
           variants={fadeInUp}
           className="flex flex-col sm:flex-row items-center gap-6"
         >
-          <button className="w-full sm:w-auto btn-primary-dark">
+          <Link to="/product" className="w-full sm:w-auto btn-primary-dark">
             Explore Product
-          </button>
-          <button className="w-full sm:w-auto btn-secondary-dark">
+          </Link>
+          <Link to="/contact" className="w-full sm:w-auto btn-secondary-dark">
             Contact Us
-          </button>
+          </Link>
         </motion.div>
       </div>
     </section>
@@ -638,6 +816,8 @@ export default function Science() {
       <Navbar />
       <Hero />
       <WhyPostureMatters />
+      <PainReductionChart />
+      <ResultsStats />
       <Pipeline />
       <MotionSensing />
       <SmartCalibration />

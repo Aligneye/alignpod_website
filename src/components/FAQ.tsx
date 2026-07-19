@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion, AnimatePresence, type Variants } from 'motion/react';
 import { ChevronDown, HelpCircle } from 'lucide-react';
+import apfinal from '../assets/apfinal2.png';
 
 const faqs = [
   {
@@ -29,9 +30,9 @@ const faqs = [
   }
 ];
 
-const fadeInUp = {
+const fadeInUp: Variants = {
   hidden: { opacity: 0, y: 40 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } }
+  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } }
 };
 
 export function FAQ() {
@@ -98,14 +99,11 @@ export function FAQ() {
                 transition={{ repeat: Infinity, duration: 6, ease: "easeInOut" }}
                 className="relative z-10 flex flex-col items-center"
               >
-                 <div className="w-[120px] h-[180px] bg-gradient-to-br from-[#8A8D91] via-[#6F7378] to-[#4B4F55] rounded-[16px] shadow-[0_30px_70px_rgba(0,0,0,0.22),inset_0_2px_8px_rgba(255,255,255,0.28),inset_0_-6px_12px_rgba(0,0,0,0.25)] border border-[#9CA3AF]/70 flex flex-col items-center justify-center relative overflow-hidden backdrop-blur-xl">
-                   {/* Glass reflection */}
-                   <div className="absolute top-0 left-0 right-0 h-1/2 bg-gradient-to-b from-white/25 to-transparent pointer-events-none" />
-                   
-                   {/* Center Button / Node */}
-                   <div className="w-16 h-16 rounded-[10px] bg-gradient-to-b from-white to-[#F2F2F2]shadow-[0_8px_20px_rgba(0,0,0,0.18),inset_0_2px_6px_rgba(255,255,255,0.9)]border border-white">
-                   </div>
-                 </div>
+                 <img
+                   src={apfinal}
+                   alt="AlignPod device"
+                   className="w-[130px] object-contain drop-shadow-[0_30px_60px_rgba(0,0,0,0.25)]"
+                 />
                  
                  {/* Shadow underneath */}
                  <motion.div 
