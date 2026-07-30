@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Camera, X } from "lucide-react";
+import { Camera, SwitchCamera, X } from "lucide-react";
 
 type CameraCaptureProps = {
   onCapture: (file: File, previewUrl: string) => void;
@@ -11,6 +11,8 @@ export function CameraCapture({ onCapture, onClose }: CameraCaptureProps) {
   const streamRef = useRef<MediaStream | null>(null);
   const [error, setError] = useState("");
   const [isCameraReady, setIsCameraReady] = useState(false);
+  const [facingMode, setFacingMode] = useState<"user" | "environment">("user");
+  const [canSwitchCamera, setCanSwitchCamera] = useState(false);
 
   useEffect(() => {
     async function startCamera() {
@@ -18,8 +20,10 @@ export function CameraCapture({ onCapture, onClose }: CameraCaptureProps) {
         setError("");
         setIsCameraReady(false);
 
+        streamRef.current?.getTracks().forEach((track) => track.stop());
+
         const stream = await navigator.mediaDevices.getUserMedia({
-          video: true,
+          video: { facingMode },
           audio: false,
         });
 
@@ -35,6 +39,13 @@ export function CameraCapture({ onCapture, onClose }: CameraCaptureProps) {
             });
           };
         }
+
+        // Only offer the flip control when the device actually has more than one camera.
+        if (navigator.mediaDevices.enumerateDevices) {
+          const devices = await navigator.mediaDevices.enumerateDevices();
+          const videoInputs = devices.filter((d) => d.kind === "videoinput");
+          setCanSwitchCamera(videoInputs.length > 1);
+        }
       } catch (err) {
         console.error("Camera access error:", err);
         setError(
@@ -48,7 +59,11 @@ export function CameraCapture({ onCapture, onClose }: CameraCaptureProps) {
     return () => {
       streamRef.current?.getTracks().forEach((track) => track.stop());
     };
-  }, []);
+  }, [facingMode]);
+
+  const flipCamera = () => {
+    setFacingMode((prev) => (prev === "user" ? "environment" : "user"));
+  };
 
   const capturePhoto = () => {
     const video = videoRef.current;
@@ -123,6 +138,16 @@ export function CameraCapture({ onCapture, onClose }: CameraCaptureProps) {
           muted
           className="w-full h-full object-cover bg-black"
         />
+
+        {canSwitchCamera && isCameraReady && (
+          <button
+            onClick={flipCamera}
+            aria-label="Flip camera"
+            className="absolute bottom-4 right-4 w-11 h-11 rounded-full bg-black/50 text-white flex items-center justify-center hover:bg-black/70 transition"
+          >
+            <SwitchCamera className="w-5 h-5" />
+          </button>
+        )}
       </div>
 
       <button

@@ -74,13 +74,13 @@ export function WhyPostureMatters() {
   };
 
   return (
-    <section className="relative w-full py-24 lg:py-32 bg-[#fafafa] text-[#111111] overflow-hidden selection:bg-[#111111] selection:text-white">
+    <section className="relative w-full py-24 lg:py-12 bg-[#fafafa] text-[#111111] overflow-hidden selection:bg-[#111111] selection:text-white lg:min-h-screen lg:flex lg:items-center">
       <div className="absolute inset-0 z-0 pointer-events-none opacity-30">
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#fafafa_100%)]"></div>
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
+      <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 w-full">
         <motion.div
           initial="hidden"
           whileInView="visible"
@@ -88,10 +88,10 @@ export function WhyPostureMatters() {
           variants={fadeInUp}
           className="max-w-3xl mx-auto text-center"
         >
-          <span className="inline-block text-xs font-semibold tracking-[0.2em] text-gray-500 uppercase mb-4">
+          <span className="inline-block text-xs font-semibold tracking-[0.2em] text-gray-500 uppercase mb-4 lg:mb-2">
             Posture Is Not Just Position
           </span>
-          <h2 className="heading-section text-[#111111] mb-6">
+          <h2 className="heading-section text-[#111111] mb-6 lg:mb-3">
             The Cost of Poor Posture
           </h2>
 
@@ -99,14 +99,14 @@ export function WhyPostureMatters() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.8, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-            className="relative z-10 text-lg sm:text-xl md:text-2xl text-gray-600 leading-relaxed font-light mt-16 max-w-2xl mx-auto"
+            className="relative z-10 text-lg sm:text-xl md:text-2xl text-gray-600 leading-relaxed font-light mt-16 lg:mt-5 max-w-2xl mx-auto"
           >
             Hours of sitting strain your body. AlignPod makes posture awareness effortless.
           </motion.p>
         </motion.div>
 
-        <div className="mt-20">
-          <div className="grid grid-cols-1 lg:grid-cols-[1.08fr_0.92fr] gap-8 lg:gap-14 items-start">
+        <div className="mt-20 lg:mt-8">
+          <div className="grid grid-cols-1 lg:grid-cols-[1.08fr_0.92fr] gap-8 lg:gap-8 items-start">
             <div className="order-2 lg:order-1 flex flex-col lg:pr-6">
               {steps.map((step) => {
                 const isActive = activeStep === step.id;
@@ -115,12 +115,12 @@ export function WhyPostureMatters() {
                   <motion.div
                     key={step.id}
                     initial={false}
-                    className="mb-3 last:mb-0"
+                    className="mb-3 lg:mb-2 last:mb-0"
                   >
                     <button
                       onClick={() => handleToggle(step.id)}
                       aria-expanded={isActive}
-                      className={`relative w-full overflow-hidden rounded-[22px] border px-5 py-4 text-left transition-all duration-300 ease-out ${
+                      className={`relative w-full overflow-hidden rounded-[22px] border px-5 py-4 lg:py-3 text-left transition-all duration-300 ease-out ${
                         isActive
                           ? "border-[#111111] bg-[#111111] text-white shadow-[0_12px_35px_rgba(17,17,17,0.16)]"
                           : "border-gray-200 bg-white/70 text-[#111111] hover:bg-white hover:border-gray-300 hover:shadow-[0_4px_20px_rgba(0,0,0,0.04)]"
@@ -158,7 +158,7 @@ export function WhyPostureMatters() {
                           transition={{ duration: 0.35, ease: "easeOut" }}
                           className="overflow-hidden"
                         >
-                          <div className="ml-2 mt-2 rounded-[18px] border border-gray-200 bg-[#f7f7f4] px-5 py-4 text-sm leading-7 text-gray-600">
+                          <div className="ml-2 mt-2 rounded-[18px] border border-gray-200 bg-[#f7f7f4] px-5 py-4 lg:py-3 text-sm leading-7 lg:leading-6 text-gray-600">
                             {step.description}
                           </div>
                         </motion.div>
@@ -169,8 +169,8 @@ export function WhyPostureMatters() {
               })}
             </div>
 
-            <div className="order-1 lg:order-2 lg:sticky lg:top-24 self-start">
-              <div className="relative h-[60vh] sm:h-[72vh] w-full overflow-hidden rounded-[28px] border border-gray-200 bg-[#f3f3ef] shadow-sm">
+            <div className="order-1 lg:order-2 lg:sticky lg:top-24 self-start w-full flex justify-center lg:block">
+              <div className="relative aspect-square w-[95%] sm:w-full sm:aspect-auto sm:h-[72vh] lg:h-[46vh] overflow-hidden rounded-[28px] border border-gray-200 bg-[#f3f3ef] shadow-sm">
                 {steps.map((step) => {
                   const isActive = activeStep === step.id;
 

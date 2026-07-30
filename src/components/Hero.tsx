@@ -77,7 +77,7 @@ export function Hero() {
             <div className="flex flex-col sm:flex-row items-center gap-4">
               <Link
                 to="/posture-check"
-                className="btn-primary-dark"
+                className="w-full sm:w-auto btn-primary-dark text-center"
                 onClick={() =>
                  trackEvent("analyze_posture_clicked", {
                 location: "hero",

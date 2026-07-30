@@ -1,5 +1,4 @@
 import { motion, type Variants } from 'motion/react';
-import { Check } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import apfinal from '../assets/apfinal2.png';
 
@@ -16,16 +15,9 @@ const staggerContainer = {
   }
 };
 
-const trustItems = [
-  "Smart Calibration",
-  "Training + Therapy",
-  "Companion App",
-  "Personalized Profiles"
-];
-
 export function FinalCTA() {
   return (
-    <section className="relative w-full py-32 lg:py-48 bg-[#0E1014] text-white overflow-hidden selection:bg-white/20 selection:text-white flex flex-col items-center">
+    <section className="relative w-full py-32 lg:py-10 bg-[#0E1014] text-white overflow-hidden selection:bg-white/20 selection:text-white flex flex-col items-center lg:min-h-screen lg:justify-center">
       {/* Background Ambience */}
       <div className="absolute inset-0 z-0 pointer-events-none">
         {/* Soft radial gradients */}
@@ -42,15 +34,15 @@ export function FinalCTA() {
         </div>
       </div>
 
-      <div className="relative z-10 w-full max-w-5xl mx-auto px-6 lg:px-8 flex flex-col items-center pb-24">
-        
+      <div className="relative z-10 w-full max-w-5xl mx-auto px-6 lg:px-8 flex flex-col items-center pb-24 lg:pb-6">
+
         {/* Main Floating Product Visual */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, scale: 0.9, y: 40 }}
           whileInView={{ opacity: 1, scale: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-          className="relative mb-20 lg:mb-24 flex justify-center items-center h-[300px] w-full"
+          className="relative mb-20 lg:mb-6 flex justify-center items-center h-[300px] lg:h-[180px] w-full"
         >
            {/* Spotlight behind device */}
            <motion.div 
@@ -68,7 +60,7 @@ export function FinalCTA() {
              <img
                src={apfinal}
                alt="AlignPod product visual"
-               className="w-[160px] sm:w-[200px] object-contain drop-shadow-[0_40px_80px_rgba(0,0,0,0.4)]"
+               className="w-[160px] sm:w-[200px] lg:w-[140px] object-contain drop-shadow-[0_40px_80px_rgba(0,0,0,0.4)]"
              />
              
              {/* Floor Shadow */}
@@ -88,24 +80,24 @@ export function FinalCTA() {
           variants={staggerContainer}
           className="flex flex-col items-center text-center w-full"
         >
-          <motion.h2 
+          <motion.h2
             variants={fadeInUp}
-            className="heading-hero text-white mb-8"
+            className="heading-hero text-white mb-8 lg:mb-3 lg:text-4xl"
           >
             Better posture<br/>starts with awareness.
           </motion.h2>
 
-          <motion.div 
+          <motion.div
             variants={fadeInUp}
-            className="text-body text-gray-300 mb-12 max-w-2xl mx-auto"
+            className="text-body text-gray-300 mb-12 lg:mb-5 lg:text-base max-w-2xl mx-auto"
           >
             <p className="mb-2">One compact wearable. Two intelligent modes. One companion app.</p>
             <p>Designed to help you build healthier posture habits through awareness, personalized feedback, and everyday consistency.</p>
           </motion.div>
 
-          <motion.div 
+          <motion.div
             variants={fadeInUp}
-            className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 mb-20 w-full sm:w-auto"
+            className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 w-full sm:w-auto"
           >
             <button className="btn-primary-dark w-full sm:w-auto">
               Get Started
@@ -115,30 +107,12 @@ export function FinalCTA() {
             </Link>
           </motion.div>
 
-          {/* Trust Indicators */}
-          <motion.div 
-            variants={fadeInUp}
-            className="flex flex-wrap justify-center items-center gap-x-6 gap-y-4"
-          >
-            {trustItems.map((item, idx) => (
-              <div key={idx} className="flex items-center gap-2">
-                <Check className="w-4 h-4 text-white/40" />
-                <span className="text-sm font-medium tracking-wide text-white/60 uppercase">
-                  {item}
-                </span>
-                {idx !== trustItems.length - 1 && (
-                  <span className="hidden sm:block w-px h-4 bg-white/10 ml-6"></span>
-                )}
-              </div>
-            ))}
-          </motion.div>
-
         </motion.div>
       </div>
 
       {/* Brand Statement / Footer divider */}
-      <div className="absolute bottom-0 w-full flex flex-col items-center pb-8 pt-20">
-         <div className="w-full max-w-3xl h-px bg-gradient-to-r from-transparent via-white/10 to-transparent mb-8"></div>
+      <div className="absolute bottom-0 w-full flex flex-col items-center pb-8 pt-20 lg:pt-8">
+         <div className="w-full max-w-3xl h-px bg-gradient-to-r from-transparent via-white/10 to-transparent mb-8 lg:mb-4"></div>
          <p className="text-xs font-light tracking-widest text-white/30 uppercase text-center px-4">
            Designed to help people build healthier posture habits, one day at a time.
          </p>
