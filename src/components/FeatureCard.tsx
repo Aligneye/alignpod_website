@@ -51,18 +51,18 @@ export function FeatureCard({ feature, isActive, onToggle }: FeatureCardProps) {
       animate={{ scale: isActive ? 1.02 : 1 }}
       transition={{ layout: { duration: 0.45, ease: [0.4, 0, 0.2, 1] }, default: { duration: 0.45, ease: [0.4, 0, 0.2, 1] } }}
       className={[
-        "group cursor-pointer rounded-[28px] border p-8 flex flex-col backdrop-blur-sm transition-colors duration-500 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0d8080]/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0E1014]",
+        "group cursor-pointer rounded-[28px] border p-8 lg:p-6 flex flex-col backdrop-blur-sm transition-colors duration-500 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0d8080]/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0E1014]",
         isActive
           ? "bg-white/[0.12] border-[#0d8080]/60 shadow-[0_0_0_1px_rgba(13,128,128,0.25),0_25px_60px_-15px_rgba(13,128,128,0.4),0_20px_45px_rgba(0,0,0,0.35)]"
           : "bg-white/[0.06] border-white/10 hover:bg-white/[0.09] hover:border-white/20 hover:shadow-[0_20px_40px_-10px_rgba(13,128,128,0.25)]",
       ].join(" ")}
     >
-      <div className="w-12 h-12 rounded-2xl bg-white/10 border border-white/10 text-white flex items-center justify-center mb-6 group-hover:bg-white group-hover:text-[#111111] transition-colors duration-300">
-        <Icon className="w-5 h-5" strokeWidth={1.5} />
+      <div className="w-12 h-12 lg:w-10 lg:h-10 rounded-2xl bg-white/10 border border-white/10 text-white flex items-center justify-center mb-6 lg:mb-3 group-hover:bg-white group-hover:text-[#111111] transition-colors duration-300">
+        <Icon className="w-5 h-5 lg:w-4 lg:h-4" strokeWidth={1.5} />
       </div>
 
-      <h3 className="heading-card text-xl text-white">{title}</h3>
-      <p className="text-body text-white/60">{text}</p>
+      <h3 className="heading-card text-xl lg:text-lg lg:mb-2 text-white">{title}</h3>
+      <p className="text-body text-white/60 lg:text-sm lg:leading-snug">{text}</p>
 
       <AnimatePresence initial={false}>
         {isActive && (
@@ -72,7 +72,7 @@ export function FeatureCard({ feature, isActive, onToggle }: FeatureCardProps) {
             initial="hidden"
             animate="visible"
             exit="exit"
-            className="mt-6 pt-6 border-t border-white/10"
+            className="mt-6 pt-6 lg:mt-4 lg:pt-4 border-t border-white/10"
           >
             <ul className="space-y-2.5 mb-6">
               {bullets.map((bullet, i) => (
