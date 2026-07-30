@@ -81,28 +81,28 @@ export function MeetAlignPod() {
   };
 
   return (
-    <section className="relative w-full py-24 lg:py-32 bg-[#0E1014] text-white overflow-hidden selection:bg-white selection:text-black" id="meet-alignpod">
+    <section className="relative w-full py-24 lg:py-8 bg-[#0E1014] text-white overflow-hidden selection:bg-white selection:text-black lg:min-h-screen lg:flex lg:items-center" id="meet-alignpod">
       {/* Subtle Premium Background Texture */}
       <div className="absolute inset-0 z-0 opacity-40 pointer-events-none">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,#1A1D23_0%,#0E1014_72%)]"></div>
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
+      <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 w-full">
         {/* Header Section */}
         <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
           variants={fadeInUp}
-          className="max-w-3xl mx-auto text-center"
+          className="max-w-3xl lg:max-w-none mx-auto text-center"
         >
-          <span className="inline-block text-xs font-semibold tracking-[0.2em] text-[#6B7280] uppercase mb-4">
+          <span className="inline-block text-xs font-semibold tracking-[0.2em] text-[#6B7280] uppercase mb-4 lg:mb-2">
             Meet AlignPod
           </span>
-          <h2 className="heading-section text-white mb-6">
+          <h2 className="heading-section text-white mb-6 lg:mb-2 lg:text-[2.1rem] lg:leading-tight lg:whitespace-nowrap">
             A smarter way to build healthier posture.
           </h2>
-          <p className="text-body text-white/70">
+          <p className="text-body text-white/70 lg:text-sm lg:max-w-xl lg:mx-auto">
             AlignPod is a compact smart wearable that tracks posture in real
             time, gives gentle vibration feedback, and helps you build better
             sitting habits through personalized calibration and app-based
@@ -116,10 +116,10 @@ export function MeetAlignPod() {
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
           variants={staggerContainer}
-          className="mt-20 grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12 items-center"
+          className="mt-20 lg:mt-6 grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-5 items-center"
         >
           {/* Left Column Features (Desktop) / Top Features (Mobile) */}
-          <div className="flex flex-col gap-6 order-2 lg:order-1">
+          <div className="flex flex-col gap-6 lg:gap-4 order-2 lg:order-1">
             {featuresLeft.map((feature) => (
               <motion.div key={feature.id} variants={fadeInUp}>
                 <FeatureCard
@@ -134,7 +134,7 @@ export function MeetAlignPod() {
           {/* Center Column: Product Visual */}
           <motion.div
             variants={fadeInUp}
-            className="relative flex justify-center items-center h-[350px] lg:h-[500px] order-1 lg:order-2"
+            className="relative flex justify-center items-center h-[350px] lg:h-[280px] order-1 lg:order-2"
           >
             {/* Ambient Glow */}
             <div className="absolute w-[300px] h-[380px] bg-[#4F9CFF]/20 rounded-full blur-[90px]" />
@@ -166,7 +166,7 @@ export function MeetAlignPod() {
           </motion.div>
 
           {/* Right Column Features (Desktop) / Bottom Features (Mobile) */}
-          <div className="flex flex-col gap-6 order-3">
+          <div className="flex flex-col gap-6 lg:gap-4 order-3">
             {featuresRight.map((feature) => (
               <motion.div key={feature.id} variants={fadeInUp}>
                 <FeatureCard
