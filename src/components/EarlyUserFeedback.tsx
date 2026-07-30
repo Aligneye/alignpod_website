@@ -1,5 +1,5 @@
 import { motion, type Variants } from 'motion/react';
-import { Quote, Beaker, SlidersHorizontal, Activity, Smartphone } from 'lucide-react';
+import { Quote } from 'lucide-react';
 
 const testimonials = [
   {
@@ -20,13 +20,6 @@ const testimonials = [
     role: "Technology enthusiast",
     image: "https://images.unsplash.com/photo-1531891437562-4301cf35b7e4?q=80&w=200&auto=format&fit=crop"
   }
-];
-
-const trustItems = [
-  { text: "Prototype Tested", icon: Beaker },
-  { text: "Smart Calibration", icon: SlidersHorizontal },
-  { text: "Training + Therapy", icon: Activity },
-  { text: "Mobile App Connected", icon: Smartphone }
 ];
 
 const fadeInUp: Variants = {
@@ -77,7 +70,7 @@ export function EarlyUserFeedback() {
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
           variants={staggerContainer}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 mb-24 lg:mb-32"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8"
         >
           {testimonials.map((item, idx) => (
             <motion.div
@@ -109,30 +102,6 @@ export function EarlyUserFeedback() {
               </div>
             </motion.div>
           ))}
-        </motion.div>
-
-        {/* Trust Strip */}
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          variants={staggerContainer}
-          className="w-full border-t border-gray-100 pt-12 lg:pt-16"
-        >
-          <div className="flex flex-wrap justify-center lg:justify-between items-center gap-8 lg:gap-4">
-            {trustItems.map((item, idx) => (
-              <motion.div 
-                key={idx}
-                variants={fadeInUp}
-                className="flex items-center gap-3 px-4"
-              >
-                <div className="w-10 h-10 rounded-xl bg-[#F8F8F6] border border-[#E5E7EB] flex items-center justify-center text-[#6B7280]">
-                  <item.icon className="w-5 h-5" strokeWidth={1.5} />
-                </div>
-                <span className="text-sm sm:text-base font-semibold tracking-wide text-[#111111] uppercase">{item.text}</span>
-              </motion.div>
-            ))}
-          </div>
         </motion.div>
 
       </div>

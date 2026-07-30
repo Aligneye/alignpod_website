@@ -38,28 +38,28 @@ const therapyBullets = [
 
 export default function IntelligentModes() {
   return (
-    <section className="relative w-full py-24 lg:py-32 bg-[#0F1115] text-white overflow-hidden selection:bg-white/20 selection:text-white" id="training-therapy">
+    <section className="relative w-full py-24 lg:py-10 bg-[#0F1115] text-white overflow-hidden selection:bg-white/20 selection:text-white lg:min-h-screen lg:flex lg:items-center" id="training-therapy">
       {/* Background ambient glow */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-full bg-[radial-gradient(ellipse_at_top,#ffffff05_0%,transparent_70%)] pointer-events-none"></div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
+      <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 w-full">
         {/* Header */}
         <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
           variants={fadeInUp}
-          className="max-w-3xl mx-auto text-center mb-20 lg:mb-24"
+          className="max-w-3xl mx-auto text-center mb-20 lg:mb-8"
         >
-          <span className="inline-block text-xs font-semibold tracking-[0.2em] text-[#9CA3AF] uppercase mb-4">
+          <span className="inline-block text-xs font-semibold tracking-[0.2em] text-[#9CA3AF] uppercase mb-4 lg:mb-2">
             Two Intelligent Modes
           </span>
-          <h2 className="heading-section text-white mb-6">
+          <h2 className="heading-section text-white mb-6 lg:mb-3 lg:text-4xl">
             Train your posture.
             <br />
             Relax your back.
           </h2>
-          <p className="text-lg sm:text-xl text-gray-300 leading-relaxed font-light">
+          <p className="text-lg sm:text-xl lg:text-base text-gray-300 leading-relaxed font-light">
             AlignPod combines real-time posture training with gentle vibration
             therapy, giving you one compact device for awareness, correction,
             and daily comfort.
@@ -72,25 +72,25 @@ export default function IntelligentModes() {
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
           variants={staggerContainer}
-          className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10"
+          className="flex lg:grid lg:grid-cols-2 overflow-x-auto lg:overflow-visible snap-x snap-mandatory lg:snap-none no-scrollbar gap-5 lg:gap-6 -mx-6 px-6 lg:mx-0 lg:px-0"
         >
           {/* Training Mode Card */}
           <motion.div
             variants={fadeInUp}
             whileHover={{ y: -8 }}
             transition={{ duration: 0.4, ease: "easeOut" }}
-            className="group relative flex flex-col bg-white/[0.04] backdrop-blur-xl border border-white/[0.12] rounded-[32px] overflow-hidden transition-colors hover:bg-white/[0.06] hover:border-[#60A5FA]/40"
+            className="group relative flex flex-col min-w-[86%] sm:min-w-[70%] lg:min-w-0 flex-shrink-0 lg:flex-shrink snap-center bg-white/[0.04] backdrop-blur-xl border border-white/[0.12] rounded-[32px] overflow-hidden transition-colors hover:bg-white/[0.06] hover:border-[#60A5FA]/40"
           >
             {/* Soft inner glow on hover */}
             <div className="absolute inset-0 bg-gradient-to-b from-[#60A5FA]/0 to-[#60A5FA]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
 
             {/* Visual Area */}
-            <div className="relative w-full h-[280px] sm:h-[320px] bg-black/40 border-b border-white/[0.08] flex items-center justify-center overflow-hidden">
+            <div className="relative w-full h-[280px] sm:h-[320px] lg:h-[150px] bg-black/40 border-b border-white/[0.08] flex items-center justify-center overflow-hidden">
               {/* Background Grid */}
               <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:24px_24px]"></div>
 
               {/* Animated Illustration */}
-              <div className="relative flex items-end h-40">
+              <div className="relative flex items-end h-40 lg:scale-[0.55]">
                 {/* Laptop Representation */}
                 <div className="w-16 sm:w-20 h-14 border-t-2 border-r-2 border-white/20 rounded-tr-xl mr-8 sm:mr-12 relative">
                   <div className="absolute bottom-0 -left-4 w-24 sm:w-28 h-1.5 bg-white/30 rounded-full"></div>
@@ -155,26 +155,26 @@ export default function IntelligentModes() {
             </div>
 
             {/* Content Area */}
-            <div className="p-8 sm:p-10 flex flex-col flex-grow z-10">
-              <span className="text-sm font-semibold tracking-widest text-[#60A5FA] uppercase mb-3">
+            <div className="p-8 sm:p-10 lg:p-6 flex flex-col flex-grow z-10">
+              <span className="text-sm font-semibold tracking-widest text-[#60A5FA] uppercase mb-3 lg:mb-2">
                 Training Mode
               </span>
-              <h3 className="text-2xl sm:text-3xl font-display font-semibold text-white mb-4">
+              <h3 className="text-2xl sm:text-3xl lg:text-xl font-display font-semibold text-white mb-4 lg:mb-2">
                 Build better posture habits.
               </h3>
-              <p className="text-[#9CA3AF] leading-relaxed font-light text-base sm:text-lg mb-8">
+              <p className="text-[#9CA3AF] leading-relaxed font-light text-base sm:text-lg lg:text-sm mb-8 lg:mb-4">
                 AlignPod continuously monitors your posture angle and gives
                 gentle vibration reminders when slouching is detected, helping
                 you stay aware during work, study, and daily activities.
               </p>
 
-              <ul className="mt-auto flex flex-col gap-3">
+              <ul className="mt-auto flex flex-col gap-3 lg:gap-1.5">
                 {trainingBullets.map((bullet, idx) => (
                   <li key={idx} className="flex items-start gap-3">
-                    <div className="mt-1 w-5 h-5 rounded-full bg-white/10 flex items-center justify-center flex-shrink-0">
-                      <Check className="w-3 h-3 text-white/80" />
+                    <div className="mt-1 w-5 h-5 lg:w-4 lg:h-4 rounded-full bg-white/10 flex items-center justify-center flex-shrink-0">
+                      <Check className="w-3 h-3 lg:w-2.5 lg:h-2.5 text-white/80" />
                     </div>
-                    <span className="text-[#D1D5DB] font-light text-sm sm:text-base">
+                    <span className="text-[#D1D5DB] font-light text-sm sm:text-base lg:text-xs">
                       {bullet}
                     </span>
                   </li>
@@ -188,18 +188,18 @@ export default function IntelligentModes() {
             variants={fadeInUp}
             whileHover={{ y: -8 }}
             transition={{ duration: 0.4, ease: "easeOut" }}
-            className="group relative flex flex-col bg-white/[0.04] backdrop-blur-xl border border-white/[0.12] rounded-[32px] overflow-hidden transition-colors hover:bg-white/[0.06] hover:border-[#34D399]/40"
+            className="group relative flex flex-col min-w-[86%] sm:min-w-[70%] lg:min-w-0 flex-shrink-0 lg:flex-shrink snap-center bg-white/[0.04] backdrop-blur-xl border border-white/[0.12] rounded-[32px] overflow-hidden transition-colors hover:bg-white/[0.06] hover:border-[#34D399]/40"
           >
             {/* Soft inner glow on hover */}
             <div className="absolute inset-0 bg-gradient-to-b from-[#34D399]/0 to-[#34D399]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
 
             {/* Visual Area */}
-            <div className="relative w-full h-[280px] sm:h-[320px] bg-black/40 border-b border-white/[0.08] flex items-center justify-center overflow-hidden">
+            <div className="relative w-full h-[280px] sm:h-[320px] lg:h-[150px] bg-black/40 border-b border-white/[0.08] flex items-center justify-center overflow-hidden">
               {/* Soft background glow */}
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-56 h-56 bg-[#34D399]/10 blur-[80px] rounded-full pointer-events-none"></div>
 
               {/* Animated Illustration */}
-              <div className="relative flex items-center justify-center h-40 w-40">
+              <div className="relative flex items-center justify-center h-40 w-40 lg:scale-[0.55]">
                 <motion.div
                   animate={{ scale: [1, 1.3, 1], opacity: [0.2, 0.6, 0.2] }}
                   transition={{
@@ -246,25 +246,25 @@ export default function IntelligentModes() {
             </div>
 
             {/* Content Area */}
-            <div className="p-8 sm:p-10 flex flex-col flex-grow z-10">
-              <span className="text-sm font-semibold tracking-widest text-[#34D399] uppercase mb-3">
+            <div className="p-8 sm:p-10 lg:p-6 flex flex-col flex-grow z-10">
+              <span className="text-sm font-semibold tracking-widest text-[#34D399] uppercase mb-3 lg:mb-2">
                 Therapy Mode
               </span>
-              <h3 className="text-2xl sm:text-3xl font-display font-semibold text-white mb-4">
+              <h3 className="text-2xl sm:text-3xl lg:text-xl font-display font-semibold text-white mb-4 lg:mb-2">
                 Take a moment to reset.
               </h3>
-              <p className="text-[#9CA3AF] leading-relaxed font-light text-base sm:text-lg mb-8">
+              <p className="text-[#9CA3AF] leading-relaxed font-light text-base sm:text-lg lg:text-sm mb-8 lg:mb-4">
                 Use gentle vibration therapy sessions to relax your upper back
                 after long sitting hours, screen work, or periods of stiffness.
               </p>
 
-              <ul className="mt-auto flex flex-col gap-3">
+              <ul className="mt-auto flex flex-col gap-3 lg:gap-1.5">
                 {therapyBullets.map((bullet, idx) => (
                   <li key={idx} className="flex items-start gap-3">
-                    <div className="mt-1 w-5 h-5 rounded-full bg-white/10 flex items-center justify-center flex-shrink-0">
-                      <Check className="w-3 h-3 text-white/80" />
+                    <div className="mt-1 w-5 h-5 lg:w-4 lg:h-4 rounded-full bg-white/10 flex items-center justify-center flex-shrink-0">
+                      <Check className="w-3 h-3 lg:w-2.5 lg:h-2.5 text-white/80" />
                     </div>
-                    <span className="text-[#D1D5DB] font-light text-sm sm:text-base">
+                    <span className="text-[#D1D5DB] font-light text-sm sm:text-base lg:text-xs">
                       {bullet}
                     </span>
                   </li>
