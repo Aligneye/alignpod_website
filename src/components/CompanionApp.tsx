@@ -1,9 +1,7 @@
 import { motion, AnimatePresence, type Variants } from 'motion/react';
 import { Activity, SlidersHorizontal, Vibrate, BarChart3, X, UserCircle2, Users, Power, Target, Check } from 'lucide-react';
 import { useState, useEffect } from 'react';
-import calibapp from "../assets/calibapp.jpeg";
-import training from "../assets/training.jpeg";
-import therapy from "../assets/therapy.jpeg";
+import { AppShowcaseCarousel } from './AppShowcaseCarousel';
 
 const cards = [
   {
@@ -133,48 +131,8 @@ export function CompanionApp() {
         </motion.div>
 
         {/* Cinematic Phones Showcase */}
-        <div className="relative h-auto md:h-[800px] lg:h-[700px] w-full flex flex-col md:block lg:flex lg:flex-row items-center justify-center lg:justify-between gap-12 md:gap-0 mb-24 lg:mb-32 px-0 lg:px-12 max-w-6xl mx-auto perspective-[2000px]">
-          <motion.div
-            animate={{ y: [-8, 8, -8] }}
-            transition={{ repeat: Infinity, duration: 6, ease: "easeInOut", delay: 1 }}
-            whileHover={{ scale: 1.05, rotateY: 0, z: 0 }}
-            className="relative w-[260px] h-[560px] bg-white rounded-[40px] shadow-[-20px_30px_60px_rgba(0,0,0,0.08),inset_0_2px_4px_rgba(255,255,255,0.8)] border-[6px] border-[#E5E7EB] overflow-hidden flex flex-col shrink-0 scale-[0.85] md:scale-90 lg:scale-100 origin-center"
-          >
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-5 bg-[#E5E7EB] rounded-b-2xl z-20"></div>
-            <img
-              src={training}
-              alt="Training Screen"
-              className="w-full h-full object-cover"
-            />
-          </motion.div>
-
-          <motion.div
-            animate={{ y: [-12, 12, -12] }}
-            transition={{ repeat: Infinity, duration: 7, ease: "easeInOut" }}
-            whileHover={{ scale: 1.05 }}
-            className="relative w-[300px] h-[640px] bg-white rounded-[48px] shadow-[0_40px_80px_rgba(0,0,0,0.12),inset_0_2px_4px_rgba(255,255,255,0.8)] border-[8px] border-[#E5E7EB] overflow-hidden flex flex-col shrink-0 scale-[0.85] md:scale-90 lg:scale-100 origin-center"
-          >
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-6 bg-[#E5E7EB] rounded-b-3xl z-20"></div>
-            <img
-              src={calibapp}
-              alt="Calibration tracking"
-              className="w-full h-full object-cover"
-            />
-          </motion.div>
-
-          <motion.div
-            animate={{ y: [-10, 10, -10] }}
-            transition={{ repeat: Infinity, duration: 6.5, ease: "easeInOut", delay: 0.5 }}
-            whileHover={{ scale: 1.05, rotateY: 0, z: 0 }}
-            className="relative w-[260px] h-[560px] bg-white rounded-[40px] shadow-[20px_30px_60px_rgba(0,0,0,0.08),inset_0_2px_4px_rgba(255,255,255,0.8)] border-[6px] border-[#E5E7EB] overflow-hidden flex flex-col shrink-0 scale-[0.85] md:scale-90 lg:scale-100 origin-center"
-          >
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-5 bg-[#E5E7EB] rounded-b-2xl z-20"></div>
-            <img
-              src={therapy}
-              alt="therapy screen inside app"
-              className="w-full h-full object-cover"
-            />
-          </motion.div>
+        <div className="mb-24 lg:mb-32">
+          <AppShowcaseCarousel />
         </div>
 
         <motion.div 

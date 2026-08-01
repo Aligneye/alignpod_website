@@ -15,10 +15,10 @@ export const FormInput = React.forwardRef<HTMLInputElement, FormInputProps>(
     return (
       <div className="flex flex-col gap-2">
         <label className="text-sm font-semibold text-[#111111] ml-2">{label}</label>
-        <input 
-          ref={ref} 
-          className={cn("w-full bg-white border border-gray-200 rounded-2xl px-6 py-4 focus:outline-none focus:ring-2 focus:ring-[#111111]/10 focus:border-[#111111] transition-all", className)} 
-          {...props} 
+        <input
+          ref={ref}
+          className={cn("w-full bg-white text-[#111111] placeholder:text-gray-400 border border-gray-200 rounded-2xl px-6 py-4 focus:outline-none focus:ring-2 focus:ring-[#111111]/10 focus:border-[#111111] transition-all", className)}
+          {...props}
         />
       </div>
     );
@@ -35,10 +35,10 @@ export const FormTextarea = React.forwardRef<HTMLTextAreaElement, FormTextareaPr
     return (
       <div className="flex flex-col gap-2">
         <label className="text-sm font-semibold text-[#111111] ml-2">{label}</label>
-        <textarea 
-          ref={ref} 
-          className={cn("w-full bg-white border border-gray-200 rounded-2xl px-6 py-4 focus:outline-none focus:ring-2 focus:ring-[#111111]/10 focus:border-[#111111] transition-all resize-none", className)} 
-          {...props} 
+        <textarea
+          ref={ref}
+          className={cn("w-full bg-white text-[#111111] placeholder:text-gray-400 border border-gray-200 rounded-2xl px-6 py-4 focus:outline-none focus:ring-2 focus:ring-[#111111]/10 focus:border-[#111111] transition-all resize-none", className)}
+          {...props}
         />
       </div>
     );

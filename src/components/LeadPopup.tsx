@@ -31,15 +31,30 @@ export function LeadPopup() {
       message: (form.elements.namedItem("message") as HTMLTextAreaElement).value,
     };
 
+    const payload = {
+      name: data.name,
+      email: data.email,
+      phone: data.phone,
+      question: data.message,
+    };
+    console.info("[lead-popup] insert payload:", payload);
+
     try {
-      const { error } = await supabase.from("contact_requests").insert([
-        {
-          name: data.name,
-          email: data.email,
-          phone: data.phone,
-          question: data.message,
-        },
-      ]);
+      // NOTE: no .select() here on purpose — "webpage_popup" only has an
+      // anon INSERT policy, not a SELECT policy. Chaining .select() switches
+      // the request to `Prefer: return=representation`, which requires the
+      // inserted row to pass a SELECT policy too; without one, Postgres
+      // rejects the RETURNING clause and rolls back the whole insert
+      // (42501 "new row violates row-level security policy").
+      const { error, status, statusText } = await supabase
+        .from("webpage_popup")
+        .insert([payload]);
+
+      console.info("[lead-popup] supabase response:", {
+        status,
+        statusText,
+        error,
+      });
 
       if (error) throw error;
 
@@ -53,8 +68,14 @@ export function LeadPopup() {
         setShowPopup(false);
       }, 2000);
     } catch (error) {
-      console.error("Supabase insert error:", error);
-      alert("Something went wrong. Please try again.");
+      const err = error as { message?: string; code?: string; details?: string; hint?: string };
+      console.error("[lead-popup] insert failed:", {
+        message: err?.message,
+        code: err?.code,
+        details: err?.details,
+        hint: err?.hint,
+      });
+      alert(`Something went wrong: ${err?.message ?? "unknown error"}. Please try again.`);
     } finally {
       setIsSubmitting(false);
     }
