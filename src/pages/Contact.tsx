@@ -4,6 +4,7 @@ import { motion, AnimatePresence, type Variants } from 'motion/react';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
 import { trackEvent } from "../utils/analytics";
+import { supabase } from "../lib/supabase";
 import { 
   Mail, Phone, Building2, HelpCircle, 
   Instagram, Linkedin, Youtube, Check,
@@ -182,17 +183,70 @@ function GetInTouch() {
   );
 }
 
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
 function ContactForm() {
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success'>('idle');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+
+    const name = String(formData.get("name") || "").trim();
+    const email = String(formData.get("email") || "").trim();
+    const phone = String(formData.get("phone") || "").trim();
+    const category = String(formData.get("category") || "").trim();
+    const message = String(formData.get("message") || "").trim();
+
+    if (!name) {
+      alert("Please enter your full name.");
+      return;
+    }
+    if (!EMAIL_PATTERN.test(email)) {
+      alert("Please enter a valid email address.");
+      return;
+    }
+    if (!category) {
+      alert("Please select a category.");
+      return;
+    }
+    if (!message) {
+      alert("Please enter a message.");
+      return;
+    }
+
+    // Keys match the "contact_us" columns exactly. Phone is optional in the UI.
+    const payload = { name, email, phone: phone || null, category, message };
+
     setStatus('submitting');
-    setTimeout(() => {
-    setStatus("success");
-    trackEvent("contact_form_submitted");
-  }, 1500);
-}
+    console.info("[contact-form] insert payload:", payload);
+
+    try {
+      // No .select() here on purpose: "contact_us" intentionally has no anon
+      // SELECT policy, so requesting `return=representation` would fail
+      // RLS's RETURNING check and roll back the insert. We already know what
+      // we sent, so we log that instead of round-tripping the row from the DB.
+      const { error, status: httpStatus, statusText } = await supabase
+        .from("contact_us")
+        .insert([payload]);
+
+      console.info("[contact-form] supabase response:", { httpStatus, statusText, error });
+
+      if (error) throw error;
+
+      console.info("[contact-form] inserted row:", payload);
+      setStatus("success");
+      trackEvent("contact_form_submitted");
+      form.reset();
+    } catch (error) {
+      const err = error as { message?: string; code?: string; details?: string; hint?: string };
+      console.error("[contact-form] insert failed:", err);
+      alert(`Message could not be sent: ${err?.message ?? "Unknown error. Please try again."}`);
+      setStatus("idle");
+    }
+  }
 
   return (
     <section className="py-24 lg:py-32 bg-white text-[#111111]">
@@ -275,23 +329,23 @@ function ContactForm() {
                     <div className="flex flex-col sm:flex-row gap-6">
                       <div className="flex-1 flex flex-col gap-2">
                         <label className="text-sm font-semibold text-[#111111] ml-2">Full Name</label>
-                        <input required type="text" className="w-full bg-white border border-gray-200 rounded-2xl px-6 py-4 focus:outline-none focus:ring-2 focus:ring-[#111111]/10 focus:border-[#111111] transition-all" placeholder="John Doe" />
+                        <input required name="name" type="text" className="w-full bg-white text-[#111111] placeholder:text-gray-400 border border-gray-200 rounded-2xl px-6 py-4 focus:outline-none focus:ring-2 focus:ring-[#111111]/10 focus:border-[#111111] transition-all" placeholder="John Doe" />
                       </div>
                       <div className="flex-1 flex flex-col gap-2">
                         <label className="text-sm font-semibold text-[#111111] ml-2">Email Address</label>
-                        <input required type="email" className="w-full bg-white border border-gray-200 rounded-2xl px-6 py-4 focus:outline-none focus:ring-2 focus:ring-[#111111]/10 focus:border-[#111111] transition-all" placeholder="john@example.com" />
+                        <input required name="email" type="email" className="w-full bg-white text-[#111111] placeholder:text-gray-400 border border-gray-200 rounded-2xl px-6 py-4 focus:outline-none focus:ring-2 focus:ring-[#111111]/10 focus:border-[#111111] transition-all" placeholder="john@example.com" />
                       </div>
                     </div>
-                    
+
                     <div className="flex flex-col gap-2">
                       <label className="text-sm font-semibold text-[#111111] ml-2">Phone Number (Optional)</label>
-                      <input type="tel" className="w-full bg-white border border-gray-200 rounded-2xl px-6 py-4 focus:outline-none focus:ring-2 focus:ring-[#111111]/10 focus:border-[#111111] transition-all" placeholder="+1 (555) 000-0000" />
+                      <input name="phone" type="tel" className="w-full bg-white text-[#111111] placeholder:text-gray-400 border border-gray-200 rounded-2xl px-6 py-4 focus:outline-none focus:ring-2 focus:ring-[#111111]/10 focus:border-[#111111] transition-all" placeholder="+1 (555) 000-0000" />
                     </div>
 
                     <div className="flex flex-col gap-2">
                       <label className="text-sm font-semibold text-[#111111] ml-2">Category</label>
                       <div className="relative">
-                        <select required className="w-full appearance-none bg-white border border-gray-200 rounded-2xl px-6 py-4 focus:outline-none focus:ring-2 focus:ring-[#111111]/10 focus:border-[#111111] transition-all text-[#111111]">
+                        <select required name="category" defaultValue="support" className="w-full appearance-none bg-white border border-gray-200 rounded-2xl px-6 py-4 focus:outline-none focus:ring-2 focus:ring-[#111111]/10 focus:border-[#111111] transition-all text-[#111111]">
                           <option value="support">Customer Support</option>
                           <option value="sales">Sales & Partnerships</option>
                           <option value="press">Press & Media</option>
@@ -303,7 +357,7 @@ function ContactForm() {
 
                     <div className="flex flex-col gap-2">
                       <label className="text-sm font-semibold text-[#111111] ml-2">Message</label>
-                      <textarea required rows={5} className="w-full bg-white border border-gray-200 rounded-2xl px-6 py-4 focus:outline-none focus:ring-2 focus:ring-[#111111]/10 focus:border-[#111111] transition-all resize-none" placeholder="How can we help you today?"></textarea>
+                      <textarea required name="message" rows={5} className="w-full bg-white text-[#111111] placeholder:text-gray-400 border border-gray-200 rounded-2xl px-6 py-4 focus:outline-none focus:ring-2 focus:ring-[#111111]/10 focus:border-[#111111] transition-all resize-none" placeholder="How can we help you today?"></textarea>
                     </div>
 
                     <button 

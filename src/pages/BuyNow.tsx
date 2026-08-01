@@ -6,47 +6,75 @@ import { Footer } from "../components/Footer";
 import { Link } from "react-router-dom";
 import { trackEvent } from "../utils/analytics";
 import { FormInput, FormTextarea } from "../components/ui/FormInput";
+import { supabase } from "../lib/supabase";
+
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export function BuyNow() {
   const [status, setStatus] = useState<"idle" | "submitting" | "success">("idle");
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
   e.preventDefault();
-  setStatus("submitting");
 
   const form = e.currentTarget;
   const formData = new FormData(form);
 
-  const payload = {
-    name: formData.get("name"),
-    email: formData.get("email"),
-    phone: formData.get("phone"),
-    quantity: formData.get("quantity") || "1",
-    address: formData.get("address"),
-    message: formData.get("message"),
-  };
+  const name = String(formData.get("name") || "").trim();
+  const mail = String(formData.get("email") || "").trim();
+  const phone = String(formData.get("phone") || "").trim();
+  const quantity = parseInt(String(formData.get("quantity") || "1"), 10);
+  const address = String(formData.get("address") || "").trim();
+  const note = String(formData.get("message") || "").trim();
+
+  if (!name) {
+    alert("Please enter your full name.");
+    return;
+  }
+  if (!EMAIL_PATTERN.test(mail)) {
+    alert("Please enter a valid email address.");
+    return;
+  }
+  if (!phone) {
+    alert("Please enter your phone number.");
+    return;
+  }
+  if (!Number.isInteger(quantity) || quantity < 1) {
+    alert("Quantity must be at least 1.");
+    return;
+  }
+  if (!address) {
+    alert("Please enter your delivery address.");
+    return;
+  }
+
+  // Keys match the "buy_requests" columns exactly.
+  const payload = { name, mail, phone, quantity, address, note: note || null };
+
+  setStatus("submitting");
+  console.info("[buy-now] insert payload:", payload);
 
   try {
-    const response = await fetch("/api/order.php", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(payload),
-    });
+    // No .select() here on purpose: "buy_requests" intentionally has no
+    // anon SELECT policy (it holds customer PII - name/email/phone/address),
+    // so requesting `return=representation` would fail RLS's RETURNING
+    // check and roll back the whole insert. We already know what we sent,
+    // so we log that instead of round-tripping the row from the DB.
+    const { error, status: httpStatus, statusText } = await supabase
+      .from("buy_requests")
+      .insert([payload]);
 
-    const result = await response.json();
+    console.info("[buy-now] supabase response:", { httpStatus, statusText, error });
 
-    if (result.success) {
-      setStatus("success");
-      trackEvent("buy_now_form_submitted");
-      form.reset();
-    } else {
-      alert(result.message || "Order could not be submitted.");
-      setStatus("idle");
-    }
+    if (error) throw error;
+
+    console.info("[buy-now] inserted row:", payload);
+    setStatus("success");
+    trackEvent("buy_now_form_submitted");
+    form.reset();
   } catch (error) {
-    alert("Something went wrong. Please try again.");
+    const err = error as { message?: string; code?: string; details?: string; hint?: string };
+    console.error("[buy-now] insert failed:", err);
+    alert(`Order could not be submitted: ${err?.message ?? "Unknown error. Please try again."}`);
     setStatus("idle");
   }
 };
