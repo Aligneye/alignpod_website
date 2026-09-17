@@ -15,14 +15,6 @@ import { trackEvent } from "../utils/analytics";
 import { accessoriesCatalog } from "../data/accessories";
 
 export default function Accessories() {
-  const [selectedVariants, setSelectedVariants] = useState<Record<string, string>>({
-    prod_magnetic_collar: "Matte Black",
-  });
-
-  const handleVariantChange = (productId: string, variantTitle: string) => {
-    setSelectedVariants((prev) => ({ ...prev, [productId]: variantTitle }));
-  };
-
   return (
     <>
       <SEO
@@ -62,12 +54,9 @@ export default function Accessories() {
 
           {/* E-Commerce Product Grid (Bright, Clean, Scalable) */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 sm:gap-8 mb-20">
-            {accessoriesCatalog.map((product) => {
-              const activeVariant = selectedVariants[product.id] || product.variants[0]?.title || "";
-
-              return (
-                <div
-                  key={product.id}
+            {accessoriesCatalog.map((product) => (
+              <div
+                key={product.id}
                   className="group flex flex-col bg-white border border-[#E5E7EB] rounded-2xl overflow-hidden hover:border-[#D1D5DB] transition-all duration-300 hover:shadow-[0_10px_30px_rgba(0,0,0,0.06)]"
                 >
                   {/* Clickable Product Image Container -> Links to Product Page */}
@@ -97,11 +86,6 @@ export default function Accessories() {
                   {/* Product Card Body */}
                   <div className="p-5 sm:p-6 flex-1 flex flex-col justify-between">
                     <div>
-                      {/* Compatibility note */}
-                      <span className="text-[11px] font-mono text-[#9CA3AF] block mb-1.5">
-                        {product.compatibility}
-                      </span>
-
                       {/* Title with link to Dedicated Page */}
                       <Link
                         to={`/accessories/${product.handle}`}
@@ -109,76 +93,28 @@ export default function Accessories() {
                       >
                         {product.title}
                       </Link>
-
-                      {/* Tagline / Brief */}
-                      <p className="text-xs text-[#6B7280] font-light leading-relaxed mt-2 line-clamp-2">
-                        {product.subtitle}
-                      </p>
-
-                      {/* Variant Selector */}
-                      {product.variants.length > 0 && (
-                        <div className="mt-4 pt-4 border-t border-[#F3F4F6]">
-                          <span className="text-[11px] font-mono text-[#6B7280] block mb-2">
-                            Color: <span className="text-[#111111] font-medium">{activeVariant}</span>
-                          </span>
-
-                          <div className="flex items-center gap-2">
-                            {product.variants.map((v) => (
-                              <button
-                                key={v.id}
-                                type="button"
-                                onClick={() => handleVariantChange(product.id, v.title)}
-                                className={`text-[11px] font-mono px-2.5 py-1 rounded-md border transition-all cursor-pointer ${
-                                  activeVariant === v.title
-                                    ? "bg-[#111111] text-white border-[#111111] font-semibold"
-                                    : "bg-[#F9FAFB] text-[#4B5563] border-[#E5E7EB] hover:border-[#D1D5DB]"
-                                }`}
-                              >
-                                {v.title}
-                              </button>
-                            ))}
-                          </div>
-                        </div>
-                      )}
                     </div>
 
                     {/* Price & Action Row */}
                     <div className="mt-6 pt-4 border-t border-[#E5E7EB] flex items-center justify-between gap-3">
                       <div>
-                        <span className="text-[10px] font-mono text-[#9CA3AF] uppercase tracking-wider block">Price</span>
                         <span className="text-xl font-mono font-bold text-[#111111]">
                           {product.currency}{product.price.toLocaleString("en-IN")}
                         </span>
                       </div>
 
-                      <div className="flex items-center gap-2">
-                        <Link
-                          to={`/accessories/${product.handle}`}
-                          className="px-3 py-2 rounded-full border border-gray-300 text-xs font-semibold text-[#111111] hover:bg-gray-50 transition-all text-center"
-                        >
-                          Details
-                        </Link>
-                        
-                        <Link
-                          to={`/buy-now?item=${product.handle}&color=${encodeURIComponent(activeVariant)}`}
-                          onClick={() =>
-                            trackEvent("buy_accessory_clicked", {
-                              product: product.handle,
-                              variant: activeVariant,
-                            })
-                          }
-                          className="inline-flex items-center gap-1 px-4 py-2 rounded-full bg-[#111111] text-white text-xs font-semibold hover:bg-black active:scale-95 transition-all shadow-xs"
-                        >
-                          <span>Buy</span>
-                          <ArrowRight className="w-3 h-3" />
-                        </Link>
-                      </div>
+                      <Link
+                        to={`/accessories/${product.handle}`}
+                        className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full bg-[#111111] text-white text-xs font-semibold hover:bg-black active:scale-95 transition-all shadow-xs cursor-pointer"
+                      >
+                        <span>View</span>
+                        <ArrowRight className="w-3.5 h-3.5" />
+                      </Link>
                     </div>
 
                   </div>
                 </div>
-              );
-            })}
+            ))}
 
             {/* Teaser placeholder card for future accessories (Bright style) */}
             <div className="flex flex-col items-center justify-center p-8 rounded-2xl border-2 border-dashed border-[#E5E7EB] bg-white/60 text-center min-h-[360px]">
