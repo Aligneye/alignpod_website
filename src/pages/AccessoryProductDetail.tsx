@@ -64,21 +64,11 @@ export default function AccessoryProductDetail() {
             {/* Left Column: Product Visuals */}
             <div className="lg:col-span-7 flex flex-col gap-4">
               <div className="relative aspect-square w-full rounded-3xl bg-white border border-[#E5E7EB] shadow-xs flex items-center justify-center p-8 sm:p-12 overflow-hidden group">
-                {product.badge && (
-                  <span className="absolute top-6 left-6 z-10 text-xs font-mono font-semibold tracking-wider uppercase px-3 py-1.5 rounded-full bg-[#111111] text-white shadow-xs">
-                    {product.badge}
-                  </span>
-                )}
-
                 <img
                   src={product.thumbnail}
                   alt={product.title}
                   className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500 ease-out"
                 />
-
-                <span className="absolute bottom-6 left-6 text-[11px] font-mono text-[#6B7280] bg-[#F9FAFB] border border-[#E5E7EB] px-3 py-1 rounded-full">
-                  {product.compatibility}
-                </span>
               </div>
 
               {/* Thumbnail Gallery Row */}
