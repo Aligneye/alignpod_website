@@ -8,7 +8,6 @@ import { trackEvent } from "../utils/analytics";
 const navLinks = [
   { name: "Home", href: "/" },
   { name: "Why alignPod", href: "/why-alignpod" },
-  { name: "Product", href: "/product" },
   { name: "Science", href: "/science" },
   { name: "Contact", href: "/contact" },
 ];
