@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "motion/react";
 import { Check } from "lucide-react";
 import { Navbar } from "../components/Navbar";
 import { Footer } from "../components/Footer";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { trackEvent } from "../utils/analytics";
 import { FormInput, FormTextarea } from "../components/ui/FormInput";
 import { supabase } from "../lib/supabase";
@@ -11,6 +11,10 @@ import { supabase } from "../lib/supabase";
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export function BuyNow() {
+  const [searchParams] = useSearchParams();
+  const isCollar = searchParams.get("item") === "magnetic-collar";
+  const itemColor = searchParams.get("color") || "";
+  const itemLabel = isCollar ? `AlignPod Magnetic Collar${itemColor ? ` (${itemColor})` : ""}` : "AlignPod";
   const [status, setStatus] = useState<"idle" | "submitting" | "success">("idle");
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -92,11 +96,11 @@ export function BuyNow() {
             className="text-center mb-16"
           >
             <span className="inline-block text-xs font-semibold tracking-[0.2em] text-[#6B7280] uppercase mb-6">
-              Order AlignPod
+              Order {itemLabel}
             </span>
 
             <h1 className="heading-hero text-[#111111] mb-6">
-              Buy AlignPod
+              Buy {itemLabel}
             </h1>
 
             <p className="text-body text-[#6B7280] max-w-2xl mx-auto">
@@ -132,7 +136,7 @@ export function BuyNow() {
                     Order Request Received
                   </h2>
                   <p className="text-[#6B7280] text-lg max-w-md mb-10">
-                    Thank you. Our team will contact you shortly to confirm your AlignPod order.
+                    Thank you. Our team will contact you shortly to confirm your {itemLabel} order.
                   </p>
                   <Link to="/" className="btn-secondary-light">
                     Back to Homepage
@@ -157,7 +161,13 @@ export function BuyNow() {
                   </div>
 
                   <div className="md:col-span-2">
-                    <FormTextarea name="message" label="Any note or special requirement? (Optional)" rows={4} placeholder="Let us know if there's anything else we should know" />
+                    <FormTextarea 
+                      name="message" 
+                      label="Any note or special requirement? (Optional)" 
+                      rows={4} 
+                      placeholder="Let us know if there's anything else we should know" 
+                      defaultValue={isCollar ? `Order for: ${itemLabel}` : undefined}
+                    />
                   </div>
 
                   <button

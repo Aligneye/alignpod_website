@@ -19,7 +19,7 @@ export function Navbar() {
 
 
   const isDarkTheme =
-  ["/", "/why-alignpod", "/product", "/science"].includes(location.pathname);
+  ["/", "/why-alignpod", "/product", "/science", "/accessories"].includes(location.pathname);
 
   useEffect(() => {
     const handleScroll = () => {
