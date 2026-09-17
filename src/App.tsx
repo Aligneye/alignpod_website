@@ -15,6 +15,7 @@ import { PrivacyPolicy } from "./pages/PrivacyPolicy";
 import {TermsOfUse} from "./pages/TermsOfUse";
 import { BuyNow } from "./pages/BuyNow";
 import Accessories from "./pages/Accessories";
+import AccessoryProductDetail from "./pages/AccessoryProductDetail";
 import { LeadPopup } from "./components/LeadPopup";
 import { SEO } from "./components/SEO";
 import { GoogleAnalytics } from "./components/GoogleAnalytics";
@@ -170,6 +171,11 @@ export default function App() {
 <Route
   path="/accessories"
   element={<Accessories />}
+/>
+
+<Route
+  path="/accessories/:handle"
+  element={<AccessoryProductDetail />}
 />
       </Routes>
     </Router>
