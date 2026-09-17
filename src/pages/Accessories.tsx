@@ -42,13 +42,6 @@ export default function Accessories() {
                   Modular mounts, bands, and daily essentials designed to personalize and elevate your posture training setup.
                 </p>
               </div>
-
-              {/* Product Counter Pill */}
-              <div className="flex items-center gap-3">
-                <span className="px-3.5 py-1.5 rounded-full text-xs font-mono bg-white border border-[#E5E7EB] text-[#4B5563] shadow-xs">
-                  {accessoriesCatalog.length} {accessoriesCatalog.length === 1 ? "Product Available" : "Products Available"}
-                </span>
-              </div>
             </div>
           </div>
 
