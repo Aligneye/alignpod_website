@@ -14,6 +14,7 @@ import {PostureCheck } from "./pages/PostureCheck";
 import { PrivacyPolicy } from "./pages/PrivacyPolicy";
 import {TermsOfUse} from "./pages/TermsOfUse";
 import { BuyNow } from "./pages/BuyNow";
+import Accessories from "./pages/Accessories";
 import { LeadPopup } from "./components/LeadPopup";
 import { SEO } from "./components/SEO";
 import { GoogleAnalytics } from "./components/GoogleAnalytics";
@@ -164,6 +165,11 @@ export default function App() {
       <BuyNow />
     </>
   }
+/>
+
+<Route
+  path="/accessories"
+  element={<Accessories />}
 />
       </Routes>
     </Router>

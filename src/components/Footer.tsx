@@ -7,6 +7,7 @@ const footerLinks = [
     title: "Product",
     links: [
       { label: "How It Works", href: "#how-it-works" },
+      { label: "Magnetic Collar", href: "/accessories" },
       { label: "Training Mode", href: "#training-therapy" },
       { label: "Therapy Mode", href: "#training-therapy" },
       { label: "Calibration Profiles", href: "#companion-app" },
