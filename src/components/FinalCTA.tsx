@@ -99,9 +99,9 @@ export function FinalCTA() {
             variants={fadeInUp}
             className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 w-full sm:w-auto"
           >
-            <button className="btn-primary-dark w-full sm:w-auto">
+            <Link to="/product" className="btn-primary-dark w-full sm:w-auto text-center">
               Get Started
-            </button>
+            </Link>
             <Link to="/contact" className="btn-secondary-dark w-full sm:w-auto">
               Contact Us
             </Link>
