@@ -8,7 +8,6 @@ import training from "../../assets/training.jpeg";
 import apfinal from "../../assets/apfinal2.png";
 import { Navbar } from "../../components/Navbar";
 import { Footer } from "../../components/Footer";
-import { useMediaQuery } from "../../hooks/useMediaQuery";
 import { RealLifePinned } from "../../components/RealLifePinned";
 import { RealLifeMobile } from "../../components/RealLifeMobile";
 import {
@@ -289,8 +288,6 @@ const lifestyles = [
 ];
 
 function RealLife() {
-  const isDesktop = useMediaQuery("(min-width: 1024px)");
-
   return (
     <section className="py-24 lg:py-32 bg-[#F8F8F6] text-[#111111]">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -307,11 +304,12 @@ function RealLife() {
         </motion.div>
       </div>
 
-      {isDesktop ? (
+      <div className="hidden lg:block">
         <RealLifePinned lifestyles={lifestyles} />
-      ) : (
+      </div>
+      <div className="block lg:hidden">
         <RealLifeMobile lifestyles={lifestyles} />
-      )}
+      </div>
     </section>
   );
 }

@@ -79,12 +79,13 @@ function HomeIndicator({ theme }: { theme: StatusBarTheme }) {
 export function AppShowcaseCarousel() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
-  const [spacing, setSpacing] = useState(getSpacing);
+  const [spacing, setSpacing] = useState(300);
   const resumeTimeoutRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
   const dragStartX = useRef<number | null>(null);
   const length = screens.length;
 
   useEffect(() => {
+    setSpacing(getSpacing());
     const onResize = () => setSpacing(getSpacing());
     window.addEventListener('resize', onResize);
     return () => window.removeEventListener('resize', onResize);
