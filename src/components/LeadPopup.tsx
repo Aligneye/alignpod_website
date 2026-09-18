@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useState } from "react";
 import { trackEvent } from "../utils/analytics";
 import { supabase } from "../lib/supabase";

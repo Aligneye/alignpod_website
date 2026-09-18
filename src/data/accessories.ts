@@ -26,6 +26,10 @@ export interface AccessoryDetailProduct {
   variants: AccessoryVariant[];
 }
 
+export type AccessoryProduct = AccessoryDetailProduct;
+
+const collarImgSrc = typeof collarImg === "string" ? collarImg : collarImg.src;
+
 export const accessoriesCatalog: AccessoryDetailProduct[] = [
   {
     id: "prod_magnetic_collar",
@@ -36,8 +40,8 @@ export const accessoriesCatalog: AccessoryDetailProduct[] = [
     currency: "₹",
     badge: "Official Accessory",
     inStock: true,
-    thumbnail: collarImg,
-    images: [collarImg],
+    thumbnail: collarImgSrc,
+    images: [collarImgSrc],
     compatibility: "Compatible with AlignPod v1 & v2 Sensor Units",
     description:
       "Crafted for uninterrupted, all-day posture training. The AlignPod Magnetic Collar provides a secure, weightless neck mount using ultra-strong neodymium alignment magnets encased in soft-touch, hypoallergenic medical-grade silicone.",

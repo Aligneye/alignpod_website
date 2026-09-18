@@ -1,6 +1,9 @@
+"use client";
+
 import { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
-import {  Menu, X } from "lucide-react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import logo from "../assets/alignlogo.png";
 import { trackEvent } from "../utils/analytics";
@@ -16,11 +19,10 @@ const navLinks = [
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const location = useLocation();
-
+  const pathname = usePathname() || "/";
 
   const isDarkTheme =
-  ["/", "/why-alignpod", "/product", "/science"].includes(location.pathname);
+    ["/", "/why-alignpod", "/product", "/science"].includes(pathname);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -41,9 +43,7 @@ export function Navbar() {
     return isActive ? "text-[#111111]" : "text-[#111111]/60 hover:text-[#111111]";
   };
 
-  const getLogoStyle = () => {
-  return "";
-};
+  const logoSrc = typeof logo === "string" ? logo : (logo as { src: string }).src;
 
   return (
     <header
@@ -55,22 +55,22 @@ export function Navbar() {
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-8 flex items-center justify-between">
         {/* Logo */}
-        <Link to="/" className="flex items-center gap-2 z-50 relative group">
+        <Link href="/" className="flex items-center gap-2 z-50 relative group">
           <img
-            src={logo}
+            src={logoSrc}
             alt="alignPod Logo"
-            className={`h-8 md:h-10  w-auto object-contain transition-all duration-300 group-hover:opacity-80 ${getLogoStyle()}`}
+            className="h-8 md:h-10 w-auto object-contain transition-all duration-300 group-hover:opacity-80"
           />
         </Link>
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center gap-8">
           {navLinks.map((link) => {
-            const isActive = location.pathname === link.href;
+            const isActive = pathname === link.href;
             return (
               <Link
                 key={link.name}
-                to={link.href}
+                href={link.href}
                 className={`text-sm font-medium transition-colors relative py-2 ${getTextColor(isActive)}`}
               >
                 {link.name}
@@ -91,12 +91,15 @@ export function Navbar() {
 
         {/* Right Actions (Desktop & Mobile) */}
         <div className="flex items-center gap-4 z-50 relative">
-
-          <Link to="/buy-now"   onClick={() => trackEvent("buy_now_clicked", { location: "hero" })} className={`hidden md:flex items-center justify-center px-6 py-2.5 text-sm font-semibold rounded-full transition-all duration-300 hover:scale-105 ${
-            isScrolled || isDarkTheme
-              ? "bg-white text-black hover:bg-gray-100 shadow-[0_0_20px_rgba(255,255,255,0.1)]"
-              : "bg-[#111111] text-white hover:bg-black shadow-[0_4px_14px_rgba(0,0,0,0.1)]"
-          }`}>
+          <Link
+            href="/buy-now"
+            onClick={() => trackEvent("buy_now_clicked", { location: "hero" })}
+            className={`hidden md:flex items-center justify-center px-6 py-2.5 text-sm font-semibold rounded-full transition-all duration-300 hover:scale-105 ${
+              isScrolled || isDarkTheme
+                ? "bg-white text-black hover:bg-gray-100 shadow-[0_0_20px_rgba(255,255,255,0.1)]"
+                : "bg-[#111111] text-white hover:bg-black shadow-[0_4px_14px_rgba(0,0,0,0.1)]"
+            }`}
+          >
             Buy Now
           </Link>
 
@@ -127,7 +130,7 @@ export function Navbar() {
           >
             <div className="px-6 py-8 flex flex-col gap-6 h-full">
               {navLinks.map((link, idx) => {
-                const isActive = location.pathname === link.href;
+                const isActive = pathname === link.href;
                 return (
                   <motion.div
                     key={link.name}
@@ -136,7 +139,7 @@ export function Navbar() {
                     transition={{ delay: idx * 0.1, duration: 0.4 }}
                   >
                     <Link
-                      to={link.href}
+                      href={link.href}
                       className={`text-xl font-display font-medium transition-colors flex items-center gap-4 ${
                         isActive ? "text-white" : "text-white/60 hover:text-white"
                       }`}
@@ -155,7 +158,7 @@ export function Navbar() {
                 className="mt-auto pb-12"
               >
                 <Link
-                  to="/buy-now"
+                  href="/buy-now"
                   onClick={() => {
                     setIsMobileMenuOpen(false);
                     trackEvent("buy_now_clicked", { location: "mobile_menu" });

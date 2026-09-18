@@ -1,35 +1,27 @@
+"use client";
+
 import { useState } from "react";
-import { useParams, Link, Navigate } from "react-router-dom";
-import { 
-  ShieldCheck, 
-  Truck, 
-  RotateCcw, 
-  Check, 
+import Link from "next/link";
+import {
+  ShieldCheck,
+  Truck,
+  RotateCcw,
+  Check,
   ArrowLeft,
   ChevronRight,
-  Magnet,
-  Feather,
-  Droplets,
   Package,
   Sparkles,
-  ShoppingBag
+  ShoppingBag,
 } from "lucide-react";
-import { Navbar } from "../components/Navbar";
-import { Footer } from "../components/Footer";
-import { SEO } from "../components/SEO";
-import { trackEvent } from "../utils/analytics";
-import { getAccessoryByHandle, accessoriesCatalog } from "../data/accessories";
+import { Navbar } from "../../../components/Navbar";
+import { Footer } from "../../../components/Footer";
+import { trackEvent } from "../../../utils/analytics";
+import type { AccessoryProduct } from "../../../data/accessories";
 
-export default function AccessoryProductDetail() {
-  const { handle } = useParams<{ handle: string }>();
-  const product = getAccessoryByHandle(handle || "magnetic-collar");
-
-  // Fallback to first product or redirect if invalid handle
-  if (!product) {
-    return <Navigate to="/accessories" replace />;
-  }
-
-  const [selectedVariant, setSelectedVariant] = useState(product.variants[0]?.title || "Matte Black");
+export default function AccessoryDetailContent({ product }: { product: AccessoryProduct }) {
+  const [selectedVariant, setSelectedVariant] = useState(
+    product.variants[0]?.title || "Matte Black"
+  );
   const [quantity, setQuantity] = useState(1);
   const [activeTab, setActiveTab] = useState<"features" | "specs" | "box">("features");
 
@@ -38,29 +30,25 @@ export default function AccessoryProductDetail() {
 
   return (
     <>
-      <SEO
-        title={`${product.title} | AlignPod Official Accessory`}
-        description={product.subtitle}
-        canonical={`https://www.aligneye.com/accessories/${product.handle}`}
-      />
-
       <Navbar />
 
       <main className="min-h-screen bg-[#F8F8F6] text-[#111111] pt-28 sm:pt-36 pb-24 px-6">
         <div className="max-w-7xl mx-auto">
-          
           {/* Breadcrumb Navigation */}
           <nav className="flex items-center gap-2 text-xs font-mono text-[#6B7280] mb-8 sm:mb-10">
-            <Link to="/" className="hover:text-[#111111] transition-colors">Home</Link>
+            <Link href="/" className="hover:text-[#111111] transition-colors">
+              Home
+            </Link>
             <ChevronRight className="w-3 h-3 text-[#9CA3AF]" />
-            <Link to="/accessories" className="hover:text-[#111111] transition-colors">Accessories</Link>
+            <Link href="/accessories" className="hover:text-[#111111] transition-colors">
+              Accessories
+            </Link>
             <ChevronRight className="w-3 h-3 text-[#9CA3AF]" />
             <span className="text-[#111111] font-semibold">{product.title}</span>
           </nav>
 
           {/* Main PDP Grid: Gallery on Left, Product Buy Box on Right */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start mb-16">
-            
             {/* Left Column: Product Visuals */}
             <div className="lg:col-span-7 flex flex-col gap-4">
               <div className="relative aspect-square w-full rounded-3xl bg-white border border-[#E5E7EB] shadow-xs flex items-center justify-center p-8 sm:p-12 overflow-hidden group">
@@ -78,7 +66,11 @@ export default function AccessoryProductDetail() {
                     key={idx}
                     className="aspect-square rounded-2xl bg-white border-2 border-[#111111] p-3 flex items-center justify-center cursor-pointer shadow-2xs"
                   >
-                    <img src={img} alt={`${product.title} view ${idx + 1}`} className="w-full h-full object-contain" />
+                    <img
+                      src={img}
+                      alt={`${product.title} view ${idx + 1}`}
+                      className="w-full h-full object-contain"
+                    />
                   </div>
                 ))}
               </div>
@@ -86,7 +78,6 @@ export default function AccessoryProductDetail() {
 
             {/* Right Column: E-Commerce Buy Box */}
             <div className="lg:col-span-5 flex flex-col bg-white border border-[#E5E7EB] rounded-3xl p-6 sm:p-8 lg:p-10 shadow-xs">
-              
               {/* Category & Title */}
               <span className="text-xs font-mono uppercase tracking-[0.2em] text-[#6B7280] font-semibold mb-2 block">
                 Official Hardware Accessory
@@ -102,7 +93,8 @@ export default function AccessoryProductDetail() {
               <div className="flex items-baseline justify-between pb-6 border-b border-[#E5E7EB] mb-6">
                 <div>
                   <span className="text-3xl sm:text-4xl font-mono font-bold text-[#111111]">
-                    {product.currency}{product.price.toLocaleString("en-IN")}
+                    {product.currency}
+                    {product.price.toLocaleString("en-IN")}
                   </span>
                   <span className="block text-[11px] text-[#6B7280] mt-0.5">
                     Inclusive of all taxes · Free delivery
@@ -173,10 +165,12 @@ export default function AccessoryProductDetail() {
                 </div>
               </div>
 
-              {/* CTAs: Buy Now + Add to Bag (Medusa Ready) */}
+              {/* CTAs: Buy Now + Add to Bag */}
               <div className="flex flex-col gap-3 mb-8">
                 <Link
-                  to={`/buy-now?item=${product.handle}&color=${encodeURIComponent(selectedVariant)}&qty=${quantity}`}
+                  href={`/buy-now?item=${product.handle}&color=${encodeURIComponent(
+                    selectedVariant
+                  )}&qty=${quantity}`}
                   onClick={() =>
                     trackEvent("buy_now_clicked", {
                       product: product.handle,
@@ -186,13 +180,16 @@ export default function AccessoryProductDetail() {
                   }
                   className="w-full py-4 px-6 rounded-full bg-[#111111] text-white text-center font-semibold text-sm hover:bg-black active:scale-[0.99] transition-all shadow-md cursor-pointer"
                 >
-                  Buy Now · {product.currency}{(product.price * quantity).toLocaleString("en-IN")}
+                  Buy Now · {product.currency}
+                  {(product.price * quantity).toLocaleString("en-IN")}
                 </Link>
 
                 <button
                   type="button"
                   onClick={() => {
-                    alert(`${quantity}x ${product.title} (${selectedVariant}) selected! Ready for Medusa Cart integration.`);
+                    alert(
+                      `${quantity}x ${product.title} (${selectedVariant}) selected! Ready for cart integration.`
+                    );
                     trackEvent("add_to_cart", {
                       product: product.handle,
                       variant: selectedVariant,
@@ -221,12 +218,10 @@ export default function AccessoryProductDetail() {
                   <span>7-Day Replacement Guarantee</span>
                 </div>
               </div>
-
             </div>
-
           </div>
 
-          {/* Structured Information Tabs (Features / Specs / In the Box) */}
+          {/* Structured Information Tabs */}
           <div className="bg-white border border-[#E5E7EB] rounded-3xl p-6 sm:p-10 shadow-xs mb-16">
             <div className="flex items-center gap-4 sm:gap-8 border-b border-[#E5E7EB] pb-4 mb-8 overflow-x-auto">
               <button
@@ -270,7 +265,10 @@ export default function AccessoryProductDetail() {
             {activeTab === "features" && (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {product.features.map((feature, idx) => (
-                  <div key={idx} className="flex items-start gap-3.5 p-4 rounded-2xl bg-[#F9FAFB] border border-[#E5E7EB]">
+                  <div
+                    key={idx}
+                    className="flex items-start gap-3.5 p-4 rounded-2xl bg-[#F9FAFB] border border-[#E5E7EB]"
+                  >
                     <div className="w-7 h-7 rounded-full bg-[#111111] text-white flex items-center justify-center shrink-0 mt-0.5">
                       <Check className="w-4 h-4" />
                     </div>
@@ -302,17 +300,25 @@ export default function AccessoryProductDetail() {
                 <div className="p-5 rounded-2xl bg-[#F9FAFB] border border-[#E5E7EB] space-y-2">
                   <Package className="w-6 h-6 text-[#111111]" />
                   <h4 className="text-sm font-semibold text-[#111111]">1x Magnetic Collar</h4>
-                  <p className="text-xs text-[#6B7280] font-light">With integrated dual N52 neodymium magnetic clasp</p>
+                  <p className="text-xs text-[#6B7280] font-light">
+                    With integrated dual N52 neodymium magnetic clasp
+                  </p>
                 </div>
                 <div className="p-5 rounded-2xl bg-[#F9FAFB] border border-[#E5E7EB] space-y-2">
                   <ShieldCheck className="w-6 h-6 text-[#111111]" />
-                  <h4 className="text-sm font-semibold text-[#111111]">1x Quick Start & Sizing Guide</h4>
-                  <p className="text-xs text-[#6B7280] font-light">Instructions on attachment, cleaning, and maintenance</p>
+                  <h4 className="text-sm font-semibold text-[#111111]">
+                    1x Quick Start & Sizing Guide
+                  </h4>
+                  <p className="text-xs text-[#6B7280] font-light">
+                    Instructions on attachment, cleaning, and maintenance
+                  </p>
                 </div>
                 <div className="p-5 rounded-2xl bg-[#F9FAFB] border border-[#E5E7EB] space-y-2">
                   <Sparkles className="w-6 h-6 text-[#111111]" />
                   <h4 className="text-sm font-semibold text-[#111111]">Official Warranty Card</h4>
-                  <p className="text-xs text-[#6B7280] font-light">1-Year manufacturer replacement guarantee</p>
+                  <p className="text-xs text-[#6B7280] font-light">
+                    1-Year manufacturer replacement guarantee
+                  </p>
                 </div>
               </div>
             )}
@@ -321,14 +327,13 @@ export default function AccessoryProductDetail() {
           {/* Back to Catalog Link */}
           <div className="text-center">
             <Link
-              to="/accessories"
+              href="/accessories"
               className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-[#6B7280] hover:text-[#111111] transition-colors"
             >
               <ArrowLeft className="w-4 h-4" />
               <span>Back to all accessories</span>
             </Link>
           </div>
-
         </div>
       </main>
 

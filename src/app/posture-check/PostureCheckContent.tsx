@@ -1,17 +1,19 @@
+"use client";
+
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { UploadCard } from "../components/posture/UploadCard";
-import { ImagePreviewCard } from "../components/posture/ImagePreviewCard";
-import { ResultCard } from "../components/posture/ResultCard";
-import { AnalysisLoader } from "../components/posture/AnalysisLoader";
-import { analyzePostureImage } from "../services/gemini";
-import type { PostureResult } from "../types/posture";
-import { CameraCapture } from "../components/posture/CameraCapture";
-import { Navbar} from "../components/Navbar";
-import { Footer } from "../components/Footer";
-import { trackEvent } from "../utils/analytics";
+import { UploadCard } from "../../components/posture/UploadCard";
+import { ImagePreviewCard } from "../../components/posture/ImagePreviewCard";
+import { ResultCard } from "../../components/posture/ResultCard";
+import { AnalysisLoader } from "../../components/posture/AnalysisLoader";
+import { analyzePostureImage } from "../../services/gemini";
+import type { PostureResult } from "../../types/posture";
+import { CameraCapture } from "../../components/posture/CameraCapture";
+import { Navbar } from "../../components/Navbar";
+import { Footer } from "../../components/Footer";
+import { trackEvent } from "../../utils/analytics";
 
-export function PostureCheck() {
+export default function PostureCheckContent() {
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [result, setResult] = useState<PostureResult | null>(null);

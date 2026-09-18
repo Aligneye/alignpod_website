@@ -1,9 +1,12 @@
+"use client";
+
 import { useState, useEffect } from "react";
 import { motion } from "motion/react";
 import { Play, ChevronDown } from "lucide-react";
-import heroVideoUrl from "../assets/videos/alignpod-ezremove.mp4";
-import { Link } from 'react-router-dom';
+import Link from "next/link";
 import { trackEvent } from "../utils/analytics";
+
+const videoSrc = "/videos/alignpod-ezremove.mp4";
 
 export function Hero() {
   const words = ["Posture", "Alignment", "Habits", "Wellness"];
@@ -44,7 +47,7 @@ export function Hero() {
           muted
           playsInline
           className="absolute inset-0 w-full h-full object-cover"
-          src={heroVideoUrl}
+          src={videoSrc}
         />
         {/* Subtle dark overlay (approx 40-50% opacity) to ensure text readability  */}
         <div className="absolute inset-0 bg-black/45" />
@@ -76,22 +79,23 @@ export function Hero() {
 
             <div className="flex flex-col sm:flex-row items-center gap-4">
               <Link
-                to="/posture-check"
+                href="/posture-check"
                 className="w-full sm:w-auto btn-primary-dark text-center"
                 onClick={() =>
-                 trackEvent("analyze_posture_clicked", {
-                location: "hero",
-               })
-              }
-             >
-              Analyze Your Posture
-           </Link>
+                  trackEvent("analyze_posture_clicked", {
+                    location: "hero",
+                  })
+                }
+              >
+                Analyze Your Posture
+              </Link>
               <button
-                onClick={() => {trackEvent("watch_demo_clicked", { location: "hero" });
-                setShowVideo(true);
+                onClick={() => {
+                  trackEvent("watch_demo_clicked", { location: "hero" });
+                  setShowVideo(true);
                 }}
-               className="group w-full sm:w-auto btn-secondary-dark flex items-center justify-center gap-3"
-                >
+                className="group w-full sm:w-auto btn-secondary-dark flex items-center justify-center gap-3"
+              >
                 <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-white/20 transition-colors">
                   <Play className="w-3.5 h-3.5 fill-white" />
                 </div>
@@ -125,26 +129,25 @@ export function Hero() {
         </motion.div>
       </motion.div>
       {showVideo && (
-  <div className="fixed inset-0 bg-black/80 z-[9999] flex items-center justify-center px-4">
-    <div className="relative w-full max-w-4xl bg-black rounded-2xl overflow-hidden">
-      <button
-        onClick={() => setShowVideo(false)}
-        className="absolute top-3 right-3 z-10 w-9 h-9 rounded-full bg-white text-black text-2xl flex items-center justify-center"
-      >
-        ×
-      </button>
+        <div className="fixed inset-0 bg-black/80 z-[9999] flex items-center justify-center px-4">
+          <div className="relative w-full max-w-4xl bg-black rounded-2xl overflow-hidden">
+            <button
+              onClick={() => setShowVideo(false)}
+              className="absolute top-3 right-3 z-10 w-9 h-9 rounded-full bg-white text-black text-2xl flex items-center justify-center"
+            >
+              ×
+            </button>
 
-      <iframe
-        className="w-full aspect-video"
-        src="https://www.youtube.com/embed/ZVy5krlFEqk?autoplay=1"
-        title="AlignEye Demo Video"
-        allow="autoplay; encrypted-media"
-        allowFullScreen
-      />
-    </div>
-  </div>
-)}
+            <iframe
+              className="w-full aspect-video"
+              src="https://www.youtube.com/embed/ZVy5krlFEqk?autoplay=1"
+              title="AlignEye Demo Video"
+              allow="autoplay; encrypted-media"
+              allowFullScreen
+            />
+          </div>
+        </div>
+      )}
     </section>
-    
   );
 }

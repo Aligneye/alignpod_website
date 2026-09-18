@@ -1,21 +1,28 @@
-import { motion, type Variants } from 'motion/react';
-import { Link } from 'react-router-dom';
-import apfinal from '../assets/apfinal2.png';
+"use client";
+
+import { motion, type Variants } from "motion/react";
+import Link from "next/link";
+import apfinal from "../assets/apfinal2.png";
 
 const fadeInUp: Variants = {
   hidden: { opacity: 0, y: 40 },
-  visible: { opacity: 1, y: 0, transition: { duration: 1, ease: "easeOut" } }
+  visible: { opacity: 1, y: 0, transition: { duration: 1, ease: "easeOut" } },
 };
 
 const staggerContainer = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: { staggerChildren: 0.2 }
-  }
+    transition: { staggerChildren: 0.2 },
+  },
 };
 
 export function FinalCTA() {
+  const imgSrc =
+    typeof apfinal === "string"
+      ? apfinal
+      : (apfinal as { src: string }).src;
+
   return (
     <section className="relative w-full py-32 lg:py-10 bg-[#0E1014] text-white overflow-hidden selection:bg-white/20 selection:text-white flex flex-col items-center lg:min-h-screen lg:justify-center">
       {/* Background Ambience */}
@@ -24,7 +31,7 @@ export function FinalCTA() {
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[radial-gradient(circle_at_center,#2A303C_0%,transparent_70%)] opacity-50 blur-3xl mix-blend-screen"></div>
         {/* Vignette */}
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_30%,#0E1014_100%)]"></div>
-        
+
         {/* Subtle floating particles (CSS based) */}
         <div className="absolute inset-0 opacity-20">
           <div className="absolute top-[20%] left-[30%] w-1 h-1 bg-white rounded-full blur-[1px] animate-[ping_8s_ease-in-out_infinite]"></div>
@@ -35,7 +42,6 @@ export function FinalCTA() {
       </div>
 
       <div className="relative z-10 w-full max-w-5xl mx-auto px-6 lg:px-8 flex flex-col items-center pb-24 lg:pb-6">
-
         {/* Main Floating Product Visual */}
         <motion.div
           initial={{ opacity: 0, scale: 0.9, y: 40 }}
@@ -44,36 +50,36 @@ export function FinalCTA() {
           transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
           className="relative mb-20 lg:mb-6 flex justify-center items-center h-[300px] lg:h-[180px] w-full"
         >
-           {/* Spotlight behind device */}
-           <motion.div 
-             animate={{ opacity: [0.4, 0.6, 0.4], scale: [1, 1.1, 1] }}
-             transition={{ repeat: Infinity, duration: 8, ease: "easeInOut" }}
-             className="absolute w-64 h-64 bg-white/5 rounded-full blur-[80px]"
-           />
-           
-           <motion.div
-             animate={{ y: [-15, 15, -15] }}
-             transition={{ repeat: Infinity, duration: 8, ease: "easeInOut" }}
-             className="relative z-10 flex flex-col items-center"
-           >
-             {/* Product Visual */}
-             <img
-               src={apfinal}
-               alt="AlignPod product visual"
-               className="w-[160px] sm:w-[200px] lg:w-[140px] object-contain drop-shadow-[0_40px_80px_rgba(0,0,0,0.4)]"
-             />
-             
-             {/* Floor Shadow */}
-             <motion.div 
-               animate={{ scale: [1, 0.7, 1], opacity: [0.3, 0.1, 0.3] }}
-               transition={{ repeat: Infinity, duration: 8, ease: "easeInOut" }}
-               className="mt-16 w-32 h-6 bg-black rounded-[100%] blur-[12px]"
-             />
-           </motion.div>
+          {/* Spotlight behind device */}
+          <motion.div
+            animate={{ opacity: [0.4, 0.6, 0.4], scale: [1, 1.1, 1] }}
+            transition={{ repeat: Infinity, duration: 8, ease: "easeInOut" }}
+            className="absolute w-64 h-64 bg-white/5 rounded-full blur-[80px]"
+          />
+
+          <motion.div
+            animate={{ y: [-15, 15, -15] }}
+            transition={{ repeat: Infinity, duration: 8, ease: "easeInOut" }}
+            className="relative z-10 flex flex-col items-center"
+          >
+            {/* Product Visual */}
+            <img
+              src={imgSrc}
+              alt="AlignPod product visual"
+              className="w-[160px] sm:w-[200px] lg:w-[140px] object-contain drop-shadow-[0_40px_80px_rgba(0,0,0,0.4)]"
+            />
+
+            {/* Floor Shadow */}
+            <motion.div
+              animate={{ scale: [1, 0.7, 1], opacity: [0.3, 0.1, 0.3] }}
+              transition={{ repeat: Infinity, duration: 8, ease: "easeInOut" }}
+              className="mt-16 w-32 h-6 bg-black rounded-[100%] blur-[12px]"
+            />
+          </motion.div>
         </motion.div>
 
         {/* Text Content & Actions */}
-        <motion.div 
+        <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
@@ -84,7 +90,7 @@ export function FinalCTA() {
             variants={fadeInUp}
             className="heading-hero text-white mb-8 lg:mb-3 lg:text-4xl"
           >
-            Better posture<br/>starts with awareness.
+            Better posture<br />starts with awareness.
           </motion.h2>
 
           <motion.div
@@ -99,23 +105,22 @@ export function FinalCTA() {
             variants={fadeInUp}
             className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 w-full sm:w-auto"
           >
-            <Link to="/product" className="btn-primary-dark w-full sm:w-auto text-center">
+            <Link href="/product" className="btn-primary-dark w-full sm:w-auto text-center">
               Get Started
             </Link>
-            <Link to="/contact" className="btn-secondary-dark w-full sm:w-auto">
+            <Link href="/contact" className="btn-secondary-dark w-full sm:w-auto">
               Contact Us
             </Link>
           </motion.div>
-
         </motion.div>
       </div>
 
       {/* Brand Statement / Footer divider */}
       <div className="absolute bottom-0 w-full flex flex-col items-center pb-8 pt-20 lg:pt-8">
-         <div className="w-full max-w-3xl h-px bg-gradient-to-r from-transparent via-white/10 to-transparent mb-8 lg:mb-4"></div>
-         <p className="text-xs font-light tracking-widest text-white/30 uppercase text-center px-4">
-           Designed to help people build healthier posture habits, one day at a time.
-         </p>
+        <div className="w-full max-w-3xl h-px bg-gradient-to-r from-transparent via-white/10 to-transparent mb-8 lg:mb-4"></div>
+        <p className="text-xs font-light tracking-widest text-white/30 uppercase text-center px-4">
+          Designed to help people build healthier posture habits, one day at a time.
+        </p>
       </div>
     </section>
   );

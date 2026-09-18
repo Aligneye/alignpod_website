@@ -7,6 +7,9 @@ import gamer from "../assets/gamer.jpg";
 import remote from "../assets/remote.jpg";
 import traveller from "../assets/traveller.jpg";
 
+const toSrc = (img: unknown): string =>
+  typeof img === "string" ? img : (img as { src: string }).src;
+
 const lifestyles = [
   {
     title: "Students",
@@ -105,7 +108,7 @@ export function DesignedForEveryLifestyle() {
             >
               <div className="w-28 h-28 sm:w-32 sm:h-32 lg:w-36 lg:h-36 rounded-full overflow-hidden mb-6 border border-[#E5E7EB] shadow-[0_12px_30px_rgba(0,0,0,0.06)] bg-white">
                 <img
-                  src={item.image}
+                  src={toSrc(item.image)}
                   alt={item.title}
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                 />

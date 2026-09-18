@@ -147,7 +147,7 @@ export function MeetAlignPod() {
               className="relative z-10 drop-shadow-[0_30px_40px_rgba(0,0,0,0.15)]"
             >
               <img
-                src={apfinal}
+                src={typeof apfinal === 'string' ? apfinal : apfinal.src}
                 alt="AlignPod product visual"
                 className="w-[180px] sm:w-[220px] object-contain drop-shadow-[0_20px_40px_rgba(0,0,0,0.2)]"
               />

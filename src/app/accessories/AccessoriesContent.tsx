@@ -1,33 +1,24 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import { 
-  ShieldCheck, 
-  Truck, 
+"use client";
+
+import Link from "next/link";
+import {
+  ShieldCheck,
+  Truck,
   RotateCcw,
   ArrowRight,
   Sparkles,
-  Check
 } from "lucide-react";
-import { Navbar } from "../components/Navbar";
-import { Footer } from "../components/Footer";
-import { SEO } from "../components/SEO";
-import { trackEvent } from "../utils/analytics";
-import { accessoriesCatalog } from "../data/accessories";
+import { Navbar } from "../../components/Navbar";
+import { Footer } from "../../components/Footer";
+import { accessoriesCatalog } from "../../data/accessories";
 
-export default function Accessories() {
+export default function AccessoriesContent() {
   return (
     <>
-      <SEO
-        title="Accessories | Official AlignPod Store"
-        description="Shop official accessories, mounts, and essentials designed for your AlignPod smart posture tracker."
-        canonical="https://www.aligneye.com/accessories"
-      />
-
       <Navbar />
 
       <main className="min-h-screen bg-[#F8F8F6] text-[#111111] pt-28 sm:pt-36 pb-20 px-6">
         <div className="max-w-7xl mx-auto">
-          
           {/* Bright Store Header */}
           <div className="border-b border-[#E5E7EB] pb-8 sm:pb-12 mb-10 sm:mb-12">
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
@@ -50,63 +41,63 @@ export default function Accessories() {
             {accessoriesCatalog.map((product) => (
               <div
                 key={product.id}
-                  className="group flex flex-col bg-white border border-[#E5E7EB] rounded-2xl overflow-hidden hover:border-[#D1D5DB] transition-all duration-300 hover:shadow-[0_10px_30px_rgba(0,0,0,0.06)]"
+                className="group flex flex-col bg-white border border-[#E5E7EB] rounded-2xl overflow-hidden hover:border-[#D1D5DB] transition-all duration-300 hover:shadow-[0_10px_30px_rgba(0,0,0,0.06)]"
+              >
+                {/* Clickable Product Image Container -> Links to Product Page */}
+                <Link
+                  href={`/accessories/${product.handle}`}
+                  className="relative aspect-square w-full bg-[#F3F4F6] overflow-hidden flex items-center justify-center p-6 block"
                 >
-                  {/* Clickable Product Image Container -> Links to Product Page */}
-                  <Link
-                    to={`/accessories/${product.handle}`}
-                    className="relative aspect-square w-full bg-[#F3F4F6] overflow-hidden flex items-center justify-center p-6 block"
-                  >
-                    {product.badge && (
-                      <span className="absolute top-3 left-3 z-10 text-[10px] font-mono font-semibold tracking-wider uppercase px-2.5 py-1 rounded-md bg-[#111111] text-white shadow-xs">
-                        {product.badge}
-                      </span>
-                    )}
+                  {product.badge && (
+                    <span className="absolute top-3 left-3 z-10 text-[10px] font-mono font-semibold tracking-wider uppercase px-2.5 py-1 rounded-md bg-[#111111] text-white shadow-xs">
+                      {product.badge}
+                    </span>
+                  )}
 
-                    <img
-                      src={product.thumbnail}
-                      alt={product.title}
-                      className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500 ease-out"
-                    />
+                  <img
+                    src={product.thumbnail}
+                    alt={product.title}
+                    className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500 ease-out"
+                  />
 
-                    {/* Stock Status Indicator */}
-                    <div className="absolute bottom-3 right-3 flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-white/90 backdrop-blur-md text-[10px] font-mono text-emerald-700 border border-emerald-200/60 shadow-xs">
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse" />
-                      <span>In Stock</span>
-                    </div>
-                  </Link>
+                  {/* Stock Status Indicator */}
+                  <div className="absolute bottom-3 right-3 flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-white/90 backdrop-blur-md text-[10px] font-mono text-emerald-700 border border-emerald-200/60 shadow-xs">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse" />
+                    <span>In Stock</span>
+                  </div>
+                </Link>
 
-                  {/* Product Card Body */}
-                  <div className="p-5 sm:p-6 flex-1 flex flex-col justify-between">
+                {/* Product Card Body */}
+                <div className="p-5 sm:p-6 flex-1 flex flex-col justify-between">
+                  <div>
+                    {/* Title with link to Dedicated Page */}
+                    <Link
+                      href={`/accessories/${product.handle}`}
+                      className="text-lg font-display font-semibold text-[#111111] group-hover:text-black transition-colors block"
+                    >
+                      {product.title}
+                    </Link>
+                  </div>
+
+                  {/* Price & Action Row */}
+                  <div className="mt-6 pt-4 border-t border-[#E5E7EB] flex items-center justify-between gap-3">
                     <div>
-                      {/* Title with link to Dedicated Page */}
-                      <Link
-                        to={`/accessories/${product.handle}`}
-                        className="text-lg font-display font-semibold text-[#111111] group-hover:text-black transition-colors block"
-                      >
-                        {product.title}
-                      </Link>
+                      <span className="text-xl font-mono font-bold text-[#111111]">
+                        {product.currency}
+                        {product.price.toLocaleString("en-IN")}
+                      </span>
                     </div>
 
-                    {/* Price & Action Row */}
-                    <div className="mt-6 pt-4 border-t border-[#E5E7EB] flex items-center justify-between gap-3">
-                      <div>
-                        <span className="text-xl font-mono font-bold text-[#111111]">
-                          {product.currency}{product.price.toLocaleString("en-IN")}
-                        </span>
-                      </div>
-
-                      <Link
-                        to={`/accessories/${product.handle}`}
-                        className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full bg-[#111111] text-white text-xs font-semibold hover:bg-black active:scale-95 transition-all shadow-xs cursor-pointer"
-                      >
-                        <span>View</span>
-                        <ArrowRight className="w-3.5 h-3.5" />
-                      </Link>
-                    </div>
-
+                    <Link
+                      href={`/accessories/${product.handle}`}
+                      className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full bg-[#111111] text-white text-xs font-semibold hover:bg-black active:scale-95 transition-all shadow-xs cursor-pointer"
+                    >
+                      <span>View</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </Link>
                   </div>
                 </div>
+              </div>
             ))}
 
             {/* Teaser placeholder card for future accessories (Bright style) */}
@@ -121,13 +112,12 @@ export default function Accessories() {
                 We are developing new ergonomic clips, charging cases, and straps for AlignPod.
               </p>
               <Link
-                to="/contact"
+                href="/contact"
                 className="mt-5 text-xs font-mono text-[#111111] hover:text-black font-semibold underline underline-offset-4"
               >
                 Request an accessory →
               </Link>
             </div>
-
           </div>
 
           {/* Bright Store Trust / Guarantees Banner */}
@@ -162,7 +152,6 @@ export default function Accessories() {
               </div>
             </div>
           </div>
-
         </div>
       </main>
 
