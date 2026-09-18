@@ -100,7 +100,7 @@ export function FAQ() {
                 className="relative z-10 flex flex-col items-center"
               >
                  <img
-                   src={apfinal}
+                   src={typeof apfinal === 'string' ? apfinal : apfinal.src}
                    alt="AlignPod device"
                    className="w-[130px] object-contain drop-shadow-[0_30px_60px_rgba(0,0,0,0.25)]"
                  />

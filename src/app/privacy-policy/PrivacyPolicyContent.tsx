@@ -1,6 +1,8 @@
+"use client";
+
 import { motion } from "motion/react";
-import { Navbar} from "../components/Navbar";
-import { Footer } from "../components/Footer";
+import { Navbar } from "../../components/Navbar";
+import { Footer } from "../../components/Footer";
 
 const sections = [
   {
@@ -121,68 +123,63 @@ const sections = [
   },
 ];
 
-export function PrivacyPolicy() {
+export default function PrivacyPolicyContent() {
   return (
     <>
-    <Navbar/>
-    <main className="min-h-screen bg-[#F8F8F6] pt-32 pb-24 px-6">
-      <section className="max-w-5xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className="text-center mb-16"
-        >
-          <span className="inline-block text-xs font-semibold tracking-[0.2em] text-[#6B7280] uppercase mb-6">
-            Legal
-          </span>
+      <Navbar />
+      <main className="min-h-screen bg-[#F8F8F6] pt-32 pb-24 px-6">
+        <section className="max-w-5xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="text-center mb-16"
+          >
+            <span className="inline-block text-xs font-semibold tracking-[0.2em] text-[#6B7280] uppercase mb-6">
+              Legal
+            </span>
 
-          <h1 className="heading-hero text-[#111111] mb-6">
-            Privacy Policy
-          </h1>
+            <h1 className="heading-hero text-[#111111] mb-6">Privacy Policy</h1>
 
-          <p className="text-body text-[#6B7280] max-w-2xl mx-auto">
-            We value your privacy and believe your posture and wellness data should be handled with care, transparency, and responsibility.
-          </p>
-
-          <p className="text-sm text-gray-400 mt-6">
-            Last Updated: July 2026
-          </p>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className="bg-white rounded-[32px] sm:rounded-[40px] border border-[#E5E7EB] shadow-[0_4px_20px_rgba(0,0,0,0.03)] p-6 md:p-12 lg:p-14"
-        >
-          <div className="space-y-10">
-            {sections.map((section) => (
-              <section key={section.title}>
-                <h2 className="text-2xl md:text-3xl font-display font-semibold text-[#111111] mb-4">
-                  {section.title}
-                </h2>
-
-                <div className="space-y-4 text-[#6B7280] leading-relaxed text-base md:text-lg font-light">
-                  {section.body.map((paragraph, index) => (
-                    <p key={index}>{paragraph}</p>
-                  ))}
-                </div>
-              </section>
-            ))}
-          </div>
-
-          <div className="mt-14 rounded-[24px] bg-[#F8F8F6] border border-[#E5E7EB] p-6 md:p-8">
-            <p className="text-sm text-gray-500 leading-relaxed">
-              Note: This Privacy Policy is intended to provide general transparency for AlignPod users. It should be reviewed by a qualified legal professional before commercial launch, app store submission, or large-scale data collection.
+            <p className="text-body text-[#6B7280] max-w-2xl mx-auto">
+              We value your privacy and believe your posture and wellness data should be handled with care, transparency, and responsibility.
             </p>
-          </div>
-        </motion.div>
-      </section>
-    </main>
-    <Footer/>
+
+            <p className="text-sm text-gray-400 mt-6">Last Updated: July 2026</p>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="bg-white rounded-[32px] sm:rounded-[40px] border border-[#E5E7EB] shadow-[0_4px_20px_rgba(0,0,0,0.03)] p-6 md:p-12 lg:p-14"
+          >
+            <div className="space-y-10">
+              {sections.map((section) => (
+                <section key={section.title}>
+                  <h2 className="text-2xl md:text-3xl font-display font-semibold text-[#111111] mb-4">
+                    {section.title}
+                  </h2>
+
+                  <div className="space-y-4 text-[#6B7280] leading-relaxed text-base md:text-lg font-light">
+                    {section.body.map((paragraph, index) => (
+                      <p key={index}>{paragraph}</p>
+                    ))}
+                  </div>
+                </section>
+              ))}
+            </div>
+
+            <div className="mt-14 rounded-[24px] bg-[#F8F8F6] border border-[#E5E7EB] p-6 md:p-8">
+              <p className="text-sm text-gray-500 leading-relaxed">
+                Note: This Privacy Policy is intended to provide general transparency for AlignPod users. It should be reviewed by a qualified legal professional before commercial launch, app store submission, or large-scale data collection.
+              </p>
+            </div>
+          </motion.div>
+        </section>
+      </main>
+      <Footer />
     </>
   );
 }
-    

@@ -1,3 +1,5 @@
+"use client";
+
 import { Navbar } from "../components/Navbar";
 import { Hero } from "../components/Hero";
 import { WhyPostureMatters } from "../components/WhyPostureMatters";
@@ -11,7 +13,7 @@ import { BackedByVisionaries } from "../components/BackedByVisionaries";
 import { FinalCTA } from "../components/FinalCTA";
 import { Footer } from "../components/Footer";
 
-export default function Home() {
+export default function HomeContent() {
   return (
     <main className="min-h-screen bg-deep-black text-white selection:bg-white selection:text-black">
       <Navbar />
@@ -26,7 +28,6 @@ export default function Home() {
       <FAQ />
       <BackedByVisionaries />
       <Footer />
-      
     </main>
   );
 }

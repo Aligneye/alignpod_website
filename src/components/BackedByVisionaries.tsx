@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useEffect, useRef } from "react";
 import { motion } from "motion/react";
 import { SectionHeading, BodyText } from "./ui/Typography";
@@ -10,55 +12,57 @@ import PUIC from "../assets/PUIC.jpeg";
 import bihar from "../assets/startbihar.jpeg";
 import stpi from "../assets/STPI.jpeg";
 
+const toSrc = (val: unknown) => (typeof val === "string" ? val : (val as { src: string }).src);
+
 const organizations = [
   {
     name: "MeitY Startup Hub",
-    logo: meit,
+    logo: toSrc(meit),
     category: "Innovation Hub",
     url: "https://msh.meity.gov.in/",
     alt: "MeitY startup image",
   },
   {
     name: "IIT Mandi Catalyst",
-    logo: IITM,
+    logo: toSrc(IITM),
     category: "Technology Business Incubator",
     url: "https://iitmandicatalyst.in/",
     alt: "IIT Mandi image",
   },
   {
     name: "SPARKL – GLA Technology Business Incubator",
-    logo: GLA,
-    category: "Technology Business Incubator",
-    url: "https://www.sparklgla.com/",
-    alt: "SPARKL GLA image",
+    logo: toSrc(GLA),
+    category: "Incubation Partner",
+    url: "https://glaonline.com/",
+    alt: "GLA university image",
   },
   {
-    name: "Panjab University",
-    logo: pu,
-    category: "University",
-    url: "https://puchd.ac.in/",
-    alt: "PU image",
+    name: "STPI – Gurugram",
+    logo: toSrc(stpi),
+    category: "Software Technology Park",
+    url: "https://stpi.in/en",
+    alt: "STPI gurugram image",
   },
   {
-    name: "Panjab University Incubation Centre",
-    logo: PUIC,
-    category: "Incubation Centre",
-    url: "https://eei.puchd-ac.in/",
-    alt: "PUIC image",
+    name: "Patna University Incubation Center",
+    logo: toSrc(PUIC),
+    category: "Innovation & Incubation",
+    url: "https://puic.in/",
+    alt: "Patna university image",
+  },
+  {
+    name: "Patna University",
+    logo: toSrc(pu),
+    category: "Academic Partner",
+    url: "https://patnauniversity.ac.in/",
+    alt: "Patna university image",
   },
   {
     name: "Startup Bihar",
-    logo: bihar,
-    category: "Startup Mission",
+    logo: toSrc(bihar),
+    category: "State Initiative",
     url: "https://startup.bihar.gov.in/",
-    alt: "startup Bihar image",
-  },
-  {
-    name: "STPI MedTech Centre of Excellence Lucknow",
-    logo: stpi,
-    category: "Centre of Excellence",
-    url: "https://medtech.stpi.in/",
-    alt: "STPI image",
+    alt: "Startup bihar image",
   },
 ];
 

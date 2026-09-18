@@ -1,3 +1,5 @@
+"use client";
+
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { motion } from 'motion/react';
 import { ChevronLeft, ChevronRight, Wifi, SignalHigh, BatteryFull } from 'lucide-react';
@@ -18,13 +20,15 @@ interface Screen {
   statusBar: StatusBarTheme;
 }
 
+const toSrc = (val: unknown) => typeof val === 'string' ? val : (val as { src: string }).src;
+
 const screens: Screen[] = [
-  { id: 'training', img: training, alt: 'AlignPod app Training Mode screen with sensitivity and correction timing controls', bg: '#F7F6FB', statusBar: 'dark' },
-  { id: 'breathing', img: breathe, alt: 'AlignPod app Breathing Mode screen with guided 4-2-6 breathing pattern', bg: '#F3F5FA', statusBar: 'dark' },
-  { id: 'therapy', img: therapy, alt: 'AlignPod app Therapy Mode screen with acupressure vibration targeting', bg: '#FCEAF0', statusBar: 'dark' },
-  { id: 'calibration', img: calibapp, alt: 'AlignPod app device calibration screen guiding the user to hold still', bg: '#0B0F14', statusBar: 'light' },
-  { id: 'pod-connect', img: ble, alt: 'AlignPod app Bluetooth pod connection screen scanning for nearby pods', bg: '#F4F5FB', statusBar: 'dark' },
-  { id: 'analytics', img: analytics, alt: 'AlignPod app Analytics and Insights screen with posture score trends', bg: '#F5F6F8', statusBar: 'dark' },
+  { id: 'training', img: toSrc(training), alt: 'AlignPod app Training Mode screen with sensitivity and correction timing controls', bg: '#F7F6FB', statusBar: 'dark' },
+  { id: 'breathing', img: toSrc(breathe), alt: 'AlignPod app Breathing Mode screen with guided 4-2-6 breathing pattern', bg: '#F3F5FA', statusBar: 'dark' },
+  { id: 'therapy', img: toSrc(therapy), alt: 'AlignPod app Therapy Mode screen with acupressure vibration targeting', bg: '#FCEAF0', statusBar: 'dark' },
+  { id: 'calibration', img: toSrc(calibapp), alt: 'AlignPod app device calibration screen guiding the user to hold still', bg: '#0B0F14', statusBar: 'light' },
+  { id: 'pod-connect', img: toSrc(ble), alt: 'AlignPod app Bluetooth pod connection screen scanning for nearby pods', bg: '#F4F5FB', statusBar: 'dark' },
+  { id: 'analytics', img: toSrc(analytics), alt: 'AlignPod app Analytics and Insights screen with posture score trends', bg: '#F5F6F8', statusBar: 'dark' },
 ];
 
 const AUTO_ROTATE_MS = 3500;

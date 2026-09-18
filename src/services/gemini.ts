@@ -1,12 +1,12 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
-const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
+const apiKey =
+  process.env.NEXT_PUBLIC_GEMINI_API_KEY ||
+  process.env.VITE_GEMINI_API_KEY ||
+  process.env.GEMINI_API_KEY ||
+  "";
 
-if (!apiKey) {
-  throw new Error("Missing VITE_GEMINI_API_KEY in .env file");
-}
-
-const genAI = new GoogleGenerativeAI(apiKey);
+const genAI = new GoogleGenerativeAI(apiKey || "placeholder_key");
 
 function fileToGenerativePart(file: File): Promise<{
   inlineData: { data: string; mimeType: string };
@@ -30,6 +30,10 @@ function fileToGenerativePart(file: File): Promise<{
 }
 
 export async function analyzePostureImage(file: File) {
+  if (!apiKey) {
+    throw new Error("Missing Gemini API key in environment variables");
+  }
+
   const model = genAI.getGenerativeModel({
     model: "gemini-2.5-flash",
   });

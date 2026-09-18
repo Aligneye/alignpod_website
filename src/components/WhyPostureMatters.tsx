@@ -177,7 +177,7 @@ export function WhyPostureMatters() {
                   return (
                     <motion.img
                       key={step.id}
-                      src={step.image}
+                      src={typeof step.image === 'string' ? step.image : (step.image as { src: string }).src}
                       alt={step.alt}
                       initial={{ opacity: 0, scale: 1.03 }}
                       animate={{
