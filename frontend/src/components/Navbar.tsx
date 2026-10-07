@@ -10,8 +10,8 @@ import { trackEvent } from "../utils/analytics";
 
 const navLinks = [
   { name: "Home", href: "/" },
+  { name: "Store", href: "https://shop.aligneye.com/shop" },
   { name: "Why alignPod", href: "/why-alignpod" },
-  { name: "Accessories", href: "/accessories" },
   { name: "Science", href: "/science" },
   { name: "Contact", href: "/contact" },
 ];
