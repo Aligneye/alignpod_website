@@ -27,26 +27,7 @@ export async function POST(req: NextRequest) {
       });
     }
 
-    // 2. Validate Twilio environment variables
-    const accountSid = process.env.TWILIO_ACCOUNT_SID;
-    const authToken = process.env.TWILIO_AUTH_TOKEN;
-    const fromNumber =
-      process.env.TWILIO_WHATSAPP_FROM || "whatsapp:+14155238886";
-
-    if (!accountSid || !authToken) {
-      console.error(
-        "[WhatsApp Automation] Missing TWILIO_ACCOUNT_SID or TWILIO_AUTH_TOKEN."
-      );
-      return NextResponse.json(
-        {
-          error:
-            "Twilio credentials are not configured on the server. Please set TWILIO_ACCOUNT_SID and TWILIO_AUTH_TOKEN in environment variables.",
-        },
-        { status: 500 }
-      );
-    }
-
-    // 3. Compose WhatsApp message
+    // 2. Compose full custom WhatsApp message (including Delivery Address and Note)
     const cleanName = String(name).trim();
     const cleanEmail = String(email).trim();
     const cleanAddress = address ? String(address).trim() : "";
@@ -55,19 +36,68 @@ export async function POST(req: NextRequest) {
       `Hi ${cleanName}! 👋\n\n` +
       `Thank you for connecting with AlignEye. We have received your order / inquiry.\n\n` +
       `📋 *Order & Delivery Details:*\n` +
-      `• Name: ${cleanName}\n` +
-      `• Email: ${cleanEmail}\n` +
-      (cleanAddress ? `• Delivery Address: ${cleanAddress}\n` : "") +
-      (message ? `• Note: ${String(message).trim()}\n\n` : `\n`) +
+      `• *Name:* ${cleanName}\n` +
+      `• *Email:* ${cleanEmail}\n` +
+      (cleanAddress ? `• *Delivery Address:* ${cleanAddress}\n` : "") +
+      (message ? `• *Note:* ${String(message).trim()}\n\n` : `\n`) +
       `Our team will process your request and reach out to you shortly.\n\n` +
       `Best regards,\n` +
       `*Team AlignEye*\n` +
       `https://aligneye.com`;
 
-    // 4. Send via Twilio REST API
+    // 3. Try sending via local Baileys microservice gateway first (Option 1)
+    const gatewayUrl = process.env.WHATSAPP_GATEWAY_URL || "http://localhost:8080/send";
+    try {
+      const gatewayResponse = await fetch(gatewayUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          phone: phoneCheck.formatted10Digit,
+          message: whatsappBody,
+        }),
+        signal: AbortSignal.timeout(6000), // 6 second timeout
+      });
+
+      if (gatewayResponse.ok) {
+        const gwData = await gatewayResponse.json();
+        console.info(
+          `[WhatsApp Automation] Sent via Baileys Gateway to ${phoneCheck.whatsappRecipient}:`,
+          gwData
+        );
+        return NextResponse.json({
+          success: true,
+          via: "baileys",
+          messageId: gwData.messageId,
+          recipient: phoneCheck.whatsappRecipient,
+        });
+      } else {
+        const gwErr = await gatewayResponse.text();
+        console.warn(`[WhatsApp Automation] Baileys Gateway responded with error: ${gwErr}. Checking fallback...`);
+      }
+    } catch (gwErr: any) {
+      console.warn(
+        `[WhatsApp Automation] Baileys Gateway not reachable at ${gatewayUrl} (${gwErr.message}). Checking Twilio fallback...`
+      );
+    }
+
+    // 4. Fallback to Twilio REST API if configured
+    const accountSid = process.env.TWILIO_ACCOUNT_SID;
+    const authToken = process.env.TWILIO_AUTH_TOKEN;
+    const fromNumber =
+      process.env.TWILIO_WHATSAPP_FROM || "whatsapp:+14155238886";
+
+    if (!accountSid || !authToken) {
+      return NextResponse.json(
+        {
+          error:
+            "WhatsApp gateway is offline and Twilio credentials are not configured.",
+        },
+        { status: 503 }
+      );
+    }
+
     const twilioEndpoint = `https://api.twilio.com/2010-04-01/Accounts/${accountSid}/Messages.json`;
     const authHeader = `Basic ${Buffer.from(`${accountSid}:${authToken}`).toString("base64")}`;
-
     const contentSid = process.env.TWILIO_CONTENT_SID;
 
     const params = new URLSearchParams();
@@ -76,7 +106,6 @@ export async function POST(req: NextRequest) {
 
     if (contentSid) {
       params.append("ContentSid", contentSid);
-      // Passes Name ({{1}}), Email ({{2}}), and Address ({{3}}) to the template variables
       params.append(
         "ContentVariables",
         JSON.stringify({
@@ -112,11 +141,12 @@ export async function POST(req: NextRequest) {
     }
 
     console.info(
-      `[WhatsApp Automation] Message sent successfully to ${phoneCheck.whatsappRecipient} (Message SID: ${data.sid})`
+      `[WhatsApp Automation] Message sent successfully via Twilio to ${phoneCheck.whatsappRecipient} (SID: ${data.sid})`
     );
 
     return NextResponse.json({
       success: true,
+      via: "twilio",
       messageSid: data.sid,
       recipient: phoneCheck.whatsappRecipient,
       status: data.status,
