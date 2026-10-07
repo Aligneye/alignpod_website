@@ -60,6 +60,20 @@ export function LeadPopup() {
 
       if (error) throw error;
 
+      // Trigger WhatsApp automation (Indians only, handled server-side)
+      fetch("/api/send-whatsapp/", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: data.name,
+          email: data.email,
+          phone: data.phone,
+          message: data.message,
+        }),
+      }).catch((err) => {
+        console.warn("[lead-popup] WhatsApp notification call failed:", err);
+      });
+
       setSubmitted(true);
       localStorage.setItem("leadPopupSubmitted", "true");
       trackEvent("lead_popup_submitted");
