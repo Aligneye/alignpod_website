@@ -65,6 +65,21 @@ function BuyNowForm() {
 
       if (error) throw error;
 
+      // Trigger WhatsApp automation (Indians only, handled server-side)
+      fetch("/api/send-whatsapp/", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name,
+          email: mail,
+          phone,
+          address,
+          message: `Quantity: ${quantity}${note ? ` | Note: ${note}` : ""}`,
+        }),
+      }).catch((err) => {
+        console.warn("[buy-now] WhatsApp notification call failed:", err);
+      });
+
       setStatus("success");
       trackEvent("buy_now_form_submitted");
       form.reset();
