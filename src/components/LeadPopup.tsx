@@ -1,184 +1,192 @@
-import { useEffect, useState } from "react";
+
+import { useEffect, useState, useCallback } from "react";
+import { ShoppingBag, ArrowRight, X, ShieldCheck } from "lucide-react";
 import { trackEvent } from "../utils/analytics";
-import { supabase } from "../lib/supabase";
+import popupProductImage from "../assets/alignpod-popup.png";
+
+const PRODUCT_URL =
+  "https://shop.aligneye.com/product/alignpod/";
+
+const DISMISS_KEY = "alignpodOfferDismissedAt";
+const DISMISS_DAYS = 7;
 
 export function LeadPopup() {
   const [showPopup, setShowPopup] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      if (!localStorage.getItem("leadPopupSubmitted")) {
-        setShowPopup(true);
-        trackEvent("lead_popup_opened");
-      }
-    }, 5000);
-
-    return () => clearTimeout(timer);
-  }, []);
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-
-    const form = e.currentTarget;
-
-    const data = {
-      name: (form.elements.namedItem("name") as HTMLInputElement).value,
-      email: (form.elements.namedItem("email") as HTMLInputElement).value,
-      phone: (form.elements.namedItem("phone") as HTMLInputElement).value,
-      message: (form.elements.namedItem("message") as HTMLTextAreaElement).value,
-    };
-
-    const payload = {
-      name: data.name,
-      email: data.email,
-      phone: data.phone,
-      question: data.message,
-    };
-    console.info("[lead-popup] insert payload:", payload);
+  const closePopup = useCallback((method: string) => {
+    setShowPopup(false);
 
     try {
-      // NOTE: no .select() here on purpose — "webpage_popup" only has an
-      // anon INSERT policy, not a SELECT policy. Chaining .select() switches
-      // the request to `Prefer: return=representation`, which requires the
-      // inserted row to pass a SELECT policy too; without one, Postgres
-      // rejects the RETURNING clause and rolls back the whole insert
-      // (42501 "new row violates row-level security policy").
-      const { error, status, statusText } = await supabase
-        .from("webpage_popup")
-        .insert([payload]);
+      localStorage.setItem(DISMISS_KEY, String(Date.now()));
+    } catch {
+      // Continue if storage is unavailable.
+    }
 
-      console.info("[lead-popup] supabase response:", {
-        status,
-        statusText,
-        error,
-      });
+    trackEvent("offer_popup_closed", { method });
+  }, []);
 
-      if (error) throw error;
+  useEffect(() => {
+    try {
+      const dismissedAt = Number(
+        localStorage.getItem(DISMISS_KEY) || 0
+      );
 
-      setSubmitted(true);
-      localStorage.setItem("leadPopupSubmitted", "true");
-      trackEvent("lead_popup_submitted");
-      form.reset();
+      const cooldown =
+        DISMISS_DAYS * 24 * 60 * 60 * 1000;
 
-      setTimeout(() => {
-        trackEvent("lead_popup_closed");
-        setShowPopup(false);
-      }, 2000);
-    } catch (error) {
-      const err = error as { message?: string; code?: string; details?: string; hint?: string };
-      console.error("[lead-popup] insert failed:", {
-        message: err?.message,
-        code: err?.code,
-        details: err?.details,
-        hint: err?.hint,
-      });
-      alert(`Something went wrong: ${err?.message ?? "unknown error"}. Please try again.`);
-    } finally {
-      setIsSubmitting(false);
+      if (
+        dismissedAt &&
+        Date.now() - dismissedAt < cooldown
+      ) {
+        return;
+      }
+    } catch {
+      // Allow popup if storage is unavailable.
+    }
+
+    const timer = window.setTimeout(() => {
+      setShowPopup(true);
+      trackEvent("offer_popup_opened");
+    }, 5000);
+
+    return () => window.clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    if (!showPopup) return;
+
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        closePopup("escape_key");
+      }
+    };
+
+    window.addEventListener("keydown", handleEscape);
+
+    return () => {
+      window.removeEventListener("keydown", handleEscape);
+    };
+  }, [showPopup, closePopup]);
+
+  const handleBuyNow = () => {
+    trackEvent("offer_popup_buy_now_clicked", {
+      location: "homepage_popup",
+    });
+
+    try {
+      localStorage.setItem(
+        DISMISS_KEY,
+        String(Date.now())
+      );
+    } catch {
+      // Navigation still works.
     }
   };
 
   if (!showPopup) return null;
 
-return (
-  <div
-    className="fixed inset-0 z-[9999] bg-black/80 backdrop-blur-md flex items-center justify-center px-4 py-6"
-    onClick={() => {
-      trackEvent("lead_popup_closed", { method: "outside_click" });
-      setShowPopup(false);
-    }}
-  >
+  return (
     <div
-      className="relative w-full max-w-md max-h-[90vh] overflow-y-auto rounded-[24px] border border-white/10 bg-[#0b0b0f] text-white shadow-2xl"
-      onClick={(e) => e.stopPropagation()}
+      className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/80 backdrop-blur-md px-4 py-5"
+      onClick={() => closePopup("outside_click")}
     >
-      <button
-        onClick={() => {
-          trackEvent("lead_popup_closed", { method: "close_button" });
-          setShowPopup(false);
-        }}
-        className="sticky top-4 ml-auto mr-4 mt-4 z-20 w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-white text-xl flex items-center justify-center transition"
-        aria-label="Close popup"
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="alignpod-offer-title"
+        className="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-[28px] border border-white/10 bg-[#0b0e12] text-white shadow-2xl"
+        onClick={(event) => event.stopPropagation()}
       >
-        ×
-      </button>
+        {/* Close button */}
+        <button
+          type="button"
+          onClick={() => closePopup("close_button")}
+          aria-label="Close offer"
+          className="absolute top-4 right-4 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-black/50 text-white hover:bg-black/70 transition"
+        >
+          <X className="h-5 w-5" />
+        </button>
 
-      {!submitted ? (
-        <div className="relative z-10 p-6 sm:p-6 pt-2">
-          <div className="inline-flex items-center rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-xs text-white/70 mb-5">
-            Connect with us
+        <div className="grid grid-cols-1 md:grid-cols-2">
+          {/* ACTUAL ALIGNPOD PRODUCT IMAGE */}
+          <div className="relative flex min-h-[220px] sm:min-h-[300px] items-center justify-center overflow-hidden bg-[#e8f2f3] md:min-h-[480px]">
+            <img
+              src={popupProductImage}
+              alt="AlignPod smart posture wearable"
+              className="absolute inset-0 h-full w-full object-cover"
+            />
+
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent" />
           </div>
 
-          <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight mb-3">
-            Improve your sitting habits with AlignPod
-          </h2>
+          {/* OFFER CONTENT */}
+          <div className="relative flex flex-col justify-center p-6 sm:p-9">
+            <div className="mb-5 inline-flex w-fit items-center rounded-full border border-teal-400/20 bg-teal-400/10 px-3 py-1.5 text-[11px] font-semibold tracking-[0.15em] text-teal-200">
+              ALIGNPOD LAUNCH OFFER
+            </div>
 
-          <p className="text-white/60 text-sm leading-relaxed mb-4">
-            Share your details and our team will help you with product demo,
-            pricing, and availability.
-          </p>
+            <h2
+              id="alignpod-offer-title"
+              className="mb-4 text-3xl sm:text-4xl font-bold leading-tight tracking-tight"
+            >
+              Better posture
+              <br />
+              starts here.
+            </h2>
 
-          <form onSubmit={handleSubmit} className="space-y-3">
-            <input
-              name="name"
-              required
-              placeholder="Your name"
-              className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-white placeholder:text-white/35 outline-none focus:border-white/30 focus:bg-white/10 transition"
-            />
+            <p className="mb-6 text-sm sm:text-base leading-relaxed text-white/65">
+              Meet AlignPod, your everyday posture companion.
+              Build healthier sitting habits with gentle,
+              real-time posture reminders.
+            </p>
 
-            <input
-              name="email"
-              type="email"
-              required
-              placeholder="Email address"
-              className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-white placeholder:text-white/35 outline-none focus:border-white/30 focus:bg-white/10 transition"
-            />
+            {/* OFFER PRICE */}
+            <div className="mb-6 rounded-2xl border border-white/10 bg-white/[0.045] p-5">
+              <p className="mb-3 text-xs uppercase tracking-[0.16em] text-white/50">
+                Special Launch Price
+              </p>
 
-            <input
-              name="phone"
-              type="tel"
-              required
-              placeholder="Phone number"
-              className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-white placeholder:text-white/35 outline-none focus:border-white/30 focus:bg-white/10 transition"
-            />
+              <div className="flex flex-wrap items-baseline gap-3">
+                <span className="text-4xl sm:text-5xl font-bold tracking-tight">
+                  ₹6,999
+                </span>
 
-            <textarea
-              name="message"
-              placeholder="What would you like to know?"
-              rows={2}
-              className="w-full resize-none rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-white placeholder:text-white/35 outline-none focus:border-white/30 focus:bg-white/10 transition"
-            />
+                <span className="text-lg text-white/40 line-through">
+                  ₹7,999
+                </span>
+              </div>
+
+              <div className="mt-4 inline-flex items-center rounded-full bg-teal-400/10 px-3 py-1.5 text-xs font-semibold text-teal-200">
+                Save ₹1,000
+              </div>
+            </div>
+
+            {/* BUY NOW BUTTON */}
+            <a
+              href={PRODUCT_URL}
+              onClick={handleBuyNow}
+              className="flex min-h-[56px] w-full items-center justify-center gap-3 rounded-full bg-[#087c80] px-6 py-4 text-base font-semibold text-white no-underline shadow-lg transition duration-200 hover:-translate-y-0.5 hover:bg-[#0b9598] hover:text-white"
+            >
+              <ShoppingBag className="h-5 w-5" />
+              Buy Now
+              <ArrowRight className="h-5 w-5" />
+            </a>
+
+            <div className="mt-5 flex items-center justify-center gap-2 text-xs text-white/55">
+              <ShieldCheck className="h-4 w-4 text-teal-300" />
+              <span>Explore product details before checkout</span>
+            </div>
 
             <button
-              type="submit"
-              disabled={isSubmitting}
-              className="w-full rounded-xl bg-white text-black py-2.5 font-semibold hover:bg-white/90 disabled:opacity-60 transition"
+              type="button"
+              onClick={() => closePopup("not_now")}
+              className="mt-5 w-full bg-transparent p-2 text-center text-sm text-white/45 transition hover:text-white/80"
             >
-              {isSubmitting ? "Submitting..." : "Get in Touch"}
+              Maybe later
             </button>
-          </form>
-
-          <p className="mt-4 text-center text-xs text-white/35">
-            We usually respond within 24 hours.
-          </p>
-        </div>
-      ) : (
-        <div className="relative z-10 p-7 text-center">
-          <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-white text-black text-2xl">
-            ✓
           </div>
-
-          <h2 className="text-2xl font-semibold mb-3">Thank you!</h2>
-
-          <p className="text-white/60">
-            Your details have been submitted successfully.
-          </p>
         </div>
-      )}
+      </div>
     </div>
-  </div>
-);
+  );
 }
