@@ -34,15 +34,15 @@ export function Hero() {
     return () => clearTimeout(timeout);
   }, [subIndex, reverse, index]);
 
-  const handleOrderNow = () => {
-    trackEvent("order_now_clicked", {
+  const handleBuyNow = () => {
+    trackEvent("buy_now_clicked", {
       location: "hero",
     });
   };
 
   return (
     <section className="relative min-h-screen flex items-center justify-center pt-24 overflow-hidden bg-deep-black">
-      {/* Background Video/Gradient Setup */}
+      {/* Background video */}
       <div className="absolute inset-0 z-0 bg-deep-black">
         <video
           autoPlay
@@ -53,7 +53,6 @@ export function Hero() {
           src={heroVideoUrl}
         />
 
-        {/* Dark overlay for text readability */}
         <div className="absolute inset-0 bg-black/45" />
       </div>
 
@@ -102,16 +101,16 @@ export function Hero() {
                 Analyze Your Posture
               </Link>
 
-              {/* Order Now Button */}
+              {/* Buy Now Button */}
               <a
                 href="https://shop.aligneye.com/product/alignpod/"
-                onClick={handleOrderNow}
+                onClick={handleBuyNow}
                 className="group w-full sm:w-auto btn-secondary-dark flex items-center justify-center gap-3"
               >
                 <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-white/20 transition-colors">
                   <ShoppingBag className="w-3.5 h-3.5 text-white" />
                 </div>
-                Order Now
+                Buy Now
               </a>
 
             </div>
